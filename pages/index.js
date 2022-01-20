@@ -1,11 +1,11 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { Button } from '@chakra-ui/react'
+import { Center, Button, Image, Box} from '@chakra-ui/react'
 
+//https://tenor.com/view/smiling-geicos-caveman-3doors-down-let-me-be-myself-song-smirk-gif-20065301
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <Box className={styles.container}>
       <Head>
         <title>Haikus For Savages</title>
         <meta name="description" content="Created by ColdMillenium Productions" />
@@ -16,9 +16,12 @@ export default function Home() {
         <h1 className={styles.title}>
           Haikus for Savages!
         </h1>
+        <Center  boxSize='sm'>
+          <Image background="white" height={300} width={300} rounded={300}src='https://c.tenor.com/16NyC3oOWT4AAAAi/smiling-geicos-caveman.gif' />
+        </Center>
         <Button width={150} mb={5} mt={50}>Create Game</Button>
         <Button width={150}>Join Game</Button>
       </main>
-    </div>
+    </Box>
   )
 }
