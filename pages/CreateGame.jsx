@@ -1,8 +1,10 @@
 import {useState} from 'react';
 import {Input, Text, Center, Stack, Button, Box} from '@chakra-ui/react'
 import useStore from '../store'
+import {useRouter} from 'next/router'
 
 function CreateGame() {
+  const router = useRouter();
   const username = useStore(state => state.username)
   const setUsername = useStore(state => state.setUsername)
   const [name, setName] = useState('')
@@ -12,8 +14,15 @@ function CreateGame() {
       setName(value)
     }
   }
+  const randomRoomId = function  () 
+  {
+    return Math.random().toString(36).replace('0.', '') ;
+  }
   const handleMakeGame = () =>{
     setUsername(name);
+    //TODO: Need to talk to server make a room and then get room id
+    router.push(`/Game/${randomRoomId()}`)
+
   }
   return <Center height="100vh">
     
@@ -34,7 +43,7 @@ function CreateGame() {
     
     
   </Center>;
-
+  
 }
 
 export default CreateGame;
