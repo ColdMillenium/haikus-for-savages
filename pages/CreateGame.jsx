@@ -1,13 +1,19 @@
 import {useState} from 'react';
 import {Input, Text, Center, Stack, Button, Box} from '@chakra-ui/react'
+import useStore from '../store'
 
 function CreateGame() {
+  const username = useStore(state => state.username)
+  const setUsername = useStore(state => state.setUsername)
   const [name, setName] = useState('')
   const handleChange = (event) => {
     let value = event.target.value;
     if(value.length<=12 && !/\s/.test(value)){
       setName(value)
     }
+  }
+  const handleMakeGame = () =>{
+    setUsername(name);
   }
   return <Center height="100vh">
     
@@ -23,7 +29,7 @@ function CreateGame() {
           placeholder='Your username' 
         />
       </Box>
-      <Button color="grey" mt={5}>Make Game</Button>
+      <Button onClick={handleMakeGame} color="grey" mt={5}>Make Game</Button>
     </Stack>
     
     
