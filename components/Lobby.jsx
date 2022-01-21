@@ -10,12 +10,13 @@ function Lobby() {
   const clientId = useStore(store => store.clientId)
   const teamA = useStore(store => store.teamA);
   const teamB = useStore(store => store.teamB);
+  const toggleReady = useStore(store => store.playerReady);
   const { roomId } = router.query;
 
   const teamList = (players) => {
     const list = [];
     players.forEach(p =>{
-      list.push(<Flex f>
+      list.push(<Flex key={p.id}>
         <Text fontSize="xl" key={p.id} ml={5}>
           {p.username}
         </Text>
@@ -36,7 +37,7 @@ function Lobby() {
       {teamList(teamB)}
     </Box>
 
-    <Button colorScheme="green"  m={5} mt={10}>Ready</Button>
+    <Button onClick={toggleReady} colorScheme="green"  m={5} mt={10}>Ready</Button>
     <Button colorScheme="gray" m={5} mt={10}>Switch Teams</Button>
   </Box>;
 
