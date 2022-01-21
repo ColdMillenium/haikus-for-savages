@@ -28,7 +28,7 @@ const useStore = create((set,get) => ({
     })
     socket.current.on("newRoom", roomId => {
       console.log(`roomId:${roomId} has been created in server`)
-      set({roomId})
+      get().joinRoom(roomId)
     });
     socket.current.on("joinedRoom", roomId => {
       console.log("You are now in room" + roomId);
