@@ -7,11 +7,14 @@ function Lobby() {
   
   const router = useRouter();
   const hostName = useStore(store => store.hostName);
+  const username = useStore(store => store.username);
   const clientId = useStore(store => store.clientId)
+  const players = useStore(store => store.players);
   const teamA = useStore(store => store.teamA);
   const teamB = useStore(store => store.teamB);
   const toggleReady = useStore(store => store.playerReady);
   const switchTeams = useStore(store => store.switchTeams);
+  const startGame = useStore(store => store.startGame)
   const { roomId } = router.query;
 
   const teamList = (players) => {
@@ -25,6 +28,24 @@ function Lobby() {
       </Flex>)
     })
     return list;
+  }
+  const showStartButton = () =>{
+    if(hostName != username){
+      return null;
+    }
+    if(players.filter(p => p.ready == true).length == players.length){
+      console.log(players);
+      return <>
+        <Button 
+          onClick={startGame} 
+          colorScheme="green"  
+          m={5} 
+          mt={10}
+        >
+          Start
+      </Button>
+      </>
+    }
   }
   return <Box  p={5}>
     <Text fontSize="4xl">{hostName}'s Room</Text>
@@ -40,6 +61,8 @@ function Lobby() {
 
     <Button onClick={toggleReady} colorScheme="green"  m={5} mt={10}>Ready</Button>
     <Button onClick={switchTeams} colorScheme="gray" m={5} mt={10}>Switch Teams</Button>
+    {showStartButton()}
+    
   </Box>;
 
 }
