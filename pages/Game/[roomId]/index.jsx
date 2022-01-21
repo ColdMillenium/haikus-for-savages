@@ -2,6 +2,7 @@ import {useEffect, useRef} from 'react';
 import { useRouter } from 'next/router';
 import useStore from '../../../store'
 import Lobby from '../../../components/Lobby'
+import Turn from '../../../components/Turn'
 
 function index() {
   
@@ -24,6 +25,8 @@ function index() {
   switch(gamePhase){
     case "LOBBY":
       return <Lobby/>
+    case "TURN":
+      return <Turn/>
     default:
       return <div>{gamePhase} not implemented</div>
   }
