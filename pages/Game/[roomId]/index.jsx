@@ -16,9 +16,11 @@ function index() {
 
   useEffect(() =>{
     if(!connected || username == "" || players.include(username)){
-      router.push(`JoinGame?roomId=${roomId}`)
+      if(roomId){
+        router.push(`/JoinGame?roomId=${roomId}`)
+      }
     }
-  }, [connected, username, players])
+  }, [connected, username, players, roomId])
   switch(gamePhase){
     case "LOBBY":
       return <Lobby/>
