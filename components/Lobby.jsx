@@ -6,12 +6,10 @@ import useStore from '../store.js'
 function Lobby() {
   
   const router = useRouter();
-  const hostName = useStore(store => store.hostName);
+  const {hostName, players, teamA, teamB} = useStore(store => store.room)
+  
   const username = useStore(store => store.username);
   const clientId = useStore(store => store.clientId)
-  const players = useStore(store => store.players);
-  const teamA = useStore(store => store.teamA);
-  const teamB = useStore(store => store.teamB);
   const toggleReady = useStore(store => store.playerReady);
   const switchTeams = useStore(store => store.switchTeams);
   const startGame = useStore(store => store.startGame)
@@ -32,6 +30,9 @@ function Lobby() {
   const showStartButton = () =>{
     if(hostName != username){
       return null;
+    }
+    if(Math.abs(teamA.length - teamB.length) >= 1 || players.length < 4 ){
+      return null
     }
     if(players.filter(p => p.ready == true).length == players.length){
       console.log(players);

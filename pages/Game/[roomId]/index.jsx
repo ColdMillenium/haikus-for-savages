@@ -7,11 +7,11 @@ import Turn from '../../../components/Turn'
 function index() {
   
   const router = useRouter();
+  const {players, phase} = useStore(store => store.room)
   const username = useStore(store => store.username);
   const connected = useStore(store => store.connected);
-  const players = useStore(store => store.players);
   const clientId = useStore(store => store.clientId)
-  const gamePhase = useStore(store => store.gamePhase)
+  
   const sayHi = useStore(store => store.sayHi)
   const { roomId } = router.query;
 
@@ -22,13 +22,13 @@ function index() {
       }
     }
   }, [connected, username, players, roomId])
-  switch(gamePhase){
+  switch(phase){
     case "LOBBY":
       return <Lobby/>
     case "TURN":
       return <Turn/>
     default:
-      return <div>{gamePhase} not implemented</div>
+      return <div>{phase} not implemented</div>
   }
   return <Lobby/>;
 
