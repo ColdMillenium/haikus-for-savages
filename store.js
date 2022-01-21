@@ -38,6 +38,16 @@ const useStore = create((set,get) => ({
     const clientId = get().clientId;
     socket.current.emit("makeRoom");
     console.log(`${username}: ${clientId} is requesting to make a room`);
+  },
+  joinRoom: (roomId) => {
+    const socket = get().socket;
+    const username = get().username;
+    const clientId = get().clientId;
+    socket.current.emit("joinRoom", {
+      username,
+      roomId,
+    })
+    console.log(`${username}: ${clientId} is requesting to join a room`)
   }
 }))
 
