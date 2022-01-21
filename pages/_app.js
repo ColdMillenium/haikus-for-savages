@@ -11,9 +11,7 @@ function MyApp({ Component, pageProps }) {
   const setSocket = useStore (state => state.setSocket)
   const router = useRouter();
   useEffect(() => {
-    if(username == ""){
-      router.push("/")
-    }else{
+    if(username != ""){
       setSocket(socket);
     }
   },[username])
