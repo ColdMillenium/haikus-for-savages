@@ -5,7 +5,6 @@ import {useRouter} from 'next/router'
 
 function CreateGame() {
   const router = useRouter();
-  const username = useStore(state => state.username)
   const setUsername = useStore(state => state.setUsername)
   const [name, setName] = useState('')
   const handleChange = (event) => {
