@@ -6,13 +6,13 @@ import useStore from '../store.js'
 function Lobby() {
   
   const router = useRouter();
-  const username = useStore(store => store.username);
+  const hostName = useStore(store => store.hostName);
   const clientId = useStore(store => store.clientId)
   const sayHi = useStore(store => store.sayHi)
   const { roomId } = router.query;
 
   return <div>
-    <Text fontSize="4xl">{username}'s Room</Text>
+    <Text fontSize="4xl">{hostName}'s Room</Text>
     Room ID: {roomId}
     <Button onClick={sayHi}>Hi</Button>
     <Text>{clientId}</Text>
