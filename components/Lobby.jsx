@@ -11,6 +11,7 @@ function Lobby() {
   const teamA = useStore(store => store.teamA);
   const teamB = useStore(store => store.teamB);
   const toggleReady = useStore(store => store.playerReady);
+  const switchTeams = useStore(store => store.switchTeams);
   const { roomId } = router.query;
 
   const teamList = (players) => {
@@ -38,7 +39,7 @@ function Lobby() {
     </Box>
 
     <Button onClick={toggleReady} colorScheme="green"  m={5} mt={10}>Ready</Button>
-    <Button colorScheme="gray" m={5} mt={10}>Switch Teams</Button>
+    <Button onClick={switchTeams} colorScheme="gray" m={5} mt={10}>Switch Teams</Button>
   </Box>;
 
 }
