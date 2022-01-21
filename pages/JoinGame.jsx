@@ -11,18 +11,40 @@ function JoinGame() {
   const username = useStore(state => state.username)
   const connected = useStore(state => state.connected);
   const joinRoom = useStore(state => state.joinRoom);
-  const [roomId, setRoomId] = useState("")
+  const roomId = useStore(state => state.roomId)
+  const joinRoomError = useStore(state => state.joinRoomError);
+  const [needToJoin, setNeedToJoin] = useState(false);
+  const [roomIdInput, setRoomIdInput] = useState("")
   const [name, setName] = useState('')
 
   useEffect(()=>{
-    setRoomId(defaultRoomId);
+    setRoomIdInput(defaultRoomId);
   }, [defaultRoomId])
 
   useEffect(()=>{
-    if(connected){
-      joinRoom(roomId);
+    if(connected && needToJoin){
+      joinRoom(roomIdInput);
+      setNeedToJoin(false);
     }
-  }, [connected, username])
+  }, [connected, needToJoin, roomIdInput])
+
+  useEffect(()=>{
+    if(joinRoomError == ""){
+      return;
+    }else if(joinRoomError == "DUPLICATE_USERNAME"){
+
+    }else if (joinRoomError == "INVALID_ROOM_ID"){
+
+    }else{
+      //unhandled feedback?
+    }
+  }, [joinRoomError])
+
+  useEffect(()=>{
+   if(roomId != "" && roomId == roomIdInput){
+     router.push(`Game/${roomId}`);
+   }
+  }, [roomId])
 
   const updateName = (event) => {
     let value = event.target.value;
@@ -33,7 +55,7 @@ function JoinGame() {
   const updateRoomId = (event) => {
     let value = event.target.value;
     if(value.length<=12 && !/\s/.test(value)){
-      setRoomId(value)
+      setRoomIdInput(value)
     }
   }
   const isValidName = () =>{
@@ -48,8 +70,9 @@ function JoinGame() {
 
   }
   const handleJoinGame = () =>{
-    if(isValidName() && roomId!=null && roomId != ""){
+    if(isValidName() && roomIdInput!=null && roomIdInput != ""){
       connect(name)
+      setNeedToJoin(true);
     }
   }
 
@@ -72,12 +95,15 @@ function JoinGame() {
         <Text color="grey">Room ID:</Text>
         <Input 
           width={200}
-          value={roomId}
+          value={roomIdInput}
           onChange={updateRoomId}
           placeholder='Room ID' 
         />
       </Box>
       <Button onClick={handleJoinGame} color="grey" mt={5}>Join Game</Button>
+      {
+        joinRoomError != ""? <Text color="red">{joinRoomError}</Text> : null
+      }
     </Stack>
     
     

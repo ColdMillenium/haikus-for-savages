@@ -15,7 +15,7 @@ function index() {
   const { roomId } = router.query;
 
   useEffect(() =>{
-    if(!connected || username == "" || players.include(username)){
+    if(!connected || username == "" || players.includes(username)){
       if(roomId){
         router.push(`/JoinGame?roomId=${roomId}`)
       }

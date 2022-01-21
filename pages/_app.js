@@ -8,13 +8,14 @@ import io from "socket.io-client";
 function MyApp({ Component, pageProps }) {
   const socket = useRef();
   const username = useStore(state => state.username)
+  const connected = useStore(state => state.connected);
   const setSocket = useStore (state => state.setSocket)
   const router = useRouter();
   useEffect(() => {
-    if(username != ""){
+    if(!connected){
       setSocket(socket);
     }
-  },[username])
+  },[ connected])
   return <ChakraProvider>
     <Component {...pageProps} />
   </ChakraProvider>
