@@ -7,6 +7,7 @@ function index() {
   
   const router = useRouter();
   const username = useStore(store => store.username);
+  const clientId = useStore(store => store.clientId)
   const sayHi = useStore(store => store.sayHi)
   const { roomId } = router.query;
 
@@ -14,6 +15,7 @@ function index() {
     <Text fontSize="4xl">{username}'s Room</Text>
     Room ID: {roomId}
     <Button onClick={sayHi}>Hi</Button>
+    <Text>{clientId}</Text>
   </div>;
 
 }

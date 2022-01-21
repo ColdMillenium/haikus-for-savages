@@ -4,6 +4,9 @@ import io from "socket.io-client";
 
 const useStore = create((set,get) => ({
   username: "",
+  clientId: "",
+  roomId: "",
+  connected: false,
   socket: null,
   setSocket: (socket) => {
     socket.current = io("http://localhost:8000", {
@@ -14,15 +17,25 @@ const useStore = create((set,get) => ({
       }
     });
     socket.current.on("socketId", (id) => {
-      console.log("my id is : " + id)
+      console.log("my id is : " + id);
+      set({
+        connected: true,
+        clientId: id
+      });
     })
+    socket.current.on("newRoom", roomId => {
+      console.log(`roomId:${roomId} has been created in server`)
+      set({roomId})
+    });
     set({socket:socket});
   },
-  setUsername: (username) => set({ username: username}),
-  sayHi: () =>{
-    const socket = get().socket
-    socket.current.emit("hello", null);
-    console.log(get().socket)
+  connect: (username) => set({ username: username}),
+  makeRoom: () =>{
+    const socket = get().socket;
+    const username = get().username;
+    const clientId = get().clientId;
+    socket.current.emit("makeRoom");
+    console.log(`${username}: ${clientId} is requesting to make a room`);
   }
 }))
 

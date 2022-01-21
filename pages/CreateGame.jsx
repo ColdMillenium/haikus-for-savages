@@ -1,28 +1,42 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {Input, Text, Center, Stack, Button, Box} from '@chakra-ui/react'
 import useStore from '../store'
 import {useRouter} from 'next/router'
 
 function CreateGame() {
   const router = useRouter();
-  const setUsername = useStore(state => state.setUsername)
+  const connect = useStore(state => state.connect)
+  const connected = useStore(state => state.connected)
+  const makeRoom = useStore(state => state.makeRoom);
+  const roomId = useStore(state => state.roomId);
+  const [newRoom, setNewRoom] = useState(false);
   const [name, setName] = useState('')
+
+  useEffect(() =>{
+    if(connected && newRoom){
+      makeRoom();
+      setNewRoom(false);
+    }
+  },[connected, newRoom])
+  useEffect(() =>{
+    if(roomId != ""){
+      router.push(`/Game/${roomId}`)
+    }
+  }, [roomId])
+
   const handleChange = (event) => {
     let value = event.target.value;
     if(value.length<=12 && !/\s/.test(value)){
       setName(value)
     }
   }
-  const randomRoomId = function  () 
-  {
-    return Math.random().toString(36).replace('0.', '') ;
-  }
   const handleMakeGame = () =>{
-    setUsername(name);
+    setNewRoom(true);
+    connect(name);
     //TODO: Need to talk to server make a room and then get room id
-    router.push(`/Game/${randomRoomId()}`)
-
+    // router.push(`/Game/${randomRoomId()}`)
   }
+
   return <Center height="100vh">
     
     <Stack spacing={5} p={20} rounded={5} boxShadow='md'>
