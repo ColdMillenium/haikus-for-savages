@@ -33,9 +33,10 @@ const useStore = create((set,get) => ({
       console.log(`roomId:${roomId} has been created in server`)
       get().joinRoom(roomId)
     });
-    socket.current.on("joinedRoom", roomId => {
+    socket.current.on("joinedRoom", data => {
+      const {roomId, phase} = data
       console.log("You are now in room" + roomId);
-      set({roomId});
+      set({roomId, gamePhase:phase});
     }),
     socket.current.on("joinRoomError", joinRoomError => set({joinRoomError}))
     socket.current.on("playerData", playerData => {
@@ -78,6 +79,14 @@ const useStore = create((set,get) => ({
     const clientId = get().clientId;
     const roomId = get().roomId;
     socket.current.emit("switchTeams", {roomId})
+    console.log(`${username}: ${clientId} is requesting to switch teams for game ${roomId}`)
+  },
+  startGame: () =>{
+    const socket = get().socket;
+    const username = get().username;
+    const clientId = get().clientId;
+    const roomId = get().roomId;
+    socket.current.emit("startGame", {roomId})
     console.log(`${username}: ${clientId} is requesting to switch teams for game ${roomId}`)
   }
 }))
