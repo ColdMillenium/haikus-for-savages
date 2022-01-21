@@ -8,6 +8,8 @@ const useStore = create((set,get) => ({
   roomId: "",
   connected: false,
   socket: null,
+  players: [],
+  gamePhase: "LOBBY",
   setSocket: (socket) => {
     socket.current = io("http://localhost:8000", {
       //socket.current = io("https://hfs-server.herokuapp.com", {
