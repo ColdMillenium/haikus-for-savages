@@ -10,6 +10,8 @@ const useStore = create((set,get) => ({
   socket: null,
   players: [],
   hostName: "",
+  teamA: [],
+  teamB: [],
   gamePhase: "LOBBY",
   joinRoomError: "",
   setSocket: (socket) => {
@@ -37,11 +39,10 @@ const useStore = create((set,get) => ({
     }),
     socket.current.on("joinRoomError", joinRoomError => set({joinRoomError}))
     socket.current.on("playerData", playerData => {
-      const {players, hostName} = playerData;
+      const {players, hostName, teamA, teamB} = playerData;
       console.log("Update w/ Room Data")
       console.log(playerData);
-      set({players});
-      set({hostName});
+      set({players, hostName, teamA, teamB});
     })
     set({socket:socket});
   },
