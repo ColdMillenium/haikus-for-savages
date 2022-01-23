@@ -8,7 +8,6 @@ function CreateGame() {
   const connect = useStore(state => state.connect)
   const connected = useStore(state => state.connected)
   const makeRoom = useStore(state => state.makeRoom);
-  const getTestRoom = useStore(state => state.getTestRoom);
   const roomId = useStore(state => state.roomId);
   const [newRoom, setNewRoom] = useState(false);
   const [name, setName] = useState('')
@@ -53,7 +52,6 @@ function CreateGame() {
         />
       </Box>
       <Button onClick={handleMakeGame} color="grey" mt={5}>Make Game</Button>
-      <Button onClick={getTestRoom} color="grey" mt={5}>Get Test Room</Button>
     </Stack>
     
     

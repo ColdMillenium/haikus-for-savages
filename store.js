@@ -15,6 +15,7 @@ const useStore = create((set,get) => ({
   gamePhase: "LOBBY",
   joinRoomError: "",
   room: {},
+  roomId: "",
   setSocket: (socket) => {
     socket.current = io("http://localhost:8000", {
       //socket.current = io("https://hfs-server.herokuapp.com", {
@@ -34,11 +35,10 @@ const useStore = create((set,get) => ({
       console.log(`roomId:${roomId} has been created in server`)
       get().joinRoom(roomId)
     });
-    socket.current.on("joinedRoom", data => {
-      const {roomId, phase} = data
-      console.log("You are now in room" + roomId);
-      set({roomId, gamePhase:phase});
-    }),
+    // socket.current.on("joinedRoom", roomId => {
+    //   console.log("You are now in room" + roomId);
+    //   set({roomId});
+    // }),
     socket.current.on("joinRoomError", joinRoomError => set({joinRoomError}))
     socket.current.on("playerData", playerData => {
       const {players, hostName, teamA, teamB} = playerData;
@@ -48,7 +48,7 @@ const useStore = create((set,get) => ({
     }),
     socket.current.on("gameStatus", room => {
       console.log(`roomId:${room.id} has update`)
-      set({room});
+      set({room, roomId:room.id});
     })
     socket.current.on("testRoom", room => {
       console.log(room);

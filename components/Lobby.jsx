@@ -53,11 +53,11 @@ function Lobby() {
     Room ID: {roomId}
     <Text fontSize="4xl">Team A</Text>
     <Box pl = {5}>
-      {teamList(teamA)}
+      {teamList(teamA.players)}
     </Box>
     <Text fontSize="4xl">Team B</Text>
     <Box pl = {5}>
-      {teamList(teamB)}
+      {teamList(teamB.players)}
     </Box>
 
     <Button onClick={toggleReady} colorScheme="green"  m={5} mt={10}>Ready</Button>
