@@ -50,6 +50,9 @@ const useStore = create((set,get) => ({
       console.log(`roomId:${room.id} has update`)
       set({room});
     })
+    socket.current.on("testRoom", room => {
+      console.log(room);
+    })
     set({socket:socket});
   },
   connect: (username) => set({ username: username}),
@@ -97,6 +100,10 @@ const useStore = create((set,get) => ({
   playCard: (pile) =>{
     socket.current.emit("playCard", pile);
     console.log("client is playing card into " + pile + " pile");
+  },
+  getTestRoom: () =>{
+    const socket = get().socket;
+    socket.current.emit("getTestRoom");
   }
 }))
 
