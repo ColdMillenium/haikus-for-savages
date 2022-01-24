@@ -86,7 +86,7 @@ const useStore = create((set,get) => ({
     const username = get().username;
     const clientId = get().clientId;
     const roomId = get().roomId;
-    socket.current.emit("switchTeams", {roomId})
+    socket.current.emit("switchTeams")
     console.log(`${username}: ${clientId} is requesting to switch teams for game ${roomId}`)
   },
   startGame: () =>{
