@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import { useRouter } from 'next/router';
-import {Text ,Button, Box, Flex, Input} from '@chakra-ui/react'
+import {Text ,Button, Box, Flex, Input, Select} from '@chakra-ui/react'
 import ModeRules from './ModeRules'
 import useStore from '../store.js'
 
@@ -14,6 +14,7 @@ function Lobby() {
   const toggleReady = useStore(store => store.playerReady);
   const switchTeams = useStore(store => store.switchTeams);
   const startGame = useStore(store => store.startGame)
+  const setMode = useStore(store=> store.setMode);
   const { roomId } = router.query;
   const [startHidden, setStartHidden] = useState(true);
   const [gameMode, setGameMode] = useState();
@@ -42,11 +43,21 @@ function Lobby() {
     }
     setStartHidden(true);
   },[mode])
-  
+
+  const onModeChange = (e) =>{
+    setMode(e.target.value);
+  }
+
   
   return <Box  p={5}>
     <Text fontSize="4xl">{hostName}'s Room</Text>
-    Room ID: {roomId}
+    <Text>Room ID: {roomId}</Text>
+    <Select value={mode} onChange={onModeChange}>
+      <option value='COOP'>Co-Op (2)</option>
+      <option value='ROTATE'>Rotation (3)</option>
+      <option value='TEAMS'>Teams (4+)</option>
+    </Select>
+    
     <ModeRules mode={mode}/>
     <GameSetting field="Time Per Turn" value={maxTime}/>
     <GameSetting field="Rounds" value={maxRounds}/>
