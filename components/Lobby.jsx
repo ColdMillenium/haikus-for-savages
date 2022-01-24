@@ -7,7 +7,18 @@ import useStore from '../store.js'
 function Lobby() {
   
   const router = useRouter();
-  const {hostName, players, teamA, teamB, mode, host, partySize, maxTime, maxPlayers, maxRounds} = useStore(store => store.room)
+  const {
+    hostName, 
+    players, 
+    teamA, 
+    teamB, 
+    mode, 
+    host, 
+    partySize, 
+    maxTime, 
+    maxPlayers, 
+    maxRounds
+  } = useStore(store => store.room)
   
   const username = useStore(store => store.username);
   const clientId = useStore(store => store.clientId)
@@ -17,10 +28,14 @@ function Lobby() {
   const setMode = useStore(store=> store.setMode);
   const { roomId } = router.query;
   const [startHidden, setStartHidden] = useState(true);
-  const [gameMode, setGameMode] = useState();
-  const [gameModeDesc, setGameModeDesc] = useState();
+  const [switchTeamsHidden, setSwitchTeamsHidden] = useState(true);
 
   useEffect(() =>{
+    if(mode == "TEAMS"){
+      setSwitchTeamsHidden(false);
+    }else{
+      setSwitchTeamsHidden(true);
+    }
     if(clientId == host && players.filter(p => p.ready).length == players.length){
       if( (mode == "COOP" && partySize == 2) ||
       (mode == "ROTATE" && partySize == 3) ||
@@ -32,17 +47,6 @@ function Lobby() {
     }
     setStartHidden(true);
   },[players, mode, host])
-  useEffect(() =>{
-    if(mode == "COOP"){
-      setGameMode("Co-Op Game (2 Players)")
-      setGameModeDesc("Both players are on teh same team and switch off being the Poet, Paly with just the Poet Point Slate ")
-    }else if(mode == "ROTATE"){
-      setGameMode("Rotation Game(2 Players)")
-    }else{
-
-    }
-    setStartHidden(true);
-  },[mode])
 
   const onModeChange = (e) =>{
     setMode(e.target.value);
@@ -52,7 +56,6 @@ function Lobby() {
     navigator.clipboard.writeText(roomId);
   }
 
-  
   return <Box  p={5}>
     <Flex align="center">
       <Text fontSize="4xl" fontWeight="bold">{hostName}'s Room</Text> 
@@ -63,7 +66,6 @@ function Lobby() {
       </Button>
     </Flex>
     <Box  p={5}>
-      
       <Flex align="center">
         <Text fontSize="lg">Mode: </Text>
         <Select value={mode} onChange={onModeChange} maxW={200}>
@@ -72,39 +74,42 @@ function Lobby() {
           <option value='TEAMS'>Teams (4+)</option>
         </Select>
       </Flex>
-      
     </Box>
-   
-    
-    
     <ModeRules mode={mode}/>
     <GameSetting field="Time Per Turn" value={maxTime}/>
     <GameSetting field="Rounds" value={maxRounds}/>
     <GameSetting field="Maximum Players" value={maxPlayers}/>
-    
     {mode == 'TEAMS'? <>
-      <Text fontSize="2xl" fontWeight="bold">Team A</Text>
+      <Text fontSize="2xl" fontWeight="bold">
+        Team A ({teamA.players.length})
+      </Text>
       <Box pl = {5}>
         <PlayerList players = {teamA.players}/>
       </Box>
-      <Text fontSize="2xl" fontWeight="bold">Team B</Text>
+      <Text fontSize="2xl" fontWeight="bold"> 
+        Team A ({teamB.players.length})
+      </Text>
       <Box pl = {5}>
         <PlayerList players = {teamB.players}/>
       </Box>
     </>
     :
     <>
-      <Text fontSize="2xl" fontWeight="bold">Players</Text>
+      <Text fontSize="2xl" fontWeight="bold">Players({players.length})</Text>
       <Box pl = {5}>
         <PlayerList players = {players}/>
       </Box>
     </>
     }
-    
-
-    <Button onClick={toggleReady} colorScheme="green"  m={5} mt={10}>Ready</Button>
-    <Button onClick={switchTeams} colorScheme="gray" m={5} mt={10}>Switch Teams</Button>
-    <StartButton hidden={startHidden} onClick={startGame} />
+    <Button onClick={toggleReady} colorScheme="green"  m={5} mt={10}>
+      Ready
+    </Button>
+    <HiddenButton hidden={switchTeamsHidden} onClick={startGame}>
+      Switch Teams
+    </HiddenButton>
+    <HiddenButton hidden={startHidden} onClick={startGame} colorScheme="red">
+      Start Game
+    </HiddenButton>
     
   </Box>;
 
@@ -114,33 +119,49 @@ const PlayerList = (props) => {
   const {players} = props
   const list = [];
   players.forEach(p =>{
-    list.push(<Flex key={p.id}>
-      <Text fontSize="xl" key={p.id} ml={5}>
-        {p.username}
-      </Text>
+    list.push(<Flex key={p.id} >
+      <Flex>
+        <Text 
+          fontSize="xl" 
+          key={p.id} 
+          width = {200} 
+          m={3} 
+          ml={5} 
+          p={3} 
+          pl={5} 
+          pr={5} 
+          backgroundColor="#d5f1f2" 
+          boxShadow="md"
+          rounded={5}
+          align="center"
+        >
+          {p.username}
+        </Text>
+      </Flex>
       <Text ml={1} fontSize="sm">{p.ready ? "[READY]" : "[NOT READY]"}</Text>
     </Flex>)
   })
   return list;
 }
 
-const StartButton = (props) =>{
-  const {hidden, onClick} = props
+const HiddenButton = (props) =>{
+  const {hidden, children, onClick, ...rest} = props
   if(hidden){
     return null
   }else{
     return <>
       <Button 
-        onClick={onClick}
-        colorScheme="green"  
         m={5} 
         mt={10}
+        onClick={onClick}
+        {...rest}
       >
-        Start
+        {children}
       </Button>
     </>
   }
 }
+
 
 const GameSetting = (props) =>{
   const {field, value, onChange, placeholder, width=50} = props;
@@ -156,10 +177,4 @@ const GameSetting = (props) =>{
     />
   </Flex>
 }
-
-const TeamsDescription = (props) =>{
-
-}
-
-
 export default Lobby;
