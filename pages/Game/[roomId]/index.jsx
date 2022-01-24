@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import useStore from '../../../store'
 import Lobby from '../../../components/Lobby'
 import Turn from '../../../components/Turn'
+import TurnTransition from '../../../components/TurnTransition'
+import GameOver from '../../../components/GameOver';
 
 function index() {
   
@@ -27,6 +29,10 @@ function index() {
       return <Lobby/>
     case "TURN":
       return <Turn/>
+    case "TURN_TRANSITION":
+      return <TurnTransition/>
+    case "GAME_OVER":
+      return <GameOver/>
     default:
       return <div>{phase} not implemented</div>
   }
