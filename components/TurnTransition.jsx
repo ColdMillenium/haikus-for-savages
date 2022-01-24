@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import Conditional from './Conditional'
 import {Text ,Button, Box, Flex, Input, Select, Spacer, Center} from '@chakra-ui/react'
 import useStore from '../store'
 
@@ -86,15 +87,14 @@ function TurnTransition() {
 
 const RoleDisplay = props =>{
   const {onClick, role} = props;
-  if(role != ""){
-    return <Flex direction="column" align="center" p={5} backgroundColor="lightgrey" rounded={5} m={3}> 
+  return <Conditional condition={role!=""}>
+    <Flex direction="column" align="center" p={5} backgroundColor="lightgrey" rounded={5} m={3}> 
       <Text fontSize="xl">You are the <strong>{role}</strong></Text>
       <Text fontSize="sm">When you're ready to begin, click ready</Text>
       <Button onClick={onClick}>Ready!</Button>
     </Flex>
-  }else{
-    return null
-  }
+  </Conditional>
+
 }
 
 const ReadyStatuses = props =>{
