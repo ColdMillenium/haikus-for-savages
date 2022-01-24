@@ -50,9 +50,9 @@ function Lobby() {
 
   
   return <Box  p={5}>
-    <Text fontSize="4xl">{hostName}'s Room</Text>
+    <Text fontSize="4xl" fontWeight="bold">{hostName}'s Room</Text>
     <Text>Room ID: {roomId}</Text>
-    <Select value={mode} onChange={onModeChange}>
+    <Select value={mode} onChange={onModeChange} maxW={200}>
       <option value='COOP'>Co-Op (2)</option>
       <option value='ROTATE'>Rotation (3)</option>
       <option value='TEAMS'>Teams (4+)</option>
