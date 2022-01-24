@@ -1,13 +1,13 @@
 import {useEffect, useRef, useState} from 'react';
 import { useRouter } from 'next/router';
-import {Text ,Button, Box, Flex} from '@chakra-ui/react'
+import {Text ,Button, Box, Flex, Input} from '@chakra-ui/react'
 import ModeRules from './ModeRules'
 import useStore from '../store.js'
 
 function Lobby() {
   
   const router = useRouter();
-  const {hostName, players, teamA, teamB, mode, host, partySize} = useStore(store => store.room)
+  const {hostName, players, teamA, teamB, mode, host, partySize, maxTime, maxPlayers, maxRounds} = useStore(store => store.room)
   
   const username = useStore(store => store.username);
   const clientId = useStore(store => store.clientId)
@@ -48,6 +48,9 @@ function Lobby() {
     <Text fontSize="4xl">{hostName}'s Room</Text>
     Room ID: {roomId}
     <ModeRules mode={mode}/>
+    <GameSetting field="Time Per Turn" value={maxTime}/>
+    <GameSetting field="Rounds" value={maxRounds}/>
+    <GameSetting field="Maximum Players" value={maxPlayers}/>
     <Text fontSize="4xl">Team A</Text>
     <Box pl = {5}>
       <PlayerList players = {teamA.players}/>
@@ -95,6 +98,21 @@ const StartButton = (props) =>{
       </Button>
     </>
   }
+}
+
+const GameSetting = (props) =>{
+  const {field, value, onChange, placeholder, width=50} = props;
+  return <Flex m={2} ml={5} align="center" >
+    <Text fontSize="xl" mr={3}>{field}:</Text>
+    <Input 
+      width = {width} 
+      value={value} 
+      fontSize="lg"  
+      size="sm" 
+      placeholder={placeholder} 
+      onChange={onChange}
+    />
+  </Flex>
 }
 
 const TeamsDescription = (props) =>{
