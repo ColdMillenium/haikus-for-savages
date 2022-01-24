@@ -25,7 +25,7 @@ function TurnTransition() {
       setRole("Speaker")
     }else if(punisher && punisher.username == username){
       setRole("Punisher")
-    }else{
+    }else if(mode !="TEAMS"){
       setRole("Audience");
     }
     console.log(audience,speaker,punisher)
