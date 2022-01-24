@@ -62,14 +62,26 @@ function Lobby() {
     <GameSetting field="Time Per Turn" value={maxTime}/>
     <GameSetting field="Rounds" value={maxRounds}/>
     <GameSetting field="Maximum Players" value={maxPlayers}/>
-    <Text fontSize="4xl">Team A</Text>
-    <Box pl = {5}>
-      <PlayerList players = {teamA.players}/>
-    </Box>
-    <Text fontSize="4xl">Team B</Text>
-    <Box pl = {5}>
-      <PlayerList players = {teamB.players}/>
-    </Box>
+    
+    {mode == 'TEAMS'? <>
+      <Text fontSize="2xl" fontWeight="bold">Team A</Text>
+      <Box pl = {5}>
+        <PlayerList players = {teamA.players}/>
+      </Box>
+      <Text fontSize="2xl" fontWeight="bold">Team B</Text>
+      <Box pl = {5}>
+        <PlayerList players = {teamB.players}/>
+      </Box>
+    </>
+    :
+    <>
+      <Text fontSize="2xl" fontWeight="bold">Players</Text>
+      <Box pl = {5}>
+        <PlayerList players = {players}/>
+      </Box>
+    </>
+    }
+    
 
     <Button onClick={toggleReady} colorScheme="green"  m={5} mt={10}>Ready</Button>
     <Button onClick={switchTeams} colorScheme="gray" m={5} mt={10}>Switch Teams</Button>
