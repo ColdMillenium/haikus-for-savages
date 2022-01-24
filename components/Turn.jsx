@@ -4,7 +4,7 @@ import Card from './Card'
 import {Center, Stack, Flex, Button} from '@chakra-ui/react'
 
 function Turn() {
-  const {punisher, speaker, currCard, score} = useStore(store => store.room)
+  const {punisher, speaker, audience, currCard, score} = useStore(store => store.room)
   const clientId = useStore(store => store.clientId);
 
 
