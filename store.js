@@ -85,7 +85,7 @@ const useStore = create((set,get) => ({
     playerRequest(get, "playerReady", {});
   },
   roleReady: () =>{
-
+    playerRequest(get, "roleReady", {});
   },
   switchTeams: () =>{
     playerRequest(get, "switchTeams", {});
