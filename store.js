@@ -16,6 +16,9 @@ const useStore = create((set,get) => ({
   joinRoomError: "",
   room: {},
   roomId: "",
+  clientsTeam: null,
+  clientsRole: "",
+  currTeam: "",
   connect: (username) => set({ username: username}),
   setSocket: (socket) => {
     socket.current = io("http://localhost:8000", {
@@ -60,7 +63,25 @@ const useStore = create((set,get) => ({
 
     socket.current.on("gameStatus", room => {
       console.log(`roomId:${room.id} has update`)
-      set({room, roomId:room.id});
+      let clientsRole = get().clientsRole;
+      let clientsTeam = get().clientsTeam;
+      let currTeam = get().currTeam;
+
+      if(room.inGame){
+        if(room.mode == "TEAMS"){
+          clientsTeam = findClientsTeam( get ,room);
+          currTeam = findCurrTeam(get, room);
+        }
+        clientsRole = findClientsRole( get, room);
+      }
+      
+      set({
+        room, 
+        roomId:room.id, 
+        clientsTeam,
+        clientsRole, 
+        currTeam,
+      });
     })
 
     socket.current.on("testRoom", room => {
@@ -96,6 +117,9 @@ const useStore = create((set,get) => ({
   startGame: () =>{
     playerRequest(get, "startGame", {});
   },
+  startTurn: () =>{
+    playerRequest(get, "startTurn", {});
+  },
   playCard: (pile) =>{
     playerRequest(get, "playCard", pile, `into ${pile}`);
   },
@@ -109,9 +133,7 @@ const playerRequest = (get, event, data,  extra) =>{
 }
 
 const clientRequest = (get, event, data, extra) =>{
-  const socket = get().socket;
-  const username = get().username;
-  const clientId = get().clientId;
+  const {socket, username, clientId} = get();
   let user = `${username}:${clientId}`;
   if(username == ""){
     user = clientId;
@@ -119,5 +141,59 @@ const clientRequest = (get, event, data, extra) =>{
   socket.current.emit(event, data)
   console.log(`[${user}] is requesting to "${event}". ${extra}`)
 }
+
+const findClientsTeam = ( get, room ) =>{
+  const {clientId} = get();
+  const {teamA, teamB} = room
+  let clientTeam;
+  if(teamHasPlayer(teamA, clientId)){
+    clientTeam = "teamA";
+  }else if(teamHasPlayer(teamB, clientId)){
+    clientTeam = "teamB";
+  }else{
+    clientTeam = "Justice"
+  }
+  return clientTeam
+}
+
+const teamHasPlayer = (team, playerId) =>{
+  return team.players.map(p=> p.id).includes(playerId);
+}
+const findCurrTeam = (get, room) =>{
+  //if it has any player id from a team, it must be that team!
+  const {teamA} = room;
+  const teamAPlayer = teamA.players[0].id;
+  let currTeam;
+  if(teamHasPlayer(room.currTeam, teamAPlayer)){
+    currTeam = "teamA";
+  }else{
+    currTeam = "teamB"
+  }
+  return currTeam;
+}
+
+const findClientsRole = (get, room) =>{
+  const {speaker, audience, punisher, mode} = room;
+  const clientId = get().clientId
+  const clientsTeam = findClientsTeam(get,room);
+  const currTeam = findCurrTeam(get,room);
+  const isYourTeamsTurn = clientsTeam == currTeam
+
+  let role ="";
+  if(clientId == speaker.id){
+    role ="Speaker";
+  }else if(punisher && punisher.id == clientId){
+    role ="Punisher";
+  }else if(
+    audience && audience.id == clientId || 
+    mode =="TEAMS" && isYourTeamsTurn
+  ){
+    role ="Audience";
+  }else{
+    role = "";
+  }
+  return role;
+}
+
 
 export default useStore;
