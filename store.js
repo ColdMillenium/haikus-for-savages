@@ -16,6 +16,7 @@ const useStore = create((set,get) => ({
   joinRoomError: "",
   room: {},
   roomId: "",
+  connect: (username) => set({ username: username}),
   setSocket: (socket) => {
     socket.current = io("http://localhost:8000", {
       //socket.current = io("https://hfs-server.herokuapp.com", {
@@ -24,6 +25,12 @@ const useStore = create((set,get) => ({
         auth: "123"
       }
     });
+    set({socket:socket});
+
+
+    // ---------------------------- ON SEVER EVENTS ---------------------------------------
+
+
     socket.current.on("socketId", (id) => {
       console.log("my id is : " + id);
       set({
@@ -31,84 +38,86 @@ const useStore = create((set,get) => ({
         clientId: id
       });
     })
+
     socket.current.on("newRoom", roomId => {
       console.log(`roomId:${roomId} has been created in server`)
       get().joinRoom(roomId)
     });
+
     // socket.current.on("joinedRoom", roomId => {
     //   console.log("You are now in room" + roomId);
     //   set({roomId});
     // }),
+
     socket.current.on("joinRoomError", joinRoomError => set({joinRoomError}))
+
     socket.current.on("playerData", playerData => {
       const {players, hostName, teamA, teamB} = playerData;
       console.log("Update w/ Room Data")
       console.log(playerData);
       set({players, hostName, teamA, teamB});
     }),
+
     socket.current.on("gameStatus", room => {
       console.log(`roomId:${room.id} has update`)
       set({room, roomId:room.id});
     })
+
     socket.current.on("testRoom", room => {
       console.log(room);
     })
-    set({socket:socket});
+
+    
   },
-  connect: (username) => set({ username: username}),
+
+
+  // ---------------------------- CLIENT REQUESTS TO SERVER ---------------------------------------
+
+
   makeRoom: () =>{
-    const socket = get().socket;
-    const username = get().username;
-    const clientId = get().clientId;
-    socket.current.emit("makeRoom");
-    console.log(`${username}: ${clientId} is requesting to make a room`);
+    clientRequest(get, "makeRoom", {});
   },
   joinRoom: (roomId) => {
-    const socket = get().socket;
-    const username = get().username;
-    const clientId = get().clientId;
-    socket.current.emit("joinRoom", {
-      username,
-      roomId,
-    })
-    console.log(`${username}: ${clientId} is requesting to join a room ${roomId}`)
+     const username = get().username;
+    clientRequest(get, "joinRoom", {username, roomId}, ` ${roomId}`);
   },
   playerReady: () =>{
-    const socket = get().socket;
-    const username = get().username;
-    const clientId = get().clientId;
-    const roomId = get().roomId;
-    socket.current.emit("playerReady")
-    console.log(`${username}: ${clientId} is requesting to ready up for game ${roomId}`)
+    playerRequest(get, "playerReady", {});
+  },
+  roleReady: () =>{
+
   },
   switchTeams: () =>{
-    const socket = get().socket;
-    const username = get().username;
-    const clientId = get().clientId;
-    const roomId = get().roomId;
-    socket.current.emit("switchTeams")
-    console.log(`${username}: ${clientId} is requesting to switch teams for game ${roomId}`)
+    playerRequest(get, "switchTeams", {});
   },
   setMode: (mode) =>{
-    const socket = get().socket;
-    const username = get().username;
-    const clientId = get().clientId;
-    const roomId = get().roomId;
-    socket.current.emit("setMode", mode)
-    console.log(`${username}: ${clientId} is requesting to set mode to ${mode} in ${roomId}`)
+    playerRequest(get, "setMode", mode, `to ${mode}`);
   },
   startGame: () =>{
-    const socket = get().socket;
-    const username = get().username;
-    const clientId = get().clientId;
-    const roomId = get().roomId;
-    socket.current.emit("startGame")
-    console.log(`${username}: ${clientId} is requesting to start game for room ${roomId}`)
+    playerRequest(get, "startGame", {});
   },
   playCard: (pile) =>{
-    socket.current.emit("playCard", pile);
-    console.log("client is playing card into " + pile + " pile");
+    playerRequest(get, "playCard", pile, `into ${pile}`);
   },
 }))
+
+// ---------------------------- Heler Functions ---------------------------------------
+const playerRequest = (get, event, data,  extra) =>{
+  const roomId = get().roomId;
+  extra = extra + `[Room ${roomId}]`;
+  clientRequest(get, event, data, ` in [Room ${roomId}]`)
+}
+
+const clientRequest = (get, event, data, extra) =>{
+  const socket = get().socket;
+  const username = get().username;
+  const clientId = get().clientId;
+  let user = `${username}:${clientId}`;
+  if(username == ""){
+    user = clientId;
+  }
+  socket.current.emit(event, data)
+  console.log(`[${user}] is requesting to "${event}". ${extra}`)
+}
 
 export default useStore;
