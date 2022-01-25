@@ -5,7 +5,7 @@ import {Center, Stack, Flex, Button, Text} from '@chakra-ui/react'
 import Conditional from './Conditional';
 
 function Turn() {
-  const {punisher, speaker, audience, currCard, score, timerOn} = useStore(store => store.room)
+  const {currCard, score, timerOn, playedCards, timeLeft, timeStart} = useStore(store => store.room)
   const {clientId, clientsRole ,room, playCard} = useStore(store => store);
 
   const hideCard = () =>{
@@ -16,15 +16,15 @@ function Turn() {
     
     <Flex direction="column" align="center" h="500px">
       <Text fontSize="4xl" fontWeight="bold">{clientsRole}</Text>
-      <Timer timerOn={true} timeLeft={5*1000 + 1000} timeStart={Date.now()}/>
+      <Timer timerOn={true} timeLeft={timeLeft} timeStart={timeStart}/>
       <Center h="100vh" w="100%">
         <Card hidden={hideCard()} card={currCard}/>
       </Center>
       <Conditional condition={clientsRole == "Speaker"}>
         <Flex>
-          <Button onClick={() => playCard("OOPS")}m={2} colorScheme="red">Oops -1</Button>
-          <Button onClick={() => playCard("GOOD")} m={2} colorScheme="yellow">Easy +1</Button>
-          <Button onClick={() => playCard("GREAT")} m={2}colorScheme="green">Great +1</Button>
+          <PileButton type="OOPS" score={playedCards.oops.length} onClick={playCard}/>
+          <PileButton type="GOOD" score={playedCards.good.length} onClick={playCard}/>
+          <PileButton type="GREAT" score={playedCards.great.length} onClick={playCard}/>
         </Flex>
       </Conditional>
       <Conditional condition={clientsRole == "Audience"}>
@@ -33,6 +33,21 @@ function Turn() {
     </Flex>
   </Center>
 
+}
+
+const PileButton = ({type, score, onClick}) =>{
+  const colorScheme = {OOPS:'red', GOOD:'yellow' ,GREAT:'green'};
+  const text = {OOPS:'Oops -1', GOOD:'Good +1' ,GREAT:'Great +3'}
+  return <Flex direction="column" align="center">
+    <Button 
+      onClick={() => onClick(type)}
+      m={2} 
+      colorScheme= {colorScheme[type]}
+    >
+      {text[type]}
+    </Button>
+    <Text fontSize="2xl">{score}</Text>
+  </Flex>
 }
 
 const Timer = (props) => {
