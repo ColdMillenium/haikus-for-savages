@@ -46,10 +46,10 @@ const useStore = create((set,get) => ({
 
     socket.current.on("newRoom", roomId => {
       console.log(`roomId:${roomId} has been created in server`)
-      get().joinRoom(roomId)
+      playerRequest(get, ACTION.JOIN_ROOM, {username: get().username, roomId});
     });
 
-    socket.current.on("joinRoomError", joinRoomError => set({joinRoomError}))
+    // socket.current.on("joinRoomError", joinRoomError => set({joinRoomError}))
 
     socket.current.on("playerData", playerData => {
       const {players, hostName, teamA, teamB} = playerData;
