@@ -123,6 +123,15 @@ const useStore = create((set,get) => ({
   playCard: (pile) =>{
     playerRequest(get, "playCard", pile, `into ${pile}`);
   },
+  endTurn: () =>{
+    playerRequest(get, "endTurn", {});
+  },
+  acceptPunishment: () =>{
+    playerRequest(get, "acceptPunishment", {});
+  },
+  rejectPunishment: () =>{
+    playerRequest(get, "rejectPunishment", {});
+  },
 }))
 
 // ---------------------------- Heler Functions ---------------------------------------

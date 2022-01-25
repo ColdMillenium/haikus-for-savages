@@ -6,7 +6,7 @@ import Conditional from './Conditional';
 
 function Turn() {
   const {currCard, score, timerOn, playedCards, timeLeft, timeStart} = useStore(store => store.room)
-  const {clientId, clientsRole ,room, playCard} = useStore(store => store);
+  const {clientId, clientsRole ,room, playCard, endTurn} = useStore(store => store);
   const [turnOver, setTurnOver] = useState(false);
   const hideCard = () =>{
     return clientsRole != "Punisher" && clientsRole!="Speaker"
@@ -50,8 +50,8 @@ function Turn() {
       <Conditional condition={clientsRole == "Audience"}>
         <Text> Listen carefully to the Speaker!</Text>
       </Conditional>
-      <Conditional condition={turnOver}>
-        <Button h="150" mt={3} size="lg">End Turn</Button>
+      <Conditional condition={turnOver && clientsRole == "Speaker"}>
+        <Button onClick={endTurn} h="150" mt={3} size="lg">End Turn</Button>
       </Conditional>
       
     </Flex>
@@ -80,15 +80,16 @@ const Timer = (props) => {
   const [time, setTime] = useState(timeLeft/1000);
   const [timerOn, setTimerOn] = useState(props.timerOn);
   useEffect(() => {
-    if(Date.now() - timeStart > timeLeft){
-      setTurnOver(true);
-    }
-    const interval;
-    console.log("yo")
-    console.log("timerOn", timerOn)
+    
+    let interval;
+    console.log("yo");
+    console.log("timerOn", timerOn);
     if(timerOn){
       console.log("hey")
       interval = setInterval(function(){
+        if(Date.now() - timeStart > timeLeft){
+          setTurnOver(true);
+        }
         if(time <= 0){
           
           setTimerOn(false);
