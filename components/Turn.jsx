@@ -5,7 +5,7 @@ import {Center, Stack, Flex, Button, Text} from '@chakra-ui/react'
 import Conditional from './Conditional';
 
 function Turn() {
-  const {punisher, speaker, audience, currCard, score} = useStore(store => store.room)
+  const {punisher, speaker, audience, currCard, score, timerOn} = useStore(store => store.room)
   const {clientId, clientsRole ,room} = useStore(store => store);
 
   const showCard = () =>{
@@ -41,11 +41,44 @@ function Turn() {
       </Conditional>
       
     </Stack>
-    
+    <Timer timerOn={true} timeLeft={5*1000 + 1000} timeStart={Date.now()}/>
 
   </Center>
       
   ;
 }
 
+const Timer = (props) => {
+  const {timeLeft, timeStart} = props
+  const [time, setTime] = useState(timeLeft/1000);
+  const [timerOn, setTimerOn] = useState(props.timerOn);
+  useEffect(() => {
+    const interval;
+    console.log("yo")
+    console.log("timerOn", timerOn)
+    if(timerOn){
+      console.log("hey")
+      interval = setInterval(function(){
+        if(time <= 0){
+          setTimerOn(false);
+          setTime(0);
+        }else{
+          setTime(Math.floor((timeLeft - (Date.now() - timeStart))/1000));
+        }
+      },200)
+      
+    }
+    return () =>{
+      clearInterval(interval);
+    }
+    
+  },[timerOn])
+
+  if(time > 0){
+    return <div>{ Math.floor(time/60) + ":" + (time%60 < 10? "0":"") + time%60}</div>
+  }else{
+    return <div>0:00</div>
+  }
+  
+}
 export default Turn;
