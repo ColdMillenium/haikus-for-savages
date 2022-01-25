@@ -5,7 +5,7 @@ import {Center, Stack, Flex, Button, Text} from '@chakra-ui/react'
 import Conditional from './Conditional';
 
 function Turn() {
-  const {currCard, score, timerOn, playedCards, timeLeft, timeStart} = useStore(store => store.room)
+  const {currCard, score, timerOn, playedCards, timeLeft, timeStart, roundNum, turnNum} = useStore(store => store.room)
   const {clientId, clientsRole ,room, playCard, endTurn} = useStore(store => store);
   const [turnOver, setTurnOver] = useState(false);
   const hideCard = () =>{
@@ -53,7 +53,8 @@ function Turn() {
       <Conditional condition={turnOver && clientsRole == "Speaker"}>
         <Button onClick={endTurn} h="150" mt={3} size="lg">End Turn</Button>
       </Conditional>
-      
+      <div>Round#:{roundNum}</div>
+      <div>Turn#:{turnNum}</div>
     </Flex>
   </Center>
 
