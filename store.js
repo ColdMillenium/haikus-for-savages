@@ -175,10 +175,7 @@ const findCurrTeam = (get, room) =>{
 const findClientsRole = (get, room) =>{
   const {speaker, audience, punisher, mode} = room;
   const clientId = get().clientId
-  const clientsTeam = findClientsTeam(get,room);
-  const currTeam = findCurrTeam(get,room);
-  const isYourTeamsTurn = clientsTeam == currTeam
-
+  
   let role ="";
   if(clientId == speaker.id){
     role ="Speaker";
@@ -186,7 +183,7 @@ const findClientsRole = (get, room) =>{
     role ="Punisher";
   }else if(
     audience && audience.id == clientId || 
-    mode =="TEAMS" && isYourTeamsTurn
+    mode =="TEAMS" && findClientsTeam(get,room) == findCurrTeam(get,room)
   ){
     role ="Audience";
   }else{
