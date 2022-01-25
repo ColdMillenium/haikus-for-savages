@@ -23,10 +23,10 @@ function Lobby() {
   
   const username = useStore(store => store.username);
   const clientId = useStore(store => store.clientId)
-  const toggleReady = useStore(store => store.playerReady);
-  const switchTeams = useStore(store => store.switchTeams);
-  const startGame = useStore(store => store.startGame)
-  const setMode = useStore(store=> store.setMode);
+  const toggleReady = useStore(store => () =>store.playerAction(store.ACTION.PLAYER_READY))
+  const switchTeams = useStore(store => () =>store.playerAction(store.ACTION.SWITCH_TEAMS))
+  const startGame = useStore(store => () =>store.playerAction(store.ACTION.START_GAME))
+  const setMode = useStore(store => (mode) =>store.playerAction(store.ACTION.SET_MODE, mode))
   const { roomId } = router.query;
   const [startHidden, setStartHidden] = useState(true);
   const [switchTeamsHidden, setSwitchTeamsHidden] = useState(true);

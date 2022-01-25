@@ -7,12 +7,9 @@ function JoinGame() {
   const router = useRouter();
   const { query } = useRouter();
   const defaultRoomId = query.roomId;
+  const {username, connected, roomId, joinRoomError} = useStore(state => state);
+  const joinRoom = useStore(store => (data) =>store.playerAction(store.ACTION.JOIN_ROOM, data))
   const connect = useStore(state => state.connect)
-  const username = useStore(state => state.username)
-  const connected = useStore(state => state.connected);
-  const joinRoom = useStore(state => state.joinRoom);
-  const roomId = useStore(state => state.roomId)
-  const joinRoomError = useStore(state => state.joinRoomError);
   const [needToJoin, setNeedToJoin] = useState(false);
   const [roomIdInput, setRoomIdInput] = useState("")
   const [name, setName] = useState('')
@@ -23,10 +20,11 @@ function JoinGame() {
 
   useEffect(()=>{
     if(connected && needToJoin){
-      joinRoom(roomIdInput);
+      console.log("need to join", {roomIdInput, username});
+      joinRoom({roomId: roomIdInput, username});
       setNeedToJoin(false);
     }
-  }, [connected, needToJoin, roomIdInput])
+  }, [connected, needToJoin, roomIdInput, username])
 
   useEffect(()=>{
     if(joinRoomError == ""){

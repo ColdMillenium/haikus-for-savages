@@ -1,8 +1,10 @@
 import create from 'zustand'
 import {useEffect, useRef} from 'react';
 import io from "socket.io-client";
+import ACTION from './action';
 
 const useStore = create((set,get) => ({
+  ACTION,
   username: "",
   clientId: "",
   roomId: "",
@@ -47,11 +49,6 @@ const useStore = create((set,get) => ({
       get().joinRoom(roomId)
     });
 
-    // socket.current.on("joinedRoom", roomId => {
-    //   console.log("You are now in room" + roomId);
-    //   set({roomId});
-    // }),
-
     socket.current.on("joinRoomError", joinRoomError => set({joinRoomError}))
 
     socket.current.on("playerData", playerData => {
@@ -90,55 +87,15 @@ const useStore = create((set,get) => ({
 
     
   },
-
-
-  // ---------------------------- CLIENT REQUESTS TO SERVER ---------------------------------------
-
-
-  makeRoom: () =>{
-    clientRequest(get, "makeRoom", {});
-  },
-  joinRoom: (roomId) => {
-     const username = get().username;
-    clientRequest(get, "joinRoom", {username, roomId}, ` ${roomId}`);
-  },
-  playerReady: () =>{
-    playerRequest(get, "playerReady", {});
-  },
-  roleReady: () =>{
-    playerRequest(get, "roleReady", {});
-  },
-  switchTeams: () =>{
-    playerRequest(get, "switchTeams", {});
-  },
-  setMode: (mode) =>{
-    playerRequest(get, "setMode", mode, `to ${mode}`);
-  },
-  startGame: () =>{
-    playerRequest(get, "startGame", {});
-  },
-  startTurn: () =>{
-    playerRequest(get, "startTurn", {});
-  },
-  playCard: (pile) =>{
-    playerRequest(get, "playCard", pile, `into ${pile}`);
-  },
-  endTurn: () =>{
-    playerRequest(get, "endTurn", {});
-  },
-  acceptPunishment: () =>{
-    playerRequest(get, "acceptPunishment", {});
-  },
-  rejectPunishment: () =>{
-    playerRequest(get, "rejectPunishment", {});
-  },
+  playerAction: (event, data) => playerRequest(get, event, data),
 }))
 
 // ---------------------------- Heler Functions ---------------------------------------
 const playerRequest = (get, event, data,  extra) =>{
+  console.log("playerRequest Data=>", data);
   const roomId = get().roomId;
   extra = extra + `[Room ${roomId}]`;
-  clientRequest(get, event, data, ` in [Room ${roomId}]`)
+  clientRequest(get, event, data, ` ${data} in [Room ${roomId}]`)
 }
 
 const clientRequest = (get, event, data, extra) =>{

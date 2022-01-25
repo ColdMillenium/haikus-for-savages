@@ -11,12 +11,12 @@ function TurnTransition() {
     mode,
   } = useStore(store => store.room)
   const {
-    roleReady,
-    startTurn,
     currTeam,
     clientsRole,
     clientsTeam,
   } = useStore(store => store);
+  const roleReady = useStore(store => () =>store.playerAction(store.ACTION.ROLE_READY))
+  const startTurn = useStore(store => () =>store.playerAction(store.ACTION.START_TURN))
   const [isYourTeamTurn, setIsYourTeamTurn] = useState(false);
   const [readyToStart, setReadyToStart] = useState(false);
 

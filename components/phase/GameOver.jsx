@@ -8,6 +8,7 @@ const imgUrl = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/aa5f34
 function GameOver() {
   const {restart, mode, score, players, teamA, teamB} = useStore(store => store.room);
   const {clientsTeam} = useStore(store => store);
+  const toLobby = useStore(store => () =>store.playerAction(store.ACTION.TO_LOBBY))
   return <Center h="100vh" w="100vh">
     <Flex direction="column" align="center" justify="center">
       <Image src={imgUrl} alt='Funny Game Over Image' />
@@ -24,7 +25,7 @@ function GameOver() {
         <Button m={3}>Restart</Button>
       </Show>
       <Show when={true}>
-        <Button m={3}>Back to Lobby</Button>
+        <Button onClick={toLobby} m={3}>Back to Lobby</Button>
       </Show>
     </Flex>
   </Center>;

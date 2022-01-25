@@ -5,10 +5,9 @@ import {useRouter} from 'next/router'
 
 function CreateGame() {
   const router = useRouter();
+  const {roomId, connected} = useStore(state => state)
   const connect = useStore(state => state.connect)
-  const connected = useStore(state => state.connected)
-  const makeRoom = useStore(state => state.makeRoom);
-  const roomId = useStore(state => state.roomId);
+  const makeRoom = useStore(store => () =>store.playerAction(store.ACTION.MAKE_ROOM))
   const [newRoom, setNewRoom] = useState(false);
   const [name, setName] = useState('')
 
