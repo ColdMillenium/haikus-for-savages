@@ -6,46 +6,33 @@ import Conditional from './Conditional';
 
 function Turn() {
   const {punisher, speaker, audience, currCard, score, timerOn} = useStore(store => store.room)
-  const {clientId, clientsRole ,room} = useStore(store => store);
+  const {clientId, clientsRole ,room, playCard} = useStore(store => store);
 
-  const showCard = () =>{
-    if(clientsRole == "Speaker"){
-      return <Center h="100vh" w="100%">
-      <Card hidden={false} easy="Dance" hard ="Belly Dance"/>
-      </Center>
-      
-    }else if(clientsRole == "Punisher"){
-      return <Center h="100vh" w="100%" >
-        <Stack></Stack>
-      <Card hidden={false} easy="Dance" hard ="Belly dance"/>
-      </Center>
-    }else{
-      return <Center h="100vh" w="100%">
-      <Card hidden={true} easy="Dance" hard ="Belly dance"/>
-      </Center>
-    }
+  const hideCard = () =>{
+    return clientsRole != "Punisher" && clientsRole!="Speaker"
   }
   console.log(room);
   return <Center h="100vh" w="100%">
-    <Stack h="500px">
-      {showCard()}
+    
+    <Flex direction="column" align="center" h="500px">
+      <Text fontSize="4xl" fontWeight="bold">{clientsRole}</Text>
+      <Timer timerOn={true} timeLeft={5*1000 + 1000} timeStart={Date.now()}/>
+      <Center h="100vh" w="100%">
+        <Card hidden={hideCard()} card={currCard}/>
+      </Center>
       <Conditional condition={clientsRole == "Speaker"}>
         <Flex>
-          <Button m={2} colorScheme="red">Oops -1</Button>
-          <Button m={2} colorScheme="yellow">Easy +1</Button>
-          <Button m={2}colorScheme="green">Great +1</Button>
+          <Button onClick={() => playCard("OOPS")}m={2} colorScheme="red">Oops -1</Button>
+          <Button onClick={() => playCard("GOOD")} m={2} colorScheme="yellow">Easy +1</Button>
+          <Button onClick={() => playCard("GREAT")} m={2}colorScheme="green">Great +1</Button>
         </Flex>
       </Conditional>
       <Conditional condition={clientsRole == "Audience"}>
         <Text> Listen carefully to the Speaker!</Text>
       </Conditional>
-      
-    </Stack>
-    <Timer timerOn={true} timeLeft={5*1000 + 1000} timeStart={Date.now()}/>
-
+    </Flex>
   </Center>
-      
-  ;
+
 }
 
 const Timer = (props) => {
@@ -74,11 +61,14 @@ const Timer = (props) => {
     
   },[timerOn])
 
-  if(time > 0){
-    return <div>{ Math.floor(time/60) + ":" + (time%60 < 10? "0":"") + time%60}</div>
-  }else{
-    return <div>0:00</div>
+  const display = () => {
+    if(time >0){
+      return Math.floor(time/60) + ":" + (time%60 < 10? "0":"") + time%60;
+    }else{
+      return "0:00";
+    }
   }
-  
+
+  return <Text fontSize="3xl">{display()}</Text>
 }
 export default Turn;
