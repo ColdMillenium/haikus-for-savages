@@ -3,25 +3,23 @@ import {Text ,Button, Box, Flex} from '@chakra-ui/react'
 
 function ModeRules(props) {
   const {mode} = props;
-  let title = ""
-  let description;
-  if(mode == "COOP"){
-    title = "2 Player Mode: Co-op"
-    description = <CoopDescription/>
-  }else if(mode == "ROTATE"){
-    title = "3 Player Mode: Rotation"
-    description = <RotationDescription/>
-  }else{
-    title = "4+ Player Mode: Teams"
-    description = <TeamDescription/>
+  const title = {
+    COOP:"2 Player Mode: Co-op",
+    ROTATE:"3 Player Mode: Rotation",
+    TEAMS: "4+ Player Mode: Teams"
   }
+  const description = {
+    COOP:<CoopDescription/>,
+    ROTATE: <RotationDescription/>, 
+    TEAMS: <TeamDescription/>
+  }
+
   return <Box>
-    <Text fontSize="3xl" fontWeight="bold"><bold>{title}</bold></Text>
+    <Text fontSize="3xl" fontWeight="bold"><bold>{title[mode]}</bold></Text>
     <RulesContainer>
-      {description}
+      {description[mode]}
     </RulesContainer>
   </Box>
-  return <div></div>;
 }
 const RulesContainer = (props) =>{
   return <Box p={5} maxW ={700}>{props.children}</Box>

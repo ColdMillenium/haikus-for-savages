@@ -1,8 +1,8 @@
 import React , {useEffect, useState}from 'react';
-import useStore from '../store';
-import Card from './Card'
+import useStore from '../../store';
+import Card from '../Card'
 import {Center, Stack, Flex, Button, Text} from '@chakra-ui/react'
-import Conditional from './Conditional';
+import {Show} from '../Conditional';
 
 function Turn() {
   const {currCard, score, timerOn, playedCards, timeLeft, timeStart, roundNum, turnNum} = useStore(store => store.room)
@@ -25,7 +25,7 @@ function Turn() {
       <Center h="100vh" w="100%">
         <Card hidden={hideCard()} card={currCard}/>
       </Center>
-      <Conditional condition={clientsRole == "Speaker"}>
+      <Show when={clientsRole == "Speaker"}>
         <Flex>
           <PileButton 
             disabled={turnOver}
@@ -46,13 +46,13 @@ function Turn() {
             onClick={playCard}
           />
         </Flex>
-      </Conditional>
-      <Conditional condition={clientsRole == "Audience"}>
+      </Show>
+      <Show when={clientsRole == "Audience"}>
         <Text> Listen carefully to the Speaker!</Text>
-      </Conditional>
-      <Conditional condition={turnOver && clientsRole == "Speaker"}>
+      </Show>
+      <Show when={turnOver && clientsRole == "Speaker"}>
         <Button onClick={endTurn} h="150" mt={3} size="lg">End Turn</Button>
-      </Conditional>
+      </Show>
       <div>Round#:{roundNum}</div>
       <div>Turn#:{turnNum}</div>
     </Flex>

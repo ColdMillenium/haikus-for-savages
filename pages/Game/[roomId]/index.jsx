@@ -1,10 +1,10 @@
 import {useEffect, useRef} from 'react';
 import { useRouter } from 'next/router';
 import useStore from '../../../store'
-import Lobby from '../../../components/Lobby'
-import Turn from '../../../components/Turn'
-import TurnTransition from '../../../components/TurnTransition'
-import GameOver from '../../../components/GameOver';
+import Lobby from '../../../components/phase/Lobby'
+import Turn from '../../../components/phase/Turn'
+import TurnTransition from '../../../components/phase/TurnTransition'
+import GameOver from '../../../components/phase/GameOver';
 
 function index() {
   

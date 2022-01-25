@@ -1,8 +1,9 @@
 import {useEffect, useRef, useState} from 'react';
 import { useRouter } from 'next/router';
 import {Text ,Button, Box, Flex, Input, Select, Spacer} from '@chakra-ui/react'
-import ModeRules from './ModeRules'
-import useStore from '../store.js'
+import ModeRules from '../ModeRules'
+import useStore from '../../store.js'
+import { Hide, Show } from '../Conditional';
 
 function Lobby() {
   
@@ -55,7 +56,7 @@ function Lobby() {
   const copyRoomId = () =>{
     navigator.clipboard.writeText(roomId);
   }
-
+  console.log("room Teams", teamA, teamB);
   return <Box  p={5}>
     <Flex align="center">
       <Text fontSize="4xl" fontWeight="bold">{hostName}'s Room</Text> 
@@ -79,28 +80,13 @@ function Lobby() {
     <GameSetting field="Time Per Turn" value={maxTime}/>
     <GameSetting field="Rounds" value={maxRounds}/>
     <GameSetting field="Maximum Players" value={maxPlayers}/>
-    {mode == 'TEAMS'? <>
-      <Text fontSize="2xl" fontWeight="bold">
-        Team A ({teamA.players.length})
-      </Text>
-      <Box pl = {5}>
-        <PlayerList players = {teamA.players}/>
-      </Box>
-      <Text fontSize="2xl" fontWeight="bold"> 
-        Team A ({teamB.players.length})
-      </Text>
-      <Box pl = {5}>
-        <PlayerList players = {teamB.players}/>
-      </Box>
-    </>
-    :
-    <>
-      <Text fontSize="2xl" fontWeight="bold">Players({players.length})</Text>
-      <Box pl = {5}>
-        <PlayerList players = {players}/>
-      </Box>
-    </>
-    }
+    <Show when={mode == 'TEAMS'}>
+      <PlayerList title="Team A" players={teamA.players}/>
+      <PlayerList title="Team B" players={teamB.players}/>
+    </Show>
+    <Show when={mode != "TEAMS"}>
+      <PlayerList title="Players" players={players}/>
+    </Show>
     <Button onClick={toggleReady} colorScheme="green"  m={5} mt={10}>
       Ready
     </Button>
@@ -112,11 +98,10 @@ function Lobby() {
     </HiddenButton>
     
   </Box>;
-
 }
 
-const PlayerList = (props) => {
-  const {players} = props
+const PlayerList = ({players, title}) => {
+  console.log(title,players)
   const list = [];
   players.forEach(p =>{
     list.push(<Flex key={p.id} >
@@ -141,27 +126,32 @@ const PlayerList = (props) => {
       <Text ml={1} fontSize="sm">{p.ready ? "[READY]" : "[NOT READY]"}</Text>
     </Flex>)
   })
-  return list;
+  return <>
+    <Text fontSize="2xl" fontWeight="bold">
+      {title} ({players.length})
+      </Text>
+    <Box pl = {5}>
+      {list}
+    </Box>
+  </>
 }
 
 const HiddenButton = (props) =>{
   const {hidden, children, onClick, ...rest} = props
-  if(hidden){
-    return null
-  }else{
     return <>
-      <Button 
-        m={5} 
-        mt={10}
-        onClick={onClick}
-        {...rest}
-      >
-        {children}
-      </Button>
+      <Hide when={hidden}>
+        <Button 
+          m={5} 
+          mt={10}
+          onClick={onClick}
+          {...rest}
+        >
+          {children}
+        </Button>
+      </Hide>
     </>
-  }
+  
 }
-
 
 const GameSetting = (props) =>{
   const {field, value, onChange, placeholder, width=50} = props;
