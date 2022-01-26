@@ -4,6 +4,7 @@ import {Text ,Button, Box, Flex, Input, Select, Spacer} from '@chakra-ui/react'
 import ModeRules from '../ModeRules'
 import useStore from '../../store.js'
 import { Hide, Show } from '../Conditional';
+import PlayerList from '../PlayerList';
 
 function Lobby() {
   
@@ -20,9 +21,8 @@ function Lobby() {
     maxPlayers, 
     maxRounds
   } = useStore(store => store.room)
-  
-  const username = useStore(store => store.username);
-  const clientId = useStore(store => store.clientId)
+
+  const {clientId, theme} = useStore(store => store)
   const toggleReady = useStore(store => () =>store.playerAction(store.ACTION.PLAYER_READY))
   const switchTeams = useStore(store => () =>store.playerAction(store.ACTION.SWITCH_TEAMS))
   const startGame = useStore(store => () =>store.playerAction(store.ACTION.START_GAME))
@@ -81,11 +81,21 @@ function Lobby() {
     <GameSetting field="Rounds" value={maxRounds}/>
     <GameSetting field="Maximum Players" value={maxPlayers}/>
     <Show when={mode == 'TEAMS'}>
-      <PlayerList title="Team A" players={teamA.players}/>
-      <PlayerList title="Team B" players={teamB.players}/>
+      <PlayerList 
+        title="Team A" 
+        players={teamA.players} 
+        backgroundColor={theme.teamA.primary}
+        color={theme.teamA.secondary}
+      />
+      <PlayerList 
+        title="Team B" 
+        players={teamB.players} 
+        backgroundColor={theme.teamB.primary}
+        color={theme.teamB.secondary}
+      />
     </Show>
     <Show when={mode != "TEAMS"}>
-      <PlayerList title="Players" players={players}/>
+      <PlayerList title="Players" players={players} />
     </Show>
     <Button onClick={toggleReady} colorScheme="green"  m={5} mt={10}>
       Ready
@@ -100,41 +110,7 @@ function Lobby() {
   </Box>;
 }
 
-const PlayerList = ({players, title}) => {
-  console.log(title,players)
-  const list = [];
-  players.forEach(p =>{
-    list.push(<Flex key={p.id} >
-      <Flex>
-        <Text 
-          fontSize="xl" 
-          key={p.id} 
-          width = {200} 
-          m={3} 
-          ml={5} 
-          p={3} 
-          pl={5} 
-          pr={5} 
-          backgroundColor="#d5f1f2" 
-          boxShadow="md"
-          rounded={5}
-          align="center"
-        >
-          {p.username}
-        </Text>
-      </Flex>
-      <Text ml={1} fontSize="sm">{p.ready ? "[READY]" : "[NOT READY]"}</Text>
-    </Flex>)
-  })
-  return <>
-    <Text fontSize="2xl" fontWeight="bold">
-      {title} ({players.length})
-      </Text>
-    <Box pl = {5}>
-      {list}
-    </Box>
-  </>
-}
+
 
 const HiddenButton = (props) =>{
   const {hidden, children, onClick, ...rest} = props

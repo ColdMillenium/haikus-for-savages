@@ -21,6 +21,25 @@ const useStore = create((set,get) => ({
   clientsTeam: null,
   clientsRole: "",
   currTeam: "",
+  theme:{
+    teamA:{
+      primary: "#1832f4",
+      secondary:"white"
+    },
+    teamB:{
+      primary: "#f41c18",
+      secondary:"white"
+    }, 
+    default:{
+      primary: "0d1935",
+      secondary:"eaedf2"
+    },
+    status:{
+      ready: "#08d319",
+      notReady: "f40c00",
+      error:"f40c00"
+    },
+  },
   connect: (username) => set({ username: username}),
   setSocket: (socket) => {
     socket.current = io("http://localhost:8000", {
