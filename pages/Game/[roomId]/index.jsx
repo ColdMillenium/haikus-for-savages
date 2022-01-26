@@ -5,6 +5,7 @@ import Lobby from '../../../components/phase/Lobby'
 import Turn from '../../../components/phase/Turn'
 import TurnTransition from '../../../components/phase/TurnTransition'
 import GameOver from '../../../components/phase/GameOver';
+import GameLayout from '../../../components/layouts/GameLayout'
 
 function index() {
   
@@ -24,20 +25,14 @@ function index() {
       }
     }
   }, [connected, username, players, roomId])
-  switch(phase){
-    case "LOBBY":
-      return <Lobby/>
-    case "TURN":
-      return <Turn/>
-    case "TURN_TRANSITION":
-      return <TurnTransition/>
-    case "GAME_OVER":
-      return <GameOver/>
-    default:
-      return <div>{phase} not implemented</div>
-  }
-  return <Lobby/>;
 
+  const getPhase = {
+    "LOBBY":<Lobby/>,
+    "TURN" :<Turn/>,
+    "TURN_TRANSITION":<TurnTransition/>,
+    "GAME_OVER":<GameOver/>
+  }
+  return <GameLayout>{getPhase[phase]}</GameLayout>
 }
 
 export default index;
