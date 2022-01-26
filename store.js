@@ -21,6 +21,7 @@ const useStore = create((set,get) => ({
   clientsTeam: null,
   clientsRole: "",
   currTeam: "",
+  gameLogOpen: false,
   theme:{
     teamA:{
       primary: "#1832f4",
@@ -103,10 +104,9 @@ const useStore = create((set,get) => ({
     socket.current.on("testRoom", room => {
       console.log(room);
     })
-
-    
   },
   playerAction: (event, data) => playerRequest(get, event, data),
+  toggleGameLog: () => {set({gameLogOpen:!get().gameLogOpen})}
 }))
 
 // ---------------------------- Heler Functions ---------------------------------------

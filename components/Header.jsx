@@ -1,9 +1,10 @@
 import React from 'react';
 import useStore from '../store';
-import { Flex , Spacer, Text} from '@chakra-ui/react';
+import { Flex , Spacer, Text, Button} from '@chakra-ui/react';
 
 function Header() {
   const username = useStore(store => store.username)
+  const toggleGameLog = useStore(store => store.toggleGameLog);
   return <>
     <Flex 
       maxW="100%" 
@@ -14,7 +15,8 @@ function Header() {
     >
       <Text fontSize="2xl" fontWeight="bolder">Haikus For Savages</Text>
       <Spacer/>
-      <Text fontSize="lg">Welcome {username}</Text>
+      <Text fontSize="lg" fontWeight="bold" mr={5}>Welcome {username}</Text>
+      <Button onClick={toggleGameLog}>Game Log</Button>
     </Flex>
   </>
 }

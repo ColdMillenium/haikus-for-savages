@@ -1,19 +1,26 @@
 
 import React , {useRef} from 'react';
 import Header from '../Header'
-import {Center, Box, Portal} from '@chakra-ui/react'
-
+import GameLog from '../GameLog';
+import {Center, Box, Stack, Flex} from '@chakra-ui/react'
+import useStore from '../../store';
 
 function GameLayout({children}) {
-  const headerLocRef = useRef()
-  return <Box h="100vh" w="100vw">
-    <Box ref={headerLocRef}></Box>
-    {children}
-    <Portal containerRef={headerLocRef}>
-      <Header/>
-    </Portal>
+  const gameLogContainerRef = useRef()
+  const gameLogOpen = useStore(store => store.gameLogOpen);
+  const width = gameLogOpen? `calc(100vw - ${320}px)`: '100vw';
+  return <Flex h="100vh" w={width} direction="column">
+    <Header/>
+
+    
+      {children}
+      <GameLog containerRef={gameLogContainerRef}/>
+    
    
-  </Box>;
+   
+    
+   
+  </Flex>;
 }
 
 export default GameLayout;

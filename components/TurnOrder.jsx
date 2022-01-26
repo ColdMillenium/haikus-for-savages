@@ -28,7 +28,7 @@ function TurnOrder() {
     players.length = 4;
   }
   console.log("players", players);
-  return <Box p={5}>
+  return <Box p={5} w="100%" position="absolute" bottom={0} backgroundColor="white">
     <Text m={5} fontSize="2xl" fontWeight="bold">Round's Next Speakers:</Text>
     <Flex>
       {players.map((p,index)=>{

@@ -52,8 +52,12 @@ function TurnTransition() {
     }
     return "red"
   }
-  return <>
-    <Center h="100vh" w="100vw">
+  return <Box 
+    h="100%" 
+    backgroundColor="red"
+   
+  >
+    <Center h="100%" w="100%">
       <Flex align="center" justify="center" direction="column">
         <Show when={mode == "TEAMS"}>
           <Text 
@@ -86,7 +90,7 @@ function TurnTransition() {
       </Flex>
     </Center>
     <TurnOrder/>
-  </>
+  </Box>
 }
 
 const ReadyButton = ({clientsRole, readyToStart, onClick}) =>{
