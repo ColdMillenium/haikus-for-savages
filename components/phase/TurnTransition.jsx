@@ -38,7 +38,7 @@ function TurnTransition() {
     }else if(mode == "ROTATE"){
       setReadyToStart(speakerReady && audienceReady && punisherReady);
     }else{//TEAMS
-      setReadyToStart(speakerReady && audienceReady);
+      setReadyToStart(speakerReady && punisherReady);
     }
   }, [speakerReady, audienceReady, punisherReady])
 
@@ -55,7 +55,7 @@ function TurnTransition() {
             Next Turn
           </Text>
         </Show>
-        <RoleDisplay role={clientsRole} onClick={roleReady}/>
+        <RoleDisplay role={clientsRole} mode={mode} onClick={roleReady}/>
         <ReadyStatuses 
           mode={mode} 
           speakerReady={speakerReady} 
@@ -77,14 +77,14 @@ const ReadyButton = ({clientsRole, readyToStart, onClick}) =>{
 }
 
 const RoleDisplay = props =>{
-  const {onClick, role} = props;
-  return <Show when={role!=""}>
+  const {onClick, role, mode} = props;
+  return <Hide when={ (role=="Audience" && mode == 'TEAMS') || role == ""}>
     <Flex direction="column" align="center" p={5} backgroundColor="lightgrey" rounded={5} m={3}> 
       <Text fontSize="xl">You are the <strong>{role}</strong></Text>
       <Text fontSize="sm">When you're ready to begin, click ready</Text>
       <Button m={3}size="sm"onClick={onClick}>Ready!</Button>
     </Flex>
-  </Show>
+  </Hide>
 
 }
 
