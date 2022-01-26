@@ -11,7 +11,7 @@ function JoinGame() {
   const joinRoom = useStore(store => (data) =>store.playerAction(store.ACTION.JOIN_ROOM, data))
   const connect = useStore(state => state.connect)
   const [needToJoin, setNeedToJoin] = useState(false);
-  const [roomIdInput, setRoomIdInput] = useState("")
+  const [roomIdInput, setRoomIdInput] = useState(defaultRoomId)
   const [name, setName] = useState('')
 
   useEffect(()=>{
@@ -64,9 +64,7 @@ function JoinGame() {
     }
   }
 
-  const isValidRoomId = () =>{
 
-  }
   const handleJoinGame = () =>{
     if(isValidName() && roomIdInput!=null && roomIdInput != ""){
       connect(name)
@@ -86,7 +84,7 @@ function JoinGame() {
           width={200}
           value={name}
           onChange={updateName}
-          placeholder='cool username ;)' 
+          placeholder='cool username' 
         />
       </Box>
       <Box>
