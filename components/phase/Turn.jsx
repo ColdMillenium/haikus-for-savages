@@ -16,7 +16,7 @@ function Turn() {
   console.log(room);
   return <Center h="100vh" w="100%">
     
-    <Flex direction="column" align="center" h="600px">
+    <Flex direction="column" align="center">
       <Text fontSize="4xl" fontWeight="bold">{clientsRole}</Text>
       <Timer 
         timerOn={true} 
@@ -24,7 +24,7 @@ function Turn() {
         timeStart={timeStart}
         setTurnOver={setTurnOver}
       />
-      <Center h="100vh" w="100%">
+      <Center>
         <Card hidden={hideCard()} card={currCard}/>
       </Center>
       <Show when={clientsRole == "Speaker"}>
@@ -52,8 +52,11 @@ function Turn() {
       <Show when={clientsRole == "Audience"}>
         <Text> Listen carefully to the Speaker!</Text>
       </Show>
+      <Show when={clientsRole == "Punisher"}>
+        <Button fontSize="3xl"size="lg"colorScheme="red">Punish</Button>
+      </Show>
       <Show when={turnOver && clientsRole == "Speaker"}>
-        <Button onClick={endTurn} h="150" mt={3} size="lg">End Turn</Button>
+        <Button onClick={endTurn} mt={3} size="lg">End Turn</Button>
       </Show>
       <div>Round#:{roundNum}</div>
       <div>Turn#:{turnNum}</div>
