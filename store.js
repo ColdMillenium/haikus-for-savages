@@ -22,6 +22,7 @@ const useStore = create((set,get) => ({
   clientsRole: "",
   currTeam: "",
   gameLogOpen: false,
+  gameLog: [],
   theme:{
     teamA:{
       primary: "#1832f4",
@@ -73,13 +74,12 @@ const useStore = create((set,get) => ({
 
     socket.current.on("playerData", playerData => {
       const {players, hostName, teamA, teamB} = playerData;
-      console.log("Update w/ Room Data")
       console.log(playerData);
       set({players, hostName, teamA, teamB});
     }),
 
     socket.current.on("gameStatus", room => {
-      console.log(`roomId:${room.id} has update`)
+      get().gameLog.push(room.lastGameLog);
       let clientsRole = get().clientsRole;
       let clientsTeam = get().clientsTeam;
       let currTeam = get().currTeam;
@@ -111,7 +111,6 @@ const useStore = create((set,get) => ({
 
 // ---------------------------- Heler Functions ---------------------------------------
 const playerRequest = (get, event, data,  extra) =>{
-  console.log("playerRequest Data=>", data);
   const roomId = get().roomId;
   extra = extra + `[Room ${roomId}]`;
   clientRequest(get, event, data, ` ${data} in [Room ${roomId}]`)
