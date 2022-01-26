@@ -59,7 +59,7 @@ function Lobby() {
   console.log("room Teams", teamA, teamB);
   return <Box  p={5}>
     <Flex align="center">
-      <Text fontSize="4xl" fontWeight="bold">{hostName}'s Room</Text> 
+      <Text fontSize="4xl" fontWeight="bold">Lobby for {hostName}'s Room</Text> 
       <Spacer/>
       <Button mb={3} onClick={copyRoomId}>
         <div>Copy ID: </div>
