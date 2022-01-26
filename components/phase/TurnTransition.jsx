@@ -45,9 +45,16 @@ function TurnTransition() {
   return <>
     <Center h="100vh" w="100vw">
       <Flex align="center" justify="center" direction="column">
-        <Text fontSize="4xl" mb={3} fontWeight="bold">
-          {isYourTeamTurn? "Your Team's Turn": "Enemy Team's Turn"}
-        </Text>
+        <Show when={mode == "TEAMS"}>
+          <Text fontSize="4xl" mb={3} fontWeight="bold">
+            {isYourTeamTurn? "Your Team's Turn": "Enemy Team's Turn"}
+          </Text>
+        </Show>
+        <Show when={mode != "TEAMS"}>
+          <Text fontSize="4xl" mb={3} fontWeight="bold">
+            Next Turn
+          </Text>
+        </Show>
         <RoleDisplay role={clientsRole} onClick={roleReady}/>
         <ReadyStatuses 
           mode={mode} 
