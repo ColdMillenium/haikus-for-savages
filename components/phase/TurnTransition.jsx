@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Show, Hide} from '../Conditional'
+import TurnOrder from '../TurnOrder'
 import {Text ,Button, Box, Flex, Input, Select, Spacer, Center} from '@chakra-ui/react'
 import useStore from '../../store'
 
@@ -83,7 +84,8 @@ function TurnTransition() {
         />
         <ReadyButton readyToStart={readyToStart} clientsRole={clientsRole} onClick={startTurn}/>
       </Flex>
-    </Center>;
+    </Center>
+    <TurnOrder/>
   </>
 }
 
