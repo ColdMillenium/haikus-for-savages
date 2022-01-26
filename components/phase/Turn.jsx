@@ -7,7 +7,7 @@ import {Show} from '../Conditional';
 function Turn() {
   const {currCard, score, timerOn, playedCards, timeLeft, timeStart, roundNum, turnNum} = useStore(store => store.room)
   const {clientId, clientsRole ,room } = useStore(store => store);
-  const playCard = useStore(store => (type) =>store.playerAction(store.ACTION.PLAY_CARD))
+  const playCard = useStore(store => (type) =>store.playerAction(store.ACTION.PLAY_CARD, type))
   const endTurn = useStore(store => () =>store.playerAction(store.ACTION.END_TURN))
   const [turnOver, setTurnOver] = useState(false);
   const hideCard = () =>{
