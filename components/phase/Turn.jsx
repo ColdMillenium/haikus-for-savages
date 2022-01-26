@@ -26,7 +26,7 @@ function Turn() {
     return clientsRole != "Punisher" && clientsRole!="Speaker"
   }
   console.log(room);
-  return <Center h="100vh" w="100%">
+  return <Center h="100%" w="100%" overflow="hidden">
     
     <Flex direction="column" align="center">
       <Text fontSize="4xl" fontWeight="bold">{clientsRole}</Text>
