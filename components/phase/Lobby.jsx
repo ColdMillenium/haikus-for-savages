@@ -56,7 +56,7 @@ function Lobby() {
   const copyRoomId = () =>{
     navigator.clipboard.writeText(roomId);
   }
-  return <Box  p={5}>
+  return <Box  p={5} width="100%">
     <Flex align="center">
       <Text fontSize="4xl" fontWeight="bold">Lobby for {hostName}'s Room</Text> 
       <Spacer/>
