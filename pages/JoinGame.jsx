@@ -24,7 +24,7 @@ function JoinGame() {
       joinRoom({roomId: roomIdInput, username});
       setNeedToJoin(false);
     }
-  }, [connected, needToJoin, roomIdInput, username])
+  }, [connected, needToJoin, roomIdInput, username, joinRoom])
 
   useEffect(()=>{
     if(joinRoomError == ""){
@@ -42,7 +42,7 @@ function JoinGame() {
    if(roomId != "" && roomId == roomIdInput){
      router.push(`Game/${roomId}`);
    }
-  }, [roomId])
+  }, [roomId, roomIdInput, router])
 
   const updateName = (event) => {
     let value = event.target.value;
