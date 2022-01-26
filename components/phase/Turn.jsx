@@ -2,13 +2,25 @@ import React , {useEffect, useState}from 'react';
 import useStore from '../../store';
 import Card from '../Card'
 import {Center, Stack, Flex, Button, Text} from '@chakra-ui/react'
-import {Show} from '../Conditional';
+import {Show, Hide} from '../Conditional';
+import PunishmentModal from '../PunishmentModal';
 
 function Turn() {
-  const {currCard, score, timerOn, playedCards, timeLeft, timeStart, roundNum, turnNum} = useStore(store => store.room)
+  const {
+    currCard, 
+    score, 
+    timerOn, 
+    playedCards, 
+    timeLeft, 
+    timeStart, 
+    roundNum, 
+    turnNum,
+    punishmentInProgress
+  } = useStore(store => store.room)
   const {clientId, clientsRole ,room } = useStore(store => store);
   const playCard = useStore(store => (type) =>store.playerAction(store.ACTION.PLAY_CARD, type))
   const endTurn = useStore(store => () =>store.playerAction(store.ACTION.END_TURN))
+  const executePunishment = useStore(store => () =>store.playerAction(store.ACTION.EXECUTE_PUNISHMENT))
   const [turnOver, setTurnOver] = useState(false);
   const hideCard = () =>{
     return clientsRole != "Punisher" && clientsRole!="Speaker"
@@ -18,12 +30,15 @@ function Turn() {
     
     <Flex direction="column" align="center">
       <Text fontSize="4xl" fontWeight="bold">{clientsRole}</Text>
-      <Timer 
-        timerOn={true} 
-        timeLeft={timeLeft} 
-        timeStart={timeStart}
-        setTurnOver={setTurnOver}
-      />
+      <Hide when={punishmentInProgress}>
+        <Timer 
+          timerOn={punishmentInProgress == false} 
+          timeLeft={timeLeft} 
+          timeStart={timeStart}
+          setTurnOver={setTurnOver}
+        />
+      </Hide>
+      
       <Center>
         <Card hidden={hideCard()} card={currCard}/>
       </Center>
@@ -50,17 +65,32 @@ function Turn() {
         </Flex>
       </Show>
       <Show when={clientsRole == "Audience"}>
-        <Text> Listen carefully to the Speaker!</Text>
+        <Text> 
+          Listen carefully to the Speaker!
+        </Text>
       </Show>
       <Show when={clientsRole == "Punisher"}>
-        <Button fontSize="3xl"size="lg"colorScheme="red">Punish</Button>
+        <Button 
+          disabled={turnOver}
+          onClick={executePunishment} 
+          fontSize="3xl"
+          size="lg"
+          colorScheme="red">
+            Punish
+          </Button>
       </Show>
       <Show when={turnOver && clientsRole == "Speaker"}>
-        <Button onClick={endTurn} mt={3} size="lg">End Turn</Button>
+        <Button 
+          onClick={endTurn} 
+          mt={3} 
+          size="lg">
+            End Turn
+          </Button>
       </Show>
       <div>Round#:{roundNum}</div>
       <div>Turn#:{turnNum}</div>
     </Flex>
+    <PunishmentModal open={punishmentInProgress}/>
   </Center>
 
 }
@@ -100,7 +130,7 @@ const Timer = (props) => {
           
           setTimerOn(false);
           setTime(0);
-        }else{
+        }else if(timerOn){
           setTime(Math.floor((timeLeft - (Date.now() - timeStart))/1000));
         }
       },200)
@@ -110,7 +140,7 @@ const Timer = (props) => {
       clearInterval(interval);
     }
     
-  },[timerOn])
+  },[timerOn, timeStart, timeLeft])
 
   const display = () => {
     if(time >0){

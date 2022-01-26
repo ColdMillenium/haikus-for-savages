@@ -11,6 +11,7 @@ const ACTION = {
   END_TURN : "endTurn",
   ACCEPT_PUNISHMENT : "acceptPunishment",
   REJECT_PUNISHMENT : "rejectPunishment",
+  EXECUTE_PUNISHMENT : "executePunishment",
   TO_LOBBY : "toLobby",
   RESTART : "restart",
 }
