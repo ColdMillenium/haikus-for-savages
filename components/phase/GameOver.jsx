@@ -6,9 +6,10 @@ import {Show} from '../Conditional';
 
 const imgUrl = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/aa5f3401-4b21-4659-bf15-300e3205fac7/d378kyu-aa12e584-0d8e-4918-aac3-bec21f566dea.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2FhNWYzNDAxLTRiMjEtNDY1OS1iZjE1LTMwMGUzMjA1ZmFjN1wvZDM3OGt5dS1hYTEyZTU4NC0wZDhlLTQ5MTgtYWFjMy1iZWMyMWY1NjZkZWEuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.S5NGhpLLtX3GK52HpKUuGhya_3SHPAbjddg9SvtzZHo"
 function GameOver() {
-  const {restart, mode, score, players, teamA, teamB} = useStore(store => store.room);
+  const { mode, score, players, teamA, teamB} = useStore(store => store.room);
   const {clientsTeam} = useStore(store => store);
   const toLobby = useStore(store => () =>store.playerAction(store.ACTION.TO_LOBBY))
+  const restart = useStore(store => () =>store.playerAction(store.ACTION.RESTART))
   return <Center h="100vh" w="100vh">
     <Flex direction="column" align="center" justify="center">
       <Image src={imgUrl} alt='Funny Game Over Image' />
@@ -22,7 +23,7 @@ function GameOver() {
         clientsTeam={clientsTeam}
       />
       <Show when={true}>
-        <Button m={3}>Restart</Button>
+        <Button onClick={restart} m={3}>Restart</Button>
       </Show>
       <Show when={true}>
         <Button onClick={toLobby} m={3}>Back to Lobby</Button>
