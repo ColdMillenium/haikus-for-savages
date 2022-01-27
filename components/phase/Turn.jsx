@@ -140,7 +140,7 @@ const Timer = (props) => {
       clearInterval(interval);
     }
     
-  },[timerOn, timeStart, timeLeft])
+  },[timerOn, timeStart, timeLeft, setTurnOver, time])
 
   const display = () => {
     if(time >0){

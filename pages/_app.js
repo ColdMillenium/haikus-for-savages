@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }) {
     if(!connected){
       setSocket(socket);
     }
-  },[ connected])
+  },[ connected, setSocket])
   return <ChakraProvider>
     <Component {...pageProps} />
   </ChakraProvider>

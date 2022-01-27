@@ -42,7 +42,7 @@ function TurnTransition() {
     }else{//TEAMS
       setReadyToStart(speakerReady && punisherReady);
     }
-  }, [speakerReady, audienceReady, punisherReady])
+  }, [speakerReady, audienceReady, punisherReady, mode])
 
   const getTeamColor = () => {
     if(clientsTeam == "teamA"){

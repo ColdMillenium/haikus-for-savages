@@ -47,7 +47,7 @@ function Lobby() {
       }
     }
     setStartHidden(true);
-  },[players, mode, host])
+  },[players, mode, host, partySize])
 
   const onModeChange = (e) =>{
     setMode(e.target.value);

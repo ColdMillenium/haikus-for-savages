@@ -7,7 +7,7 @@ import TurnTransition from '../../../components/phase/TurnTransition'
 import GameOver from '../../../components/phase/GameOver';
 import GameLayout from '../../../components/layouts/GameLayout'
 
-function index() {
+function Game() {
   
   const router = useRouter();
   const {players, phase} = useStore(store => store.room)
@@ -24,7 +24,7 @@ function index() {
         router.push(`/JoinGame?roomId=${roomId}`)
       }
     }
-  }, [connected, username, players, roomId])
+  }, [connected, username, players, roomId, router])
 
   const getPhase = {
     "LOBBY":<Lobby/>,
@@ -35,4 +35,4 @@ function index() {
   return <GameLayout>{getPhase[phase]}</GameLayout>
 }
 
-export default index;
+export default Game;

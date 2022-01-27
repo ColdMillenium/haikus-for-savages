@@ -19,7 +19,14 @@ export default function Home() {
           Haikus for Savages!
         </h1>
         <Center  boxSize='sm'>
-          <Image background="white" height={300} width={300} rounded={300}src='https://c.tenor.com/16NyC3oOWT4AAAAi/smiling-geicos-caveman.gif' />
+          <Image 
+            alt="the caveman you always needed"
+            background="white" 
+            height={300} 
+            width={300} 
+            rounded={300}
+            src='https://c.tenor.com/16NyC3oOWT4AAAAi/smiling-geicos-caveman.gif' 
+          />
         </Center>
         <Button 
           onClick={()=>router.push("/CreateGame")} 
