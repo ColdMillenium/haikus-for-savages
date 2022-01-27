@@ -44,8 +44,8 @@ const useStore = create((set,get) => ({
   },
   connect: (username) => set({ username: username}),
   setSocket: (socket) => {
-    socket.current = io("http://localhost:8000", {
-      //socket.current = io("https://hfs-server.herokuapp.com", {
+    // socket.current = io("http://localhost:8000", {
+      socket.current = io("https://hfs-server.herokuapp.com", {
       reconnectionDelayMax: 10000,
       query: {
         auth: "123"
