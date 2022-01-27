@@ -107,7 +107,7 @@ const RoleDisplay = props =>{
   return <Hide when={ (role=="Audience" && mode == 'TEAMS') || role == ""}>
     <Flex direction="column" align="center" p={5} backgroundColor={backgroundColor} rounded={5} m={3}> 
       <Text color={color} fontSize="xl">You are the <strong>{role}</strong></Text>
-      <Text color={color} fontSize="sm">When you're ready to begin, click ready</Text>
+      <Text color={color} fontSize="sm">When you{`'`}re ready to begin, click ready</Text>
       <Button m={3}size="sm"onClick={onClick}>Ready!</Button>
     </Flex>
   </Hide>

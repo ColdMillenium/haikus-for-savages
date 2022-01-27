@@ -15,7 +15,7 @@ import {
   Spacer,
   Box
 } from '@chakra-ui/react'
-import { useEffect } from 'react';
+import { useEffect , useMemo} from 'react';
 import useStore from '../store';
 
 
@@ -40,12 +40,15 @@ const PunishmentModal = ({open}) => {
   const {clientsRole} = useStore(store => store)
   console.log("clientsRole", clientsRole);
   const sound = new Audio(zaWaRuDo);
-  useEffect(()=>{
-    if(open){
-      console.log("should be playing dawg")
-      sound.play();
-    }
-  },[open])
+  const startSound = () =>{
+    sound.play
+  }
+  // useEffect(()=>{
+  //   if(open){
+  //     console.log("should be playing dawg")
+  //     // return () => startSound();
+  //   }
+  // },[open, startSound])
   return (
     <>
       <Modal isOpen={open} onClose={onClose} rounded={5}>

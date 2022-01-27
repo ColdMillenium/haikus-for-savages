@@ -47,7 +47,7 @@ function Lobby() {
       }
     }
     setStartHidden(true);
-  },[players, mode, host, partySize])
+  },[players, mode, host, partySize, clientId])
 
   const onModeChange = (e) =>{
     setMode(e.target.value);
@@ -58,7 +58,7 @@ function Lobby() {
   }
   return <Box  p={5} width="100%">
     <Flex align="center">
-      <Text fontSize="4xl" fontWeight="bold">Lobby for {hostName}'s Room</Text> 
+      <Text fontSize="4xl" fontWeight="bold">Lobby for {hostName}{`'`}s Room</Text> 
       <Spacer/>
       <Button mb={3} onClick={copyRoomId}>
         <div>Copy ID: </div>

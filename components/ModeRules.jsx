@@ -43,11 +43,11 @@ const CoopDescription = (props) =>{
 
 const RotationDescription = (props) =>{
   return <>
-  <Text>Players rotate the three roles: Speaker, Punisher, and Audience. 
+  <Text>{`Players rotate the three roles: Speaker, Punisher, and Audience. 
     The Speaker and the Audience earn points as normal. 
     At the end of the round, the Speaker and the Audiance add up points they've earned 
     (they each earn the same number of points in a round). Each turn the roles will rotate.
-    After each player has been teh Speaker three times, the player with the most poihnts wins.
+    After each player has been teh Speaker three times, the player with the most poihnts wins.`}
   </Text>
   </>
 }

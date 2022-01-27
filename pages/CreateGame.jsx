@@ -16,12 +16,12 @@ function CreateGame() {
       makeRoom();
       setNewRoom(false);
     }
-  },[connected, newRoom])
+  },[connected, newRoom, makeRoom])
   useEffect(() =>{
     if(roomId != ""){
       router.push(`/Game/${roomId}`)
     }
-  }, [roomId])
+  }, [roomId, router])
 
   const handleChange = (event) => {
     let value = event.target.value;

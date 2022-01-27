@@ -46,9 +46,9 @@ const CoopScore = ({score}) =>{
     <Text>Total Score: {score} points</Text>
     <Show when={score<5}>So like...did you try?</Show>
     <Show when={score>5 && score<10}>Wow. Almost...not terrible..</Show>
-    <Show when={score>=10 && score<21}>You think you're hot shit dontcha...You're not...</Show>
+    <Show when={score>=10 && score<21}>{`You think you're hot shit dontcha...You're not...`}</Show>
     <Show when={score>=21 && score<30}>MUDA MUDA MUDA MUDA MUDA MUDAAAAA!</Show>
-    <Show when={score>=31 && score<49}>Oh? You're approaching me? Instead of running away, you're coming right to me</Show>
+    <Show when={score>=31 && score<49}>Oh? {`You're`} approaching me? Instead of running away, {`you're`} coming right to me</Show>
     <Show when={score>=50}>HO HOOOOO...then come as close as you like...</Show>
   </>
 }
