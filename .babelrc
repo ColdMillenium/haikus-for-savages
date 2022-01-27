@@ -2,10 +2,9 @@
   "presets": [
     ["next/babel", {
       "preset-env": {
-        "loose": true,
+        "loose": false,
         "modules": false
-      },
+      }
     }]
   ],
-  "plugins": []
 }
