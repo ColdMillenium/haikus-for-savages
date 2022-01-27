@@ -50,12 +50,10 @@ function TurnTransition() {
     }else if(clientsTeam == "teamB"){
       return theme.teamB.primary
     }
-    return "red"
+    return "lightgrey"
   }
   return <Box 
     h="100%" 
-    backgroundColor="red"
-   
   >
     <Center h="100%" w="100%">
       <Flex align="center" justify="center" direction="column">
@@ -105,7 +103,7 @@ const RoleDisplay = props =>{
   const {onClick, role, mode, backgroundColor} = props;
   const color = mode == 'TEAMS'? "white" : "black"
   return <Hide when={ (role=="Audience" && mode == 'TEAMS') || role == ""}>
-    <Flex direction="column" align="center" p={5} backgroundColor={backgroundColor} rounded={5} m={3}> 
+    <Flex boxShadow="lg" direction="column" align="center" p={5} backgroundColor={backgroundColor} rounded={5} m={3}> 
       <Text color={color} fontSize="xl">You are the <strong>{role}</strong></Text>
       <Text color={color} fontSize="sm">When you{`'`}re ready to begin, click ready</Text>
       <Button m={3}size="sm"onClick={onClick}>Ready!</Button>

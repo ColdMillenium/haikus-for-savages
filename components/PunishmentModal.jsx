@@ -40,15 +40,13 @@ const PunishmentModal = ({open}) => {
   const {clientsRole} = useStore(store => store)
   console.log("clientsRole", clientsRole);
   const sound = new Audio(zaWaRuDo);
-  const startSound = () =>{
-    sound.play
-  }
-  // useEffect(()=>{
-  //   if(open){
-  //     console.log("should be playing dawg")
-  //     // return () => startSound();
-  //   }
-  // },[open, startSound])
+  
+  useEffect(()=>{
+    if(open){
+      sound.play();
+      
+    }
+  },[open])
   return (
     <>
       <Modal isOpen={open} onClose={onClose} rounded={5}>

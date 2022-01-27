@@ -26,7 +26,7 @@ function Turn() {
     return clientsRole != "Punisher" && clientsRole!="Speaker"
   }
   console.log(room);
-  return <Center h="auto" w="100%" overflow="hidden" backgroundColor="red">
+  return <Center h="100%" w="100%" overflow="hidden">
     
     <Flex direction="column" align="center">
       <Text fontSize="4xl" fontWeight="bold">{clientsRole}</Text>
@@ -116,19 +116,23 @@ const Timer = (props) => {
   const [time, setTime] = useState(timeLeft/1000);
   const [timerOn, setTimerOn] = useState(props.timerOn);
   useEffect(() => {
-    
+    // if(Date.now() - timeStart > timeLeft){
+    //   console.log(Date.now() - timeStart);
+    // }
     let interval;
-    console.log("yo");
-    console.log("timerOn", timerOn);
     if(timerOn){
       console.log("hey")
       interval = setInterval(function(){
+        console.log(Date.now() - timeStart);
         if(Date.now() - timeStart > timeLeft){
-          setTurnOver(true);
+          console.log("time is up!")
+          setTurnOver(true)
+          return;
         }
         if(time <= 0){
           
           setTimerOn(false);
+          setTurnOver(true)
           setTime(0);
         }else if(timerOn){
           setTime(Math.floor((timeLeft - (Date.now() - timeStart))/1000));
