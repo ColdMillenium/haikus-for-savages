@@ -39,7 +39,7 @@ function GameOver() {
       
     }
   }
-  return <Center h="100vh" w="100vh">
+  return <Center h="100%" w="100%">
     <Flex direction="column" align="center" justify="center">
     <Text fontSize="6xl" fontWeight="bold">Game Over!</Text>
       {/* <Image src={imgUrl} alt='Funny Game Over Image' /> */}
