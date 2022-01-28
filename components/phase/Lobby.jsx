@@ -5,6 +5,7 @@ import ModeRules from '../ModeRules'
 import useStore from '../../store.js'
 import { Hide, Show } from '../Conditional';
 import PlayerList from '../PlayerList';
+import {CopyIcon} from '@chakra-ui/icons';
 
 function Lobby() {
   
@@ -50,24 +51,25 @@ function Lobby() {
   },[players, mode, host, partySize, clientId])
 
   const onModeChange = (e) =>{
+
     setMode(e.target.value);
   }
   
   const copyRoomId = () =>{
-    navigator.clipboard.writeText(roomId);
+    const url = `${process.env.CLIENT_SITE}/JoinGame?roomId=${roomId}`;
+    navigator.clipboard.writeText(url);;
   }
   return <Box  p={5} width="100%">
     <Flex align="center">
-      <Text fontSize="4xl" fontWeight="bold">Lobby for {hostName}{`'`}s Room</Text> 
-      <Spacer/>
-      <Button mb={3} onClick={copyRoomId}>
-        <div>Copy ID: </div>
-        <div>{roomId}</div>
+      <Text mr={3} fontSize="4xl" fontWeight="bold">Lobby for {hostName}{`'`}s Room</Text> 
+      <Button size="sm" variant="outline" colorScheme="gray" mb={3} onClick={copyRoomId}>
+        <div>Copy Link</div>
+        <CopyIcon ml={2}/>
       </Button>
     </Flex>
     <Box  p={5}>
       <Flex align="center">
-        <Text fontSize="lg">Mode: </Text>
+        <Text fontWeight="bold" fontSize="lg">Mode: </Text>
         <Select disabled={clientId!=host} value={mode} onChange={onModeChange} maxW={200} ml={2}>
           <option value='COOP'>Co-Op (2)</option>
           <option value='ROTATE'>Rotation (3)</option>
@@ -138,12 +140,12 @@ const HiddenButton = (props) =>{
 const GameSetting = (props) =>{
   const {field, value, onChange, placeholder, width=50, ...rest} = props;
   return <Flex mt={2} align="center" >
-    <Text fontSize="lg" mr={3}>{field}:</Text>
+    <Text fontWeight="bold" fontSize="lg" mr={3}>{field}:</Text>
     <Input 
       {...rest}
       width = {width} 
       value={value} 
-      fontSize="lg"  
+      fontSize="lg" 
       size="sm" 
       placeholder={placeholder} 
       onChange={onChange}
