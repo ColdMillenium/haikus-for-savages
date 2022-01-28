@@ -50,13 +50,13 @@ function TurnTransition() {
     }else if(clientsTeam == "teamB"){
       return theme.teamB.primary
     }
-    return "lightgrey"
+    return "#f7f7f7"
   }
   return <Box 
     h="100%" 
   >
     <Center h="100%" w="100%">
-      <Flex align="center" justify="center" direction="column">
+      <Flex align="center" justify="center" direction="column" boxShadow="md" p={5} rounded={5}>
         <Show when={mode == "TEAMS"}>
           <Text 
             fontSize="4xl" 
@@ -68,7 +68,7 @@ function TurnTransition() {
           </Text>
         </Show>
         <Show when={mode != "TEAMS"}>
-          <Text fontSize="4xl" mb={3} fontWeight="bold">
+          <Text fontSize="2xl" fontWeight="bold">
             Next Turn
           </Text>
         </Show>
@@ -78,35 +78,51 @@ function TurnTransition() {
           onClick={roleReady}
           backgroundColor={getTeamColor()}
         />
-        <ReadyStatuses 
-          mode={mode} 
-          speakerReady={speakerReady} 
-          audienceReady={audienceReady} 
-          punisherReady={punisherReady}
-        />
-        <ReadyButton readyToStart={readyToStart} clientsRole={clientsRole} onClick={startTurn}/>
+        <Hide when={readyToStart && clientsRole=="Speaker"}>
+          <ReadyStatuses 
+            mode={mode} 
+            speakerReady={speakerReady} 
+            audienceReady={audienceReady} 
+            punisherReady={punisherReady}
+          />
+        </Hide>
+        <Show when={readyToStart && clientsRole=="Speaker"}>
+          <Button  colorScheme="red" size='md' onClick={startTurn}>
+            Start Turn!
+          </Button>
+        </Show>
       </Flex>
     </Center>
-    <TurnOrder/>
+    <Show when={mode == "TEAMS"}>
+      <TurnOrder/>
+    </Show>
   </Box>
-}
-
-const ReadyButton = ({clientsRole, readyToStart, onClick}) =>{
-  return <Show when={readyToStart && clientsRole=="Speaker"}>
-    <Button mt={5} size='lg' onClick={onClick}>
-      Start Turn!
-    </Button>
-  </Show>
 }
 
 const RoleDisplay = props =>{
   const {onClick, role, mode, backgroundColor} = props;
   const color = mode == 'TEAMS'? "white" : "black"
   return <Hide when={ (role=="Audience" && mode == 'TEAMS') || role == ""}>
-    <Flex boxShadow="lg" direction="column" align="center" p={5} backgroundColor={backgroundColor} rounded={5} m={3}> 
-      <Text color={color} fontSize="xl">You are the <strong>{role}</strong></Text>
-      <Text color={color} fontSize="sm">When you{`'`}re ready to begin, click ready</Text>
-      <Button m={3}size="sm"onClick={onClick}>Ready!</Button>
+    <Flex 
+      boxShadow="inner" 
+      direction="column" 
+      align="center" p={5} 
+      backgroundColor={backgroundColor} 
+      rounded={5} 
+      m={3}
+      > 
+        <Text color={color} fontSize="lg">You are the <strong>{role}</strong></Text>
+        <Text color={color} fontSize="sm">When you{`'`}re ready to begin, click ready</Text>
+        <Button 
+          variant="outline"
+          mt={3} 
+          colorScheme="green" 
+          backgroundColor="white"
+          size="sm"
+          onClick={onClick}
+        >
+          Ready!
+        </Button>
     </Flex>
   </Hide>
 
@@ -115,16 +131,16 @@ const RoleDisplay = props =>{
 const ReadyStatuses = props =>{
   const {mode, speakerReady, audienceReady, punisherReady} = props;
   return <>
-    <Text fontWeight="bold">
+    <Text fontSize="sm" fontWeight="bold">
       {speakerReady? "Speaker Ready" : "Speaker Not Ready"}
     </Text>
     <Hide when={mode == "TEAMS"}>
-      <Text fontWeight="bold">
+      <Text fontSize="sm" fontWeight="bold">
         {audienceReady? "Audience Ready" : "Audience Not Ready"}
       </Text>
     </Hide>
     <Hide when={mode == "COOP"}>
-      <Text fontWeight="bold">
+      <Text fontSize="sm" fontWeight="bold">
         {punisherReady? "Punisher Ready" : "Punisher Not Ready"}
       </Text>
     </Hide>
