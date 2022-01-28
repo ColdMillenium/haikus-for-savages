@@ -20,7 +20,7 @@ const PlayerList = ({players, title, ...rest}) => {
           p={3} 
           pl={5} 
           pr={5} 
-          backgroundColor="#d5f1f2" 
+          backgroundColor="gray.50" 
           boxShadow="md"
           rounded={5}
           align="center"
@@ -39,7 +39,7 @@ const PlayerList = ({players, title, ...rest}) => {
       </Text>
     </Flex>)
   })
-  return <Flex direction="column" width={300}>
+  return <Flex direction="column" width={300} m={5}>
     <Text fontSize="3xl" fontWeight="bold" color={rest.backgroundColor}>
       {title} ({players.length})
       </Text>
