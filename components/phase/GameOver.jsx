@@ -51,7 +51,7 @@ function GameOver() {
           </Box>
         </Box>
         <Text align="center" fontWeight="bold" fontSize="4xl" zIndex="1000" color="white" position="relative" top={-10} backgroundColor="black">
-          <Show when={mode == "COOP"}>How'd you do?</Show>
+          <Show when={mode == "COOP"}>How did you guys do?</Show>
           <Show when={mode != "COOP"}>{getWinners()}</Show>
         </Text>
       </Box>
