@@ -1,14 +1,14 @@
 import React , {useEffect, useState}from 'react';
 import useStore from '../../store';
 import Card from '../Card'
-import {Center, Stack, Flex, Button, Text, Box, Image} from '@chakra-ui/react'
+import {Center, Stack, Flex, Button, Text, Box, Image, Spacer} from '@chakra-ui/react'
 import {Show} from '../Conditional';
 import VideoBackground from '../VideoBackground';
 
 const imgUrl = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/aa5f3401-4b21-4659-bf15-300e3205fac7/d378kyu-aa12e584-0d8e-4918-aac3-bec21f566dea.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2FhNWYzNDAxLTRiMjEtNDY1OS1iZjE1LTMwMGUzMjA1ZmFjN1wvZDM3OGt5dS1hYTEyZTU4NC0wZDhlLTQ5MTgtYWFjMy1iZWMyMWY1NjZkZWEuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.S5NGhpLLtX3GK52HpKUuGhya_3SHPAbjddg9SvtzZHo"
 function GameOver() {
   const { mode, score, players, teamA, teamB, host, gameOverVideo} = useStore(store => store.room);
-  const {clientsTeam, clientId} = useStore(store => store);
+  const {clientsTeam, clientId, theme} = useStore(store => store);
   const toLobby = useStore(store => () =>store.playerAction(store.ACTION.TO_LOBBY))
   const restart = useStore(store => () =>store.playerAction(store.ACTION.RESTART))
 
@@ -65,6 +65,7 @@ function GameOver() {
         teamA={teamA}
         teamB={teamB}
         clientsTeam={clientsTeam}
+        theme={theme}
       />
       <Show when={true}>
         <Button disabled={clientId!=host} onClick={restart} m={3}>Restart</Button>
@@ -76,11 +77,11 @@ function GameOver() {
   </Center>;
 }
 
-const Score = ({mode, score, teamA, teamB, players, clientsTeam}) =>{
+const Score = ({mode, ...rest}) =>{
   const displayScore = {
-    COOP: <CoopScore score={score}/>,
-    ROTATE: <RotateScore players={players}/>,
-    TEAMS: <TeamsScore teamA={teamA} teamB={teamB} clientsTeam={clientsTeam}/>
+    COOP: <CoopScore {...rest}/>,
+    ROTATE: <RotateScore {...rest}/>,
+    TEAMS: <TeamsScore {...rest}/>
   }
   return displayScore[mode]
   
@@ -107,8 +108,18 @@ const RotateScore = ({players}) =>{
   }</>
 }
 
-const TeamsScore = ({teamA, teamB, clientsTeam}) =>{
-  return <>Team Score</>
+const TeamsScore = ({teamA, teamB, clientsTeam, theme}) =>{
+  return <Flex align="center" w={480}>
+    <Text color={theme.teamA.primary} fontSize="xl" fontWeight="Bold">
+      Team A: {teamA.score} points
+    </Text>
+    <Spacer/>
+    <Text fontSize="2xl">VS</Text>
+    <Spacer/>
+    <Text color={theme.teamB.primary} fontSize="xl" fontWeight="Bold">
+      Team B: {teamB.score} points
+    </Text>
+  </Flex>
 }
 
 
