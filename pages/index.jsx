@@ -2,6 +2,7 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { Center, Button, Image, Box} from '@chakra-ui/react'
 import { useRouter } from 'next/router'
+import VideoBackground from './../components/VideoBackground';
 
 //https://tenor.com/view/smiling-geicos-caveman-3doors-down-let-me-be-myself-song-smirk-gif-20065301
 export default function Home() {
@@ -43,6 +44,9 @@ export default function Home() {
           Join Game
         </Button>
       </main>
+      <VideoBackground height={300} width={300}>
+        Holler
+      </VideoBackground>
     </Box>
   )
 }
