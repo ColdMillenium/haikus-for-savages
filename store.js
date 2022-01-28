@@ -25,20 +25,20 @@ const useStore = create((set,get) => ({
   gameLog: [],
   theme:{
     teamA:{
-      primary: "#1832f4",
-      secondary:"white"
+      primary: "red.600",
+      secondary:"gray.50"
     },
     teamB:{
-      primary: "#f41c18",
-      secondary:"white"
+      primary: "blue.500",
+      secondary:"gray.50"
     }, 
     default:{
       primary: "0d1935",
       secondary:"eaedf2"
     },
     status:{
-      ready: "#08d319",
-      notReady: "f40c00",
+      ready: "green.400",
+      notReady: "red.600",
       error:"f40c00"
     },
   },
