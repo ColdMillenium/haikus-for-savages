@@ -100,7 +100,7 @@ function TurnTransition() {
         </Show>
       </Flex>
     </Center>
-    <Show when={mode == "TEAMS"}>
+    <Show when={false}>
       <TurnOrder/>
     </Show>
   </Box>
