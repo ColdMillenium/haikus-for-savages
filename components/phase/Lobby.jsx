@@ -68,17 +68,20 @@ function Lobby() {
     <Box  p={5}>
       <Flex align="center">
         <Text fontSize="lg">Mode: </Text>
-        <Select value={mode} onChange={onModeChange} maxW={200}>
+        <Select value={mode} onChange={onModeChange} maxW={200} ml={2}>
           <option value='COOP'>Co-Op (2)</option>
           <option value='ROTATE'>Rotation (3)</option>
           <option value='TEAMS'>Teams (4+)</option>
         </Select>
       </Flex>
+      <GameSetting field="Time Per Turn" value={maxTime}/>
+      <GameSetting field="Rounds" value={maxRounds}/>
+      <Show when={mode == "TEAMS"}>
+        <GameSetting field="Maximum Players" value={maxPlayers}/>
+      </Show>
     </Box>
     <ModeRules mode={mode}/>
-    <GameSetting field="Time Per Turn" value={maxTime}/>
-    <GameSetting field="Rounds" value={maxRounds}/>
-    <GameSetting field="Maximum Players" value={maxPlayers}/>
+    
     <Button onClick={toggleReady} colorScheme="green"  m={5} mt={10}>
       Ready
     </Button>
@@ -134,8 +137,8 @@ const HiddenButton = (props) =>{
 
 const GameSetting = (props) =>{
   const {field, value, onChange, placeholder, width=50} = props;
-  return <Flex m={2} ml={5} align="center" >
-    <Text fontSize="xl" mr={3}>{field}:</Text>
+  return <Flex mt={2} align="center" >
+    <Text fontSize="lg" mr={3}>{field}:</Text>
     <Input 
       width = {width} 
       value={value} 
