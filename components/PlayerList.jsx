@@ -8,15 +8,15 @@ const PlayerList = ({players, title, ...rest}) => {
   const {theme} = useStore(store => store)
   const list = [];
   players.forEach(p =>{
-    list.push(<Flex key={p.id} >
+    list.push(<Flex key={p.id}>
       <Flex>
         <Text 
           fontSize="xl" 
           fontWeight="bold"
           key={p.id} 
           width = {200} 
-          m={3} 
-          ml={5} 
+          mt={6}
+          
           p={3} 
           pl={5} 
           pr={5} 
@@ -39,14 +39,14 @@ const PlayerList = ({players, title, ...rest}) => {
       </Text>
     </Flex>)
   })
-  return <>
+  return <Flex direction="column" width={300}>
     <Text fontSize="3xl" fontWeight="bold" color={rest.backgroundColor}>
       {title} ({players.length})
       </Text>
-    <Box pl = {5}>
+    <Box>
       {list}
     </Box>
-  </>
+  </Flex>
 }
 
 export default PlayerList
