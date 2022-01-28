@@ -8,10 +8,26 @@ function Card({hidden, card}) {
     card.GOOD = "null Card?";
     card.GREAT = "check Logs";
   }
-  return <Box p={10} boxShadow="lg" rounded={5} height="300" minWidth="200" m={5}>
-    <Flex direction="column" align="center" width="100%" h="100%">
-      <Text fontSize="2xl" align="center" mb={10}>{hidden? "???": card.GOOD}</Text>
-      <Text fontSize="2xl" >{hidden? "??????": card.GREAT}</Text>
+  return <Box 
+    p={10} 
+    boxShadow="lg" 
+    rounded={5} 
+    height="300" 
+    minWidth="200" 
+    m={5}
+  >
+    <Flex 
+      direction="column" 
+      align="center" 
+      width="100%" 
+      h="100%"
+    >
+      <Text fontSize="2xl" align="center" mb={10}>
+        {hidden? "???": card.GOOD}
+      </Text>
+      <Text fontSize="2xl">
+        {hidden? "??????": card.GREAT}
+      </Text>
     </Flex>
   </Box>;
 }
