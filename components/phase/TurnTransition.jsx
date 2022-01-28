@@ -3,12 +3,16 @@ import {Show, Hide} from '../Conditional'
 import TurnOrder from '../TurnOrder'
 import {Text ,Button, Box, Flex, Input, Select, Spacer, Center} from '@chakra-ui/react'
 import useStore from '../../store'
+import ReadyIcon from './../ReadyIcon'
 
 function TurnTransition() {
   const {
     punisherReady,
     audienceReady,
     speakerReady,
+    audience,
+    punisher,
+    speaker,
     mode,
   } = useStore(store => store.room)
   const {
@@ -84,6 +88,9 @@ function TurnTransition() {
             speakerReady={speakerReady} 
             audienceReady={audienceReady} 
             punisherReady={punisherReady}
+            audience={audience}
+            punisher={punisher}
+            speaker={speaker}
           />
         </Hide>
         <Show when={readyToStart && clientsRole=="Speaker"}>
@@ -129,20 +136,41 @@ const RoleDisplay = props =>{
 }
 
 const ReadyStatuses = props =>{
-  const {mode, speakerReady, audienceReady, punisherReady} = props;
+  const {
+    mode, 
+    speakerReady, 
+    audienceReady, 
+    punisherReady, 
+    audience, 
+    speaker,
+    punisher
+  } = props;
+  const mr=2;
+  const mb=1;
+  const fontSize="sm";
+  const fontWeight="bold"
   return <>
-    <Text fontSize="sm" fontWeight="bold">
-      {speakerReady? "Speaker Ready" : "Speaker Not Ready"}
-    </Text>
-    <Hide when={mode == "TEAMS"}>
-      <Text fontSize="sm" fontWeight="bold">
-        {audienceReady? "Audience Ready" : "Audience Not Ready"}
+    <Flex mb={mb}>
+      <Text fontSize={fontSize} fontWeight={fontWeight} mr={mr}>  
+        Speaker ({speaker?.username})
       </Text>
+      <ReadyIcon ready={speakerReady} />
+    </Flex>
+    <Hide when={mode == "TEAMS"}>
+      <Flex>
+        <Text fontSize={fontSize} fontWeight={fontWeight} mr={mr}>  
+          Audience ({audience?.username})
+        </Text>
+        <ReadyIcon ready={audienceReady} />
+      </Flex>
     </Hide>
     <Hide when={mode == "COOP"}>
-      <Text fontSize="sm" fontWeight="bold">
-        {punisherReady? "Punisher Ready" : "Punisher Not Ready"}
-      </Text>
+      <Flex>
+        <Text fontSize={fontSize} fontWeight={fontWeight} mr={mr}>  
+          Punisher ({punisher?.username})
+        </Text>
+        <ReadyIcon ready={punisherReady} />
+      </Flex>
     </Hide>
   </>
 }
