@@ -121,10 +121,8 @@ const RoleDisplay = props =>{
         <Text color={color} fontSize="lg">You are the <strong>{role}</strong></Text>
         <Text color={color} fontSize="sm">When you{`'`}re ready to begin, click ready</Text>
         <Button 
-          variant="outline"
           mt={3} 
           colorScheme="green" 
-          backgroundColor="white"
           size="sm"
           onClick={onClick}
         >
