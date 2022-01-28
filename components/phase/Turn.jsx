@@ -107,7 +107,7 @@ const PileButton = ({type, score, onClick, ...rest}) =>{
     >
       {text[type]}
     </Button>
-    <Text color={colorScheme[type]}fontSize="2xl">{score}</Text>
+    <Text color="grey" fontWeight="bold" fontSize="3xl">{score}</Text>
   </Flex>
 }
 
