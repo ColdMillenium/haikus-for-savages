@@ -14,21 +14,21 @@ function ModeRules(props) {
     TEAMS: <TeamDescription/>
   }
 
-  return <Box>
-    <Text fontSize="3xl" fontWeight="bold"><bold>{title[mode]}</bold></Text>
+  return <Box ml={5} p={5} backgroundColor="gray.200" color="grey.800" width='fit-content' rounded={5}>
+    <Text fontSize="3xl" fontWeight="bold" mb={3}><bold>{title[mode]}</bold></Text>
     <RulesContainer>
       {description[mode]}
     </RulesContainer>
   </Box>
 }
 const RulesContainer = (props) =>{
-  return <Box p={5} maxW ={700}>{props.children}</Box>
+  return <Box maxW ={700}>{props.children}</Box>
 }
 
 const CoopDescription = (props) =>{
   return <>
-    <Text>Both players are on the same team and switch off being the Speaker. 
-      After each player has been the Speaker three times, your score will be totaled</Text>
+    <Text>Both players are on the same team and switch off being the <strong>Speaker</strong>. 
+      After each player has been the <i>Speaker</i> three times, your score will be totaled.</Text>
     <Box p={3}>
       <ul>
         <li><strong>10 points or less:</strong> This Team is Bad</li>
@@ -43,22 +43,23 @@ const CoopDescription = (props) =>{
 
 const RotationDescription = (props) =>{
   return <>
-  <Text>{`Players rotate the three roles: Speaker, Punisher, and Audience. 
-    The Speaker and the Audience earn points as normal. 
-    At the end of the round, the Speaker and the Audiance add up points they've earned 
+  <Text>Players rotate the three roles: <strong>Speaker</strong>, <strong>Punisher</strong>, and <strong>Audience</strong>. 
+    The <i>Speaker</i> and the <i>Audience</i> earn points as normal. 
+    At the end of the round, the <i>Speaker</i> and the <i>Audience</i> add up points they{`'`}ve earned 
     (they each earn the same number of points in a round). Each turn the roles will rotate.
-    After each player has been teh Speaker three times, the player with the most poihnts wins.`}
+    After each player has been the <i>Speaker</i> three times, the player with the most points wins.
   </Text>
   </>
 }
 const TeamDescription = (props) =>{
   return <>
-  <Text>This is the standard mode the game. Players will take turns being speaker alternating from one team to the other.
-    The player who would be the speaker next turn will be the punisher for the current turn. Once you go through 3 rounds 
-    or everyone has been a Speaker 3 times, the team with the most points wins. 
+  <Text>This is the standard mode the game. Players will take turns being <strong>Speaker</strong> alternating from one team to the other.
+    The player who would be the <i>Speaker</i> next turn will be the <strong>Punisher</strong> for the current turn. Once you go through 3 rounds 
+    or everyone has been a <i>Speaker</i> 3 times, the team with the most points wins. 
   </Text>
-  <Text><strong>Note:</strong> If the teams are uneven, one player from
-    the team with the extra player will be randomly chosen to a <strong>permanent</strong>  punisher, dealing swift unbiased judgements on all
+  <br/>
+  <Text><strong>Uneven Teams Rule:</strong> If the teams are uneven, one player from
+    the team with the extra player will be randomly chosen to be a <strong>permanent punisher</strong>, dealing swift unbiased judgements on all
      who utter words incorrectly.</Text>
   </>
 }
