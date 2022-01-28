@@ -79,23 +79,6 @@ function Lobby() {
     <GameSetting field="Time Per Turn" value={maxTime}/>
     <GameSetting field="Rounds" value={maxRounds}/>
     <GameSetting field="Maximum Players" value={maxPlayers}/>
-    <Show when={mode == 'TEAMS'}>
-      <PlayerList 
-        title="Team A" 
-        players={teamA.players} 
-        backgroundColor={theme.teamA.primary}
-        color={theme.teamA.secondary}
-      />
-      <PlayerList 
-        title="Team B" 
-        players={teamB.players} 
-        backgroundColor={theme.teamB.primary}
-        color={theme.teamB.secondary}
-      />
-    </Show>
-    <Show when={mode != "TEAMS"}>
-      <PlayerList title="Players" players={players} />
-    </Show>
     <Button onClick={toggleReady} colorScheme="green"  m={5} mt={10}>
       Ready
     </Button>
@@ -105,6 +88,27 @@ function Lobby() {
     <HiddenButton hidden={startHidden} onClick={startGame} colorScheme="red">
       Start Game
     </HiddenButton>
+    <Show when={mode == 'TEAMS'}>
+      <Flex>
+        <PlayerList 
+          title="Team A" 
+          players={teamA.players} 
+          backgroundColor={theme.teamA.primary}
+          color={theme.teamA.secondary}
+        />
+        <PlayerList 
+          title="Team B" 
+          players={teamB.players} 
+          backgroundColor={theme.teamB.primary}
+          color={theme.teamB.secondary}
+        />
+      </Flex>
+      
+    </Show>
+    <Show when={mode != "TEAMS"}>
+      <PlayerList title="Players" players={players} />
+    </Show>
+   
     
   </Box>;
 }
