@@ -68,16 +68,16 @@ function Lobby() {
     <Box  p={5}>
       <Flex align="center">
         <Text fontSize="lg">Mode: </Text>
-        <Select value={mode} onChange={onModeChange} maxW={200} ml={2}>
+        <Select disabled={clientId!=host} value={mode} onChange={onModeChange} maxW={200} ml={2}>
           <option value='COOP'>Co-Op (2)</option>
           <option value='ROTATE'>Rotation (3)</option>
           <option value='TEAMS'>Teams (4+)</option>
         </Select>
       </Flex>
-      <GameSetting field="Time Per Turn" value={maxTime}/>
-      <GameSetting field="Rounds" value={maxRounds}/>
+      <GameSetting disabled={clientId!=host} field="Time Per Turn" value={maxTime}/>
+      <GameSetting disabled={clientId!=host} field="Rounds" value={maxRounds}/>
       <Show when={mode == "TEAMS"}>
-        <GameSetting field="Maximum Players" value={maxPlayers}/>
+        <GameSetting disabled={clientId!=host} field="Maximum Players" value={maxPlayers}/>
       </Show>
     </Box>
     <ModeRules mode={mode}/>
@@ -136,10 +136,11 @@ const HiddenButton = (props) =>{
 }
 
 const GameSetting = (props) =>{
-  const {field, value, onChange, placeholder, width=50} = props;
+  const {field, value, onChange, placeholder, width=50, ...rest} = props;
   return <Flex mt={2} align="center" >
     <Text fontSize="lg" mr={3}>{field}:</Text>
     <Input 
+      {...rest}
       width = {width} 
       value={value} 
       fontSize="lg"  
