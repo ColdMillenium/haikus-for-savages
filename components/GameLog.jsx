@@ -45,12 +45,12 @@ function GameLog({containerRef}) {
               return <Box key={log.time}> 
                 <Text 
                   color="grey" 
-                  fontWeight="bold" 
-                  fontSize="md"
+                  fontWeight="light" 
+                  fontSize="sm"
                 >
-                  {hr%12}:{min<10? "0"+ min: min}{hr>=12?"pm":"am"}
+                  {hr==0?12:hr%12}:{min<10? "0"+ min: min} {hr>=12?"pm":"am"}
                 </Text> 
-                <Text mb={1} fontSize="md" > 
+                <Text mb={2} fontSize="md" > 
                   {msg}
                 </Text>
               </Box>
