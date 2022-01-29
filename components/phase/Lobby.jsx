@@ -56,7 +56,7 @@ function Lobby() {
   }
   
   const copyRoomId = () =>{
-    const url = `${process.env.CLIENT_SITE}/JoinGame?roomId=${roomId}`;
+    const url = `${process.env.NEXT_PUBLIC_CLIENT_SITE}/JoinGame?roomId=${roomId}`;
     navigator.clipboard.writeText(url);;
   }
   return <Box  p={5} width="100%">

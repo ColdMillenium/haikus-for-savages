@@ -44,7 +44,7 @@ const useStore = create((set,get) => ({
   },
   connect: (username) => set({ username: username}),
   setSocket: (socket) => {
-       socket.current = io(process.env.GAME_SERVER, {
+       socket.current = io(process.env.NEXT_PUBLIC_GAME_SERVER, {
       reconnectionDelayMax: 10000,
       query: {
         auth: "123"
