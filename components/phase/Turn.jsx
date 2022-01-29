@@ -42,28 +42,26 @@ function Turn() {
       <Center>
         <Card hidden={hideCard()} card={currCard}/>
       </Center>
-      <Show when={clientsRole == "Speaker"}>
-        <Flex>
-          <PileButton 
-            disabled={turnOver}
-            type="OOPS" 
-            score={playedCards.oops.length} 
-            onClick={playCard}
+      <Flex>
+        <PileButton 
+          disabled={turnOver || clientsRole != "Speaker"}
+          type="OOPS" 
+          score={playedCards.oops.length} 
+          onClick={playCard}
+        />
+        <PileButton 
+          disabled={turnOver || clientsRole != "Speaker"}
+          type="GOOD" 
+          score={playedCards.good.length} 
+          onClick={playCard}
           />
-          <PileButton 
-            disabled={turnOver}
-            type="GOOD" 
-            score={playedCards.good.length} 
-            onClick={playCard}
-            />
-          <PileButton 
-            disabled={turnOver}
-            type="GREAT" 
-            score={playedCards.great.length} 
-            onClick={playCard}
-          />
-        </Flex>
-      </Show>
+        <PileButton 
+          disabled={turnOver || clientsRole != "Speaker"}
+          type="GREAT" 
+          score={playedCards.great.length} 
+          onClick={playCard}
+        />
+      </Flex>
       <Show when={clientsRole == "Audience"}>
         <Text> 
           Listen carefully to the Speaker!
@@ -121,16 +119,13 @@ const Timer = (props) => {
     // }
     let interval;
     if(timerOn){
-      console.log("hey")
       interval = setInterval(function(){
-        console.log(Date.now() - timeStart);
         if(Date.now() - timeStart > timeLeft){
           console.log("time is up!")
           setTurnOver(true)
           return;
         }
         if(time <= 0){
-          
           setTimerOn(false);
           setTurnOver(true)
           setTime(0);
