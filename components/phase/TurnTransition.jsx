@@ -25,8 +25,11 @@ function TurnTransition() {
   const startTurn = useStore(store => () =>store.playerAction(store.ACTION.START_TURN))
   const [isYourTeamTurn, setIsYourTeamTurn] = useState(false);
   const [readyToStart, setReadyToStart] = useState(false);
+  const [clientReady, setClientReady] = useState(false);
 
+  
 
+  
   //Is it your team's turn?
   useEffect(()=>{
     if(currTeam == clientsTeam){
@@ -39,6 +42,14 @@ function TurnTransition() {
  
   //Are necessary players ready to start?
   useEffect(()=>{
+    if(clientsRole == "Speaker" && speakerReady ||
+      clientsRole == "Audience" && audienceReady || 
+      clientsRole == "Punisher" && punisherReady
+    ){
+      setClientReady(true);
+    }else{
+      setClientReady(false);
+    }
     if(mode == "COOP"){
       setReadyToStart(speakerReady && audienceReady);
     }else if(mode == "ROTATE"){
@@ -46,7 +57,7 @@ function TurnTransition() {
     }else{//TEAMS
       setReadyToStart(speakerReady && punisherReady);
     }
-  }, [speakerReady, audienceReady, punisherReady, mode])
+  }, [speakerReady, audienceReady, punisherReady, mode, clientsRole])
 
   const getTeamColor = () => {
     if(clientsTeam == "teamA"){
@@ -60,7 +71,7 @@ function TurnTransition() {
     h="100%" 
   >
     <Center h="100%" w="100%">
-      <Flex align="center" justify="center" direction="column" boxShadow="md" p={5} rounded={5}>
+      <Flex align="center" justify="center" direction="column" boxShadow="md" p={5} rounded={5} width={350} h={350}>
         <Show when={mode == "TEAMS"}>
           <Text 
             fontSize="4xl" 
@@ -81,8 +92,11 @@ function TurnTransition() {
           mode={mode} 
           onClick={roleReady}
           backgroundColor={getTeamColor()}
+          clientReady={clientReady}
+          readyToStart={readyToStart}
         />
         <Hide when={readyToStart && clientsRole=="Speaker"}>
+        <Box h={50}>
           <ReadyStatuses 
             mode={mode} 
             speakerReady={speakerReady} 
@@ -92,11 +106,14 @@ function TurnTransition() {
             punisher={punisher}
             speaker={speaker}
           />
+          </Box>
         </Hide>
         <Show when={readyToStart && clientsRole=="Speaker"}>
-          <Button  colorScheme="red" size='md' onClick={startTurn}>
-            Start Turn!
-          </Button>
+          <Center h={50}>
+            <Button  colorScheme="green" size='md' onClick={startTurn}>
+              Start Turn!
+            </Button>
+          </Center>
         </Show>
       </Flex>
     </Center>
@@ -107,7 +124,7 @@ function TurnTransition() {
 }
 
 const RoleDisplay = props =>{
-  const {onClick, role, mode, backgroundColor} = props;
+  const {onClick, role, mode, backgroundColor, clientReady, readyToStart} = props;
   const color = mode == 'TEAMS'? "white" : "black"
   return <Hide when={ (role=="Audience" && mode == 'TEAMS') || role == ""}>
     <Flex 
@@ -117,16 +134,22 @@ const RoleDisplay = props =>{
       backgroundColor={backgroundColor} 
       rounded={5} 
       m={3}
+      width={290}
       > 
         <Text color={color} fontSize="lg">You are the <strong>{role}</strong></Text>
-        <Text color={color} fontSize="sm">When you{`'`}re ready to begin, click ready</Text>
+        <Text color={color} fontSize="sm">
+          <Show when={readyToStart}>Waiting for Speaker to start the turn</Show>
+          <Show when={clientReady && !readyToStart}>Waiting for other players to ready</Show>
+          <Show when={!clientReady}>When you{`'`}re ready to begin, click ready</Show>
+        </Text>
         <Button 
           mt={3} 
-          colorScheme="green" 
+          colorScheme={clientReady? 'red':'green'} 
           size="sm"
           onClick={onClick}
         >
-          Ready!
+
+          {clientReady? "Not Ready!": "Ready!"}
         </Button>
     </Flex>
   </Hide>
