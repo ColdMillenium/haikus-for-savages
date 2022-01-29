@@ -1,7 +1,7 @@
 import React , {useEffect, useState}from 'react';
 import useStore from '../../store';
 import Card from '../Card'
-import {Center, Stack, Flex, Button, Text} from '@chakra-ui/react'
+import {Center, Stack, Flex, Button, Text, Box} from '@chakra-ui/react'
 import {Show, Hide} from '../Conditional';
 import PunishmentModal from '../PunishmentModal';
 
@@ -62,10 +62,14 @@ function Turn() {
           onClick={playCard}
         />
       </Flex>
-      <Show when={clientsRole == "Audience"}>
+      <Show when={!turnOver && clientsRole == "Audience"}>
         <Text> 
           Listen carefully to the Speaker!
         </Text>
+      </Show>
+      <Show when={turnOver && clientsRole != "Speaker"}>
+        <Box m={3}> Waiting for Speaker to end turn...</Box>
+       
       </Show>
       <Show when={clientsRole == "Punisher"}>
         <Button 
@@ -77,6 +81,7 @@ function Turn() {
             Punish
           </Button>
       </Show>
+
       <Show when={turnOver && clientsRole == "Speaker"}>
         <Button 
           onClick={endTurn} 
