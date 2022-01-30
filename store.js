@@ -23,6 +23,7 @@ const useStore = create((set,get) => ({
   currTeam: "",
   gameLogOpen: false,
   gameLog: [],
+  disconnectedInGame: false,
   theme:{
     teamA:{
       primary: "red.600",
@@ -44,11 +45,14 @@ const useStore = create((set,get) => ({
   },
   connect: (username) => set({ username: username}),
   setSocket: (socket) => {
-       socket.current = io(process.env.NEXT_PUBLIC_GAME_SERVER, {
-      reconnectionDelayMax: 10000,
-      query: {
-        auth: "123"
-      }
+    socket.current = io(process.env.NEXT_PUBLIC_GAME_SERVER, {
+        reconnection: true,
+        reconnectionDelay: 1000,
+        reconnectionDelayMax: 5000,
+        reconnectionAttempts: Infinity,
+        query: {
+          auth: "123"
+        }
     });
     set({socket:socket});
 
@@ -57,19 +61,43 @@ const useStore = create((set,get) => ({
 
 
     socket.current.on("socketId", (id) => {
-      console.log("my id is : " + id);
+      console.log(`Client <${id}> is connected to the server!`);
+      if(get().disconnectedInGame){
+        console.log(`Reconnecting to old Room...`);
+        const room = clone(get().room);
+        playerRequest(get, ACTION.RECONNECT_IN_GAME, {
+          username: get().username,
+          room
+        })
+      }
       set({
         connected: true,
         clientId: id
       });
     })
 
+    socket.current.on("disconnect", (reason) => {
+      console.log(`Client <${get().clientId}> is disconnected from the server...`);
+      console.log("reason:", reason);
+    
+        // the disconnection was initiated by the server, you need to reconnect manually
+        console.log(`Server Disconnected!`);
+        if(get().room.id){
+          console.log(`attempting to reconnect to room...`);
+          set({disconnectedInGame: true})
+        }
+        // set({connected: fasle})
+      
+    })
+    socket.current.on("reconnectedToRoom", () =>{
+      console.log(`Client has been reconnected to room ${room.id}!`);
+      set({disconnectedInGame: false})
+    })
+
     socket.current.on("newRoom", roomId => {
-      console.log(`roomId:${roomId} has been created in server`)
+      console.log(`room <${roomId}> has been created in server`)
       playerRequest(get, ACTION.JOIN_ROOM, {username: get().username, roomId});
     });
-
-    // socket.current.on("joinRoomError", joinRoomError => set({joinRoomError}))
 
     socket.current.on("playerData", playerData => {
       const {players, hostName, teamA, teamB} = playerData;
@@ -98,10 +126,6 @@ const useStore = create((set,get) => ({
         clientsRole, 
         currTeam,
       });
-    })
-
-    socket.current.on("testRoom", room => {
-      console.log(room);
     })
   },
   playerAction: (event, data) => playerRequest(get, event, data),
@@ -173,6 +197,18 @@ const findClientsRole = (get, room) =>{
     role = "";
   }
   return role;
+}
+
+const clone = (instance) => {
+  return Object.assign(
+    Object.create(
+      // Set the prototype of the new object to the prototype of the instance.
+      // Used to allow new object behave like class instance.
+      Object.getPrototypeOf(instance),
+    ),
+    // Prevent shallow copies of nested structures like arrays, etc
+    JSON.parse(JSON.stringify(instance)),
+  );
 }
 
 

@@ -14,6 +14,7 @@ const ACTION = {
   EXECUTE_PUNISHMENT : "executePunishment",
   TO_LOBBY : "toLobby",
   RESTART : "restart",
+  RECONNECT_IN_GAME : "reconnectInGame",
 }
 
 export default ACTION;
