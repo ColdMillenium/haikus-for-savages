@@ -18,13 +18,13 @@ function Game() {
   const sayHi = useStore(store => store.sayHi)
   const { roomId } = router.query;
 
-  useEffect(() =>{
-    if(!connected || username == "" || players.includes(username)){
-      if(roomId){
-        router.push(`/JoinGame?roomId=${roomId}`)
-      }
-    }
-  }, [connected, username, players, roomId, router])
+  // useEffect(() =>{
+  //   if(!connected || username == "" || players.includes(username)){
+  //     if(roomId){
+  //       router.push(`/JoinGame?roomId=${roomId}`)
+  //     }
+  //   }
+  // }, [connected, username, players, roomId, router])
 
   const getPhase = {
     "LOBBY":<Lobby/>,
