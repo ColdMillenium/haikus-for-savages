@@ -7,9 +7,6 @@ import VideoBackground from './../components/VideoBackground';
 //https://tenor.com/view/smiling-geicos-caveman-3doors-down-let-me-be-myself-song-smirk-gif-20065301
 export default function Home() {
   const router = useRouter();
-  console.log("game server", process.env.NEXT_PUBLIC_GAME_SERVER);
-  console.log("client site", process.env.NEXT_PUBLIC_CLIENT_SITE);
-
   return (
     <Box className={styles.container}>
       <Head>
@@ -47,9 +44,6 @@ export default function Home() {
           Join Game
         </Button>
       </main>
-      <VideoBackground height={300} width={300}>
-        Holler
-      </VideoBackground>
     </Box>
   )
 }
