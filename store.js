@@ -20,6 +20,8 @@ const useStore = create((set,get) => ({
   roomId: "",
   clientsTeam: null,
   clientsRole: "",
+  clientReady: false,
+  readyToStart: false,
   currTeam: "",
   gameLogOpen: false,
   gameLog: [],
@@ -126,6 +128,8 @@ const useStore = create((set,get) => ({
         clientsRole, 
         currTeam,
       });
+      setClientReady(set,get);
+      setReadyToStart(set,get)
     })
   },
   playerAction: (event, data) => playerRequest(get, event, data),
@@ -197,6 +201,34 @@ const findClientsRole = (get, room) =>{
     role = "";
   }
   return role;
+}
+
+const setClientReady = (set, get) =>{
+  const {clientsRole, room } = get()
+  const {speakerReady, audienceReady, punisherReady} = room;
+  if(clientsRole == "Speaker" && speakerReady ||
+    clientsRole == "Audience" && audienceReady || 
+    clientsRole == "Punisher" && punisherReady
+  ){
+    set({clientReady:true})
+  }else{
+    set({clientReady:false})
+  }
+};
+
+const setReadyToStart = (set, get) =>{
+  const {mode, room} = get();
+  const {speakerReady, audienceReady, punisherReady} = room;
+
+  let readyToStart = speakerReady && audienceReady;
+  console.log(speakerReady, audienceReady, readyToStart);
+  if(mode == "ROTATE"){
+    readyToStart = speakerReady && audienceReady && punisherReady;
+  }else if(mode == "TEAMS"){
+    readyToStart = speakerReady && punisherReady
+  }
+  console.log(readyToStart);
+  set({readyToStart});
 }
 
 const clone = (instance) => {
