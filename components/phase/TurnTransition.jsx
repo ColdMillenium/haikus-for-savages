@@ -8,8 +8,6 @@ import {IoEarOutline, IoSkull} from 'react-icons/io5'
 import {HiSpeakerphone} from 'react-icons/hi'
 import {AiOutlineStop} from 'react-icons/ai'
 
-
-
 function TurnTransition() {
   const {
     punisherReady,
@@ -36,9 +34,6 @@ function TurnTransition() {
   const [readyToStart, setReadyToStart] = useState(false);
   const [clientReady, setClientReady] = useState(false);
 
-  
-
-  
   //Is it your team's turn?
   useEffect(()=>{
     if(currTeam == clientsTeam){
@@ -80,22 +75,19 @@ function TurnTransition() {
     h="100%" 
   >
     <Center h="100%" w="100%">
-      <Flex align="center" justify="center" direction="column" boxShadow="md" p={5} rounded={5} width={350} h='fit-content'>
-        {/* <Show when={mode == "TEAMS"}>
-          <Text 
-            fontSize="4xl" 
-            mb={3} 
-            fontWeight="bold" 
-            color={currTeam == "teamA"? theme.teamA.primary: theme.teamB.primary}
-          >
-            {isYourTeamTurn? "Your Team's Turn": "Enemy Team's Turn"}
-          </Text>
-        </Show> */}
-
-          <Text fontSize="2xl" fontWeight="bold">
-            Next Turn
-          </Text>
-       
+      <Flex 
+        align="center" 
+        justify="center" 
+        direction="column" 
+        boxShadow="md" p={5} 
+        rounded={5} 
+        width={350} 
+        h='fit-content'
+        backgroundColor="white"
+      >
+        <Text fontSize="2xl" fontWeight="bold">
+          Next Turn
+        </Text>
         <RoleDisplay 
           username={username}
           role={clientsRole} 

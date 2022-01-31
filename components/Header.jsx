@@ -12,6 +12,7 @@ function Header() {
       justify="center" 
       p={5} 
       boxShadow="lg"
+      backgroundColor="White"
     >
       <Text fontSize="2xl" fontWeight="bolder">Haikus For Savages</Text>
       <Spacer/>
