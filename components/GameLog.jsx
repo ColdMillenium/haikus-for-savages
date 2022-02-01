@@ -35,22 +35,23 @@ function GameLog({containerRef}) {
           </DrawerHeader>
           
           <DrawerBody>
-            {gameLog.map(log =>{
+            {gameLog.map((log, i) =>{
               let msg = log.msg;
               const isUsername = (word) => players.map(p=> p.username).includes(word);
-              msg = msg.split(" ").map(w => isUsername(w)?<strong style={{color:"green"}}> {w} </strong>: <> {w} </>)
+              msg = msg.split(" ").map(w => isUsername(w)?<strong key={i} style={{color:"green"}}> {w} </strong>: <p key={i}> {w} </p>)
               const hr = new Date(log.time).getHours();
               const min = new Date(log.time).getMinutes()
-
-              return <Box key={log.time}> 
+              console.log(i)
+              return <Box key={i}> 
                 <Text 
                   color="grey" 
                   fontWeight="light" 
                   fontSize="sm"
+             
                 >
                   {hr==0?12:hr%12}:{min<10? "0"+ min: min} {hr>=12?"pm":"am"}
                 </Text> 
-                <Text mb={2} fontSize="md" > 
+                <Text mb={2} fontSize="md"> 
                   {msg}
                 </Text>
               </Box>

@@ -42,7 +42,7 @@ const ReadyStatuses = () =>{
         }
       }
     
-      return <Flex>
+      return <Flex key={p.id}>
         <RoleIcon role={
           isSpeaker? "Speaker":
           isAudience?"Audience":
