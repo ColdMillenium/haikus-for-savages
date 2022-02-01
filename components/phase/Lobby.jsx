@@ -76,10 +76,10 @@ function Lobby() {
           <option value='TEAMS'>Teams (4+)</option>
         </Select>
       </Flex>
-      <GameSetting disabled={clientId!=host} field="Time Per Turn" value={maxTime}/>
-      <GameSetting disabled={clientId!=host} field="Rounds" value={maxRounds}/>
+      <GameSetting disabled={clientId!=host} field="Time Per Turn" value={maxTime} onChange={()=>{}}/>
+      <GameSetting disabled={clientId!=host} field="Rounds" value={maxRounds} onChange={()=>{}}/>
       <Show when={mode == "TEAMS"}>
-        <GameSetting disabled={clientId!=host} field="Maximum Players" value={maxPlayers}/>
+        <GameSetting disabled={clientId!=host} field="Maximum Players" value={maxPlayers} onChange={()=>{}}/>
       </Show>
     </Box>
     <ModeRules mode={mode}/>
