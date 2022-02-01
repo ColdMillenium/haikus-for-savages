@@ -15,7 +15,7 @@ function ModeRules(props) {
   }
 
   return <Box ml={5} p={5} backgroundColor="gray.200" color="grey.800" width='fit-content' rounded={5}>
-    <Text fontSize="3xl" fontWeight="bold" mb={3}><bold>{title[mode]}</bold></Text>
+    <Text fontSize="3xl" fontWeight="bold" mb={3}><strong>{title[mode]}</strong></Text>
     <RulesContainer>
       {description[mode]}
     </RulesContainer>
