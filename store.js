@@ -221,13 +221,11 @@ const setReadyToStart = (set, get) =>{
   const {speakerReady, audienceReady, punisherReady} = room;
 
   let readyToStart = speakerReady && audienceReady;
-  console.log(speakerReady, audienceReady, readyToStart);
   if(mode == "ROTATE"){
     readyToStart = speakerReady && audienceReady && punisherReady;
   }else if(mode == "TEAMS"){
     readyToStart = speakerReady && punisherReady
   }
-  console.log(readyToStart);
   set({readyToStart});
 }
 
