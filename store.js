@@ -125,13 +125,10 @@ const useStore = create((set,get) => ({
 
       //No last card starting new players turn
       if(room.phase == "TURN" && get().room.phase == "TURN_TRANSITION"){
-        console.log("new Turn. No Last card");
         set({lastCard:null});
       }
       if(room.phase == "TURN" && room.currCard?.GOOD != get().room.currCard?.GOOD ){
-        console.log("new current card. changing last card");
         set({lastCard:get().room.currCard});
-     
       }
 
       set({
