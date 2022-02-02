@@ -48,35 +48,35 @@ export const punishments = [
   },
   { 
     gif : GIFS.BAKA, 
-    sounds: SOUNDS.ANTA_BAKA
+    sound: SOUNDS.ANTA_BAKA
   },
   { 
     gif : GIFS.ANIME_GIRL_CRYING, 
-    sounds: SOUNDS.YAMATE
+    sound: SOUNDS.YAMATE
   },
   { 
     gif : GIFS.TAIGA_CRYING, 
-    sounds: SOUNDS.YAMATE_KUDASAI,
+    sound: SOUNDS.YAMATE_KUDASAI,
   },
   { 
     gif : GIFS.STEVE_HARVY_ACTIVATED, 
-    sounds: SOUNDS.NANI,
+    sound: SOUNDS.NANI,
   },
   { 
     gif : GIFS.SPONGE_BOB_CAVEMEN, 
-    sounds: SOUNDS.CAVEMAN_BONK,
+    sound: SOUNDS.CAVEMAN_BONK,
   },
   { 
     gif : GIFS.BART_DUMPING_CAKE, 
-    sounds: SOUNDS.LOSING_HORN,
+    sound: SOUNDS.LOSING_HORN,
   },
   { 
     gif : GIFS.SUBARU_FREAKOUT, 
-    sounds: SOUNDS.RE_ZERO_CREEPY,
+    sound: SOUNDS.RE_ZERO_CREEPY,
   },
   { 
     gif : GIFS.SUBARU_ZONEDOUT, 
-    sounds: SOUNDS.RE_ZERO_WEIRD,
+    sound: SOUNDS.RE_ZERO_WEIRD,
   },
 ]
 
