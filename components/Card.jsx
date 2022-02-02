@@ -19,6 +19,7 @@ function Card({hidden, card}) {
     maxWidth={150} 
     m={5}
     overflow="hidden"
+    backgroundColor="white"
   >
     <Flex 
       direction="column" 
