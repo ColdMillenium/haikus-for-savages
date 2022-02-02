@@ -41,7 +41,6 @@ function GameLog({containerRef}) {
               msg = msg.split(" ").map(w => isUsername(w)?<strong key={i} style={{color:"green"}}> {w} </strong>: <p key={i}> {w} </p>)
               const hr = new Date(log.time).getHours();
               const min = new Date(log.time).getMinutes()
-              console.log(i)
               return <Box key={i}> 
                 <Text 
                   color="grey" 
