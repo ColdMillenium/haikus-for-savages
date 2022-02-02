@@ -15,36 +15,25 @@ import {
   Spacer,
   Box
 } from '@chakra-ui/react'
-import { useEffect , useMemo} from 'react';
+import { useEffect , useState} from 'react';
 import useStore from '../store';
-
-
-const imageUrls = [
-  'https://i.giphy.com/media/26gswNS2Dm4q6600g/giphy.webp', 
-  'https://i.giphy.com/media/11jPPp3IdY1wEU/giphy.webp',
-  'https://i.imgur.com/QxmkxWX.gif',
-  'https://i.giphy.com/media/TI9HiyUqRm75jPyKQ5/giphy.webp',
-]
-
-const zaWaRuDo = "https://www.myinstants.com/media/sounds/hd-stardust-crusaders-za-warudo.mp3";
-
-const randomImg = () => {
-  let list = [...imageUrls].sort(() => Math.random() - 0.5);
-  return list[0];
-}
+import {punishments} from '../utils/effects'
 
 const PunishmentModal = ({open}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const punishmentEffectNum = useStore(store => store.room.punishmentEffectNum)
   const acceptPunishment = useStore(store => () =>store.playerAction(store.ACTION.ACCEPT_PUNISHMENT))
   const rejectPunishment = useStore(store => () => store.playerAction(store.ACTION.REJECT_PUNISHMENT))
+  const [punishmentImage, setPunishmentImage] = useState()
   const {clientsRole} = useStore(store => store)
-  console.log("clientsRole", clientsRole);
-  const sound = new Audio(zaWaRuDo);
+  
   
   useEffect(()=>{
     if(open){
+      const num = Math.floor(punishmentEffectNum * punishments.length - 1);
+      const sound = new Audio(punishments[num].sound);
+      setPunishmentImage(punishments[num].gif)
       sound.play();
-      
     }
   },[open])
   return (
@@ -58,7 +47,7 @@ const PunishmentModal = ({open}) => {
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody m={0} p={0}>
-            <Image with="100%" src={randomImg()} backgroundColor="red" alt='Funny Punishment Gif' />
+            <Image with="100%" src={punishmentImage} backgroundColor="red" alt='Funny Punishment Gif' />
             <Center>
               <Text textAlign="center" p={20} pt={5} pb={5}>Uh oh. Looks like the <strong>Punisher</strong> thinks the <strong>Speaker</strong> goofed up</Text>
             </Center>       
