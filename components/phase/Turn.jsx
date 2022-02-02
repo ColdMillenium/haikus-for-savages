@@ -4,6 +4,9 @@ import Card from '../Card'
 import {Center, Stack, Flex, Button, Text, Box} from '@chakra-ui/react'
 import {Show, Hide} from '../Conditional';
 import PunishmentModal from '../PunishmentModal';
+import {SOUNDS} from '../../utils/effects'
+
+const soundVolume = 0.05;
 
 function Turn() {
   const {
@@ -15,7 +18,8 @@ function Turn() {
     timeStart, 
     roundNum, 
     turnNum,
-    punishmentInProgress
+    punishmentInProgress,
+    lastPointsEarned
   } = useStore(store => store.room)
   const {clientId, clientsRole ,room } = useStore(store => store);
   const playCard = useStore(store => (type) =>store.playerAction(store.ACTION.PLAY_CARD, type))
@@ -26,6 +30,19 @@ function Turn() {
     return clientsRole != "Punisher" && clientsRole!="Speaker"
   }
   console.log(room);
+  if(lastPointsEarned == -1){
+    const sound = new Audio(SOUNDS.BRUH);
+    sound.volume = soundVolume
+    sound.play();
+  }else if (lastPointsEarned == 1){
+    const sound = new Audio(SOUNDS.WWE_RING_BELL);
+    sound.volume = soundVolume
+    sound.play();
+  }else if (lastPointsEarned == 3){
+    const sound = new Audio(SOUNDS.ANIME_WOW);
+    sound.volume = soundVolume
+    sound.play();
+  }
   return <Center h="100%" w="100%" overflow="hidden">
     
     <Flex direction="column" align="center">
