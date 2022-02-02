@@ -51,6 +51,7 @@ function Turn() {
   const executePunishment = useStore(store => () =>store.playerAction(store.ACTION.EXECUTE_PUNISHMENT))
   const [turnOver, setTurnOver] = useState(false);
   const [startOfCard, setStartOfCard] = useState(true);
+  const [soundPlaying, setSoundPlaying] = useState(false);
   const totalPoints = playedCards.oops.length * -1 + 
                       playedCards.good.length + 
                       playedCards.great.length * 3;
@@ -62,29 +63,30 @@ function Turn() {
     return clientsRole != "Punisher" && clientsRole!="Speaker"
   }
   
-  if(startOfCard){
-    if(lastPointsEarned == -1){
-      const sound = new Audio(SOUNDS.BRUH);
-      sound.volume = soundVolume
-      sound.play();
-    }else if (lastPointsEarned == 1){
-      const sound = new Audio(SOUNDS.WWE_RING_BELL);
-      sound.volume = soundVolume
-      sound.play();
-    }else if (lastPointsEarned == 3){
-      const sound = new Audio(SOUNDS.ANIME_WOW);
-      sound.volume = soundVolume
-      sound.play();
-    }
-  }
-  
-  //we use this to control the animations
   useEffect(()=>{
-    setStartOfCard(true);
+    if(startOfCard == false){
+      setStartOfCard(true);
+    }
+    if(soundPlaying == false && startOfCard){
+      if(lastPointsEarned == -1){
+        const sound = new Audio(SOUNDS.BRUH);
+        sound.volume = soundVolume
+        sound.play();
+      }else if (lastPointsEarned == 1){
+        const sound = new Audio(SOUNDS.WWE_RING_BELL);
+        sound.volume = soundVolume
+        sound.play();
+      }else if (lastPointsEarned == 3){
+        const sound = new Audio(SOUNDS.ANIME_WOW);
+        sound.volume = soundVolume
+        sound.play();
+      }
+      setSoundPlaying(false);
+    }
     setTimeout(()=>{
       setStartOfCard(false);
     },1000)
-  }, [lastCard])
+  }, [lastCard, setStartOfCard, lastPointsEarned, soundPlaying, setSoundPlaying])
 
   return <Center h="100%" w="100%" overflow="hidden">
 
@@ -156,19 +158,19 @@ function Turn() {
           disabled={turnOver || clientsRole != "Speaker"}
           type="OOPS" 
           score={playedCards.oops.length} 
-          onClick={placeInPile}
+          onClick={playCard}
         />
         <PileButton 
           disabled={turnOver || clientsRole != "Speaker"}
           type="GOOD" 
           score={playedCards.good.length} 
-          onClick={placeInPile}
+          onClick={playCard}
           />
         <PileButton 
           disabled={turnOver || clientsRole != "Speaker"}
           type="GREAT" 
           score={playedCards.great.length} 
-          onClick={placeInPile}
+          onClick={playCard}
         />
       </Flex>
       <Show when={!turnOver && clientsRole == "Audience"}>
