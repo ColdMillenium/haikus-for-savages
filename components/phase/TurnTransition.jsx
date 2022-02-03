@@ -1,13 +1,15 @@
-import React from 'react';
+import React , {useEffect, useState}from 'react';
 import {Show, Hide} from '../Conditional'
 import {Text ,Button, Box, Flex, Center} from '@chakra-ui/react'
 import useStore from '../../store'
 import RoleDisplay from '../RoleDisplay'
 import ReadyStatuses from '../ReadyStatuses'
+import {SOUNDS} from '../../utils/effects'
 
 function TurnTransition() {
   const {clientsRole, clientsTeam, readyToStart, theme} = useStore(store => store);
   const startTurn = useStore(store => () =>store.playerAction(store.ACTION.START_TURN))
+  
 
   const getTeamColor = () => {
     if(clientsTeam == "teamA"){
@@ -17,6 +19,12 @@ function TurnTransition() {
     }
     return "lightgrey"
   }
+
+  useEffect(() =>{
+    const startSound = new Audio(SOUNDS.AMONG_US_ROUND);
+    startSound.volume = 0.15;
+    startSound.play();
+  }, [])
 
   return <Center h="100%" w="100%">
     <Flex 
