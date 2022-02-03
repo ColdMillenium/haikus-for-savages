@@ -36,6 +36,12 @@ function CreateGame() {
     // router.push(`/Game/${randomRoomId()}`)
   }
 
+  const onEnter = (event) =>{
+    if(event.code == "Enter"){
+      handleMakeGame();
+    }
+  }
+
   return <Center height="100vh">
     
     <Stack spacing={5} p={20} rounded={5} boxShadow='md'>
@@ -46,6 +52,7 @@ function CreateGame() {
           
           width={200}
           value={name}
+          onKeyDown={onEnter}
           onChange={handleChange}
           placeholder='Your username' 
         />

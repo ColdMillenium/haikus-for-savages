@@ -72,6 +72,13 @@ function JoinGame() {
     }
   }
 
+  const onEnter = (event) =>{
+    if(event.code == "Enter"){
+      handleJoinGame();
+    }
+  }
+
+
   return <Center height="100vh">
     
     <Stack spacing={5} p={20} rounded={5} boxShadow='md'>
@@ -84,6 +91,7 @@ function JoinGame() {
           width={200}
           value={name}
           onChange={updateName}
+          onKeyDown={onEnter}
           placeholder='cool username' 
         />
       </Box>
@@ -93,6 +101,7 @@ function JoinGame() {
           width={200}
           value={roomIdInput}
           onChange={updateRoomId}
+          onKeyDown={onEnter}
           placeholder='Room ID' 
         />
       </Box>
