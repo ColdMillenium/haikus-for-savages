@@ -32,13 +32,16 @@ function Lobby() {
   const [startHidden, setStartHidden] = useState(true);
   const [switchTeamsHidden, setSwitchTeamsHidden] = useState(true);
 
+  const everyoneReady = () =>{
+    return players.filter(p => p.ready).length == players.length;
+  }
   useEffect(() =>{
     if(mode == "TEAMS"){
       setSwitchTeamsHidden(false);
     }else{
       setSwitchTeamsHidden(true);
     }
-    if(clientId == host && players.filter(p => p.ready).length == players.length){
+    if(clientId == host && everyoneReady()){
       if( (mode == "COOP" && partySize == 2) ||
       (mode == "ROTATE" && partySize == 3) ||
       (mode == "TEAMS" && partySize >= 4)
@@ -48,7 +51,7 @@ function Lobby() {
       }
     }
     setStartHidden(true);
-  },[players, mode, host, partySize, clientId])
+  },[players, mode, host, partySize, clientId, everyoneReady])
 
   const onModeChange = (e) =>{
 
@@ -83,8 +86,16 @@ function Lobby() {
       </Show>
     </Box>
     <ModeRules mode={mode}/>
-    
-    <Button onClick={toggleReady} colorScheme="green"  m={5} mt={10}>
+    <Text ml={5} mt={5}>
+      <Show when={everyoneReady()}>
+        <i>Waiting on host to start game...</i>
+      </Show>
+      <Show when={!everyoneReady()}>
+        <i>Waiting on all players to Ready...</i>
+      </Show>
+     
+    </Text>
+    <Button onClick={toggleReady} colorScheme="green"  ml={5} >
       Ready
     </Button>
     <HiddenButton hidden={switchTeamsHidden} onClick={switchTeams}>
@@ -126,7 +137,7 @@ const HiddenButton = (props) =>{
       <Hide when={hidden}>
         <Button 
           m={5} 
-          mt={10}
+  
           onClick={onClick}
           {...rest}
         >
