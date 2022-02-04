@@ -30,7 +30,7 @@ const PunishmentModal = ({open}) => {
   
   useEffect(()=>{
     if(open){
-      const num = Math.floor(punishmentEffectNum * punishments.length - 1);
+      const num = Math.floor(punishmentEffectNum * (punishments.length - 1));
       const sound = new Audio(punishments[num].sound);
       setPunishmentImage(punishments[num].gif)
       sound.play();
