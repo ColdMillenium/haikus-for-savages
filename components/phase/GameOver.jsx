@@ -1,14 +1,13 @@
-import React , {useEffect, useState}from 'react';
+import React from 'react';
 import useStore from '../../store';
-import Card from '../Card'
-import {Center, Stack, Flex, Button, Text, Box, Image, Spacer} from '@chakra-ui/react'
+import {Center, Flex, Button, Text, Box, Spacer} from '@chakra-ui/react'
 import {Show} from '../Conditional';
 import VideoBackground from '../VideoBackground';
+import Score from '../Score'
 
-const imgUrl = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/aa5f3401-4b21-4659-bf15-300e3205fac7/d378kyu-aa12e584-0d8e-4918-aac3-bec21f566dea.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2FhNWYzNDAxLTRiMjEtNDY1OS1iZjE1LTMwMGUzMjA1ZmFjN1wvZDM3OGt5dS1hYTEyZTU4NC0wZDhlLTQ5MTgtYWFjMy1iZWMyMWY1NjZkZWEuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.S5NGhpLLtX3GK52HpKUuGhya_3SHPAbjddg9SvtzZHo"
 function GameOver() {
-  const { mode, score, players, teamA, teamB, host, gameOverVideo} = useStore(store => store.room);
-  const {clientsTeam, clientId, theme} = useStore(store => store);
+  const { mode,  players, teamA, teamB, host, gameOverVideo} = useStore(store => store.room);
+  const { clientId} = useStore(store => store);
   const toLobby = useStore(store => () =>store.playerAction(store.ACTION.TO_LOBBY))
   const restart = useStore(store => () =>store.playerAction(store.ACTION.RESTART))
 
@@ -41,8 +40,7 @@ function GameOver() {
   }
   return <Center h="100%" w="100%">
     <Flex direction="column" align="center" justify="center">
-    <Text fontSize="6xl" fontWeight="bold">Game Over!</Text>
-      {/* <Image src={imgUrl} alt='Funny Game Over Image' /> */}
+      <Text fontSize="6xl" fontWeight="bold">Game Over!</Text>
       <Box background="black" h={250} mb="100px">
         <Box h="60px"></Box>
         <Box pointerEvents="none" overflow="hidden"  height="250" backgroundColor="black">
@@ -55,18 +53,7 @@ function GameOver() {
           <Show when={mode != "COOP"}>{getWinners()}</Show>
         </Text>
       </Box>
-      
-      
-      
-      <Score
-        mode={mode}
-        score={score}
-        players={players}
-        teamA={teamA}
-        teamB={teamB}
-        clientsTeam={clientsTeam}
-        theme={theme}
-      />
+      <Score/>
       <Show when={true}>
         <Button disabled={clientId!=host} onClick={restart} m={3}>Restart</Button>
       </Show>
@@ -76,52 +63,5 @@ function GameOver() {
     </Flex>
   </Center>;
 }
-
-const Score = ({mode, ...rest}) =>{
-  const displayScore = {
-    COOP: <CoopScore {...rest}/>,
-    ROTATE: <RotateScore {...rest}/>,
-    TEAMS: <TeamsScore {...rest}/>
-  }
-  return displayScore[mode]
-  
-}
-const CoopScore = ({score}) =>{
-  return <>
-    <Text>Total Score: {score} points</Text>
-    <Show when={score<5}>So like...did you try?</Show>
-    <Show when={score>5 && score<10}>Wow. Almost...not terrible..</Show>
-    <Show when={score>=10 && score<21}>{`You think you're hot shit dontcha...You're not...`}</Show>
-    <Show when={score>=21 && score<30}>MUDA MUDA MUDA MUDA MUDA MUDAAAAA!</Show>
-    <Show when={score>=31 && score<49}>Oh? {`You're`} approaching me? Instead of running away, {`you're`} coming right to me</Show>
-    <Show when={score>=50}>HO HOOOOO...then come as close as you like...</Show>
-  </>
-}
-const RotateScore = ({players}) =>{
-  console.log("before sort", players);
-  players = players.sort((a,b) => b.score - a.score);
-  console.log(players);
-  return <>{
-    players.map(p =>{
-      return <Text fontSize="2xl" key={p.id}>{p.username}: {p.score} points</Text>
-    })
-  }</>
-}
-
-const TeamsScore = ({teamA, teamB, clientsTeam, theme}) =>{
-  return <Flex align="center" w={480}>
-    <Text color={theme.teamA.primary} fontSize="xl" fontWeight="Bold">
-      Team A: {teamA.score} points
-    </Text>
-    <Spacer/>
-    <Text fontSize="2xl">VS</Text>
-    <Spacer/>
-    <Text color={theme.teamB.primary} fontSize="xl" fontWeight="Bold">
-      Team B: {teamB.score} points
-    </Text>
-  </Flex>
-}
-
-
 
 export default GameOver;

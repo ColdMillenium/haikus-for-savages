@@ -5,6 +5,7 @@ import useStore from '../../store'
 import RoleDisplay from '../RoleDisplay'
 import ReadyStatuses from '../ReadyStatuses'
 import {SOUNDS} from '../../utils/effects'
+import Score from '../Score';
 
 function TurnTransition() {
   const {clientsRole, clientsTeam, readyToStart, theme} = useStore(store => store);
@@ -37,6 +38,7 @@ function TurnTransition() {
       h='fit-content'
       backgroundColor="white"
     >
+      <Score/>
       <Text fontSize="2xl" fontWeight="bold">
         Next Turn
       </Text>

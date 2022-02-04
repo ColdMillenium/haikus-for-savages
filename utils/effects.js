@@ -30,7 +30,8 @@ export const SOUNDS = {
   LOSING_HORN: "https://www.myinstants.com/media/sounds/the-price-is-right-losing-horn.mp3,",
   DUMMY_YEAH: "https://www.myinstants.com/media/sounds/dummy-yah.mp3",
   ANTA_BAKA: "https://www.myinstants.com/media/sounds/anta-baka.mp3",
-  WWE_RING_BELL: "https://www.myinstants.com/media/sounds/wwe-bell.mp3" 
+  WWE_RING_BELL: "https://www.myinstants.com/media/sounds/wwe-bell.mp3",
+  SUCCESS_CHIME: "https://www.myinstants.com/media/sounds/success-chime.mp3"
 }
 
 export const punishments = [
