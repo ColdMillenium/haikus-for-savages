@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import useStore from '../store';
 import { Flex , Spacer, Text, Button} from '@chakra-ui/react';
 import SpeakerRulesModal from './SpeakerRulesModal'
+import Link from 'next/link'
 
 function Header() {
   const username = useStore(store => store.username)
@@ -16,7 +17,9 @@ function Header() {
       boxShadow="lg"
       backgroundColor="White"
     >
-      <Text fontSize="2xl" fontWeight="bolder">Haikus For Savages</Text>
+      <Link href="/">
+        <Text cursor="pointer" fontSize="2xl" fontWeight="bolder">Haikus For Savages</Text>
+      </Link>
       <Spacer/>
       <Text fontSize="lg" fontWeight="bold" mr={4}>Welcome {username}</Text>
       <Button mr={4} onClick={()=>setModalOpen(true)}>Rules</Button>
