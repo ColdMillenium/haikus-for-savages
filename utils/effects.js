@@ -29,7 +29,7 @@ export const SOUNDS = {
   ANIME_WOW: "https://www.myinstants.com/media/sounds/anime-wow-sound-effect.mp3",
   NANI: "https://www.myinstants.com/media/sounds/nanimp3.mp3",
   CAVEMAN_BONK: "https://www.myinstants.com/media/sounds/bonk_AgRFvsD.mp3",
-  LOSING_HORN: "https://www.myinstants.com/media/sounds/the-price-is-right-losing-horn.mp3,",
+  LOSING_HORN: "https://www.myinstants.com/media/sounds/the-price-is-right-losing-horn.mp3",
   DUMMY_YEAH: "https://www.myinstants.com/media/sounds/dummy-yah.mp3",
   ANTA_BAKA: "https://www.myinstants.com/media/sounds/anta-baka.mp3",
   WWE_RING_BELL: "https://www.myinstants.com/media/sounds/wwe-bell.mp3",
