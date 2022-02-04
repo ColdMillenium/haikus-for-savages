@@ -95,8 +95,8 @@ function Lobby() {
       </Show>
      
     </Text>
-    <Button onClick={toggleReady} colorScheme={clientReady? "green" :"red"}  ml={5} w={120}>
-      {clientReady? "Ready":"Not Ready!"}
+    <Button onClick={toggleReady} colorScheme={clientReady? "red" :"green"}  ml={5} w={120}>
+      {clientReady? "Not Ready!":"Ready"}
     </Button>
     <HiddenButton hidden={switchTeamsHidden} onClick={switchTeams}>
       Switch Teams
