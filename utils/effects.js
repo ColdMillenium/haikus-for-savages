@@ -11,6 +11,7 @@ export const GIFS = {
   SUBARU_FREAKOUT: "https://c.tenor.com/WtlvAQKd0s8AAAAC/anime-anime-cry.gif",
   SUBARU_ZONEDOUT: "https://c.tenor.com/3Ov_pUxfvNMAAAAC/rezero-shinimodori.gif",
   LAW_AND_ORDER: "https://i.giphy.com/media/1msK2c1s3lfyomkRmL/giphy.webp",
+  YOU_SHALL_NOT_PASS: "https://i.giphy.com/media/S6sZaHdqsGYFO/giphy.webp",
 
 }
 
@@ -34,6 +35,7 @@ export const SOUNDS = {
   WWE_RING_BELL: "https://www.myinstants.com/media/sounds/wwe-bell.mp3",
   SUCCESS_CHIME: "https://www.myinstants.com/media/sounds/success-chime.mp3",
   LAW_AND_ORDER: "https://www.myinstants.com/media/sounds/dun_dun_1.mp3",
+  YOU_SHALL_NOT_PASS: "https://www.myinstants.com/media/sounds/gandalf_shallnotpass.mp3"
 }
 
 export const punishments = [
@@ -84,6 +86,10 @@ export const punishments = [
   { 
     gif : GIFS.LAW_AND_ORDER, 
     sound: SOUNDS.LAW_AND_ORDER,
+  },
+  { 
+    gif : GIFS.YOU_SHALL_NOT_PASS, 
+    sound: SOUNDS.YOU_SHALL_NOT_PASS,
   },
 ]
 
