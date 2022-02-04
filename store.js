@@ -227,8 +227,8 @@ const setClientReady = (set, get) =>{
 };
 
 const setReadyToStart = (set, get) =>{
-  const {mode, room} = get();
-  const {speakerReady, audienceReady, punisherReady} = room;
+  const {room} = get();
+  const {speakerReady, audienceReady, punisherReady, mode} = room;
 
   let readyToStart = speakerReady && audienceReady;
   if(mode == "ROTATE"){
