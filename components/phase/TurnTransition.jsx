@@ -18,7 +18,7 @@ function TurnTransition() {
     }else if(clientsTeam == "teamB"){
       return theme.teamB.primary
     }
-    return "lightgrey"
+    return "black"
   }
 
   useEffect(() =>{
