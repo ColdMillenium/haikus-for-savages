@@ -31,7 +31,7 @@ function Lobby() {
   const { roomId } = router.query;
   const [startHidden, setStartHidden] = useState(true);
   const [switchTeamsHidden, setSwitchTeamsHidden] = useState(true);
-
+  const clientReady = players.filter(p => p.id == clientId)[0].ready;
   const everyoneReady = () =>{
     return players.filter(p => p.ready).length == players.length;
   }
@@ -95,8 +95,8 @@ function Lobby() {
       </Show>
      
     </Text>
-    <Button onClick={toggleReady} colorScheme="green"  ml={5} >
-      Ready
+    <Button onClick={toggleReady} colorScheme={clientReady? "green" :"red"}  ml={5} w={120}>
+      {clientReady? "Ready":"Not Ready!"}
     </Button>
     <HiddenButton hidden={switchTeamsHidden} onClick={switchTeams}>
       Switch Teams
