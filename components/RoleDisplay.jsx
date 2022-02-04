@@ -69,7 +69,7 @@ const RoleIcon = (props) =>{
 const RoleDescription = (props) =>{
   const {clientsRole, color} = props.data
   const description = {
-    "" : "It's the other team's turn. Turn off your mic off/be quiet and hope your team's punisher get's em good",
+    "" : "It's the other team's turn. Turn your mic off/be quiet and hope your team's punisher get's em good",
     "Audience": "It's your team's turn. Listen carefully to your speaker and guess the word or phrase to earn points!", 
     "Speaker" : "It's your team's turn. Speak carefully and give your teams clues to each word and/or phrase!",
     "Punisher": "It's the other team's turn. Listen carefully to their Speaker and punish them if they break any of the rules!"
