@@ -40,15 +40,12 @@ const RotateScore = ({players}) =>{
 }
 
 const TeamsScore = ({teamA, teamB, theme}) =>{
-  return <Flex align="center" w={480}>
-    <Text color={theme.teamA.primary} fontSize="xl" fontWeight="Bold">
-      Team A: {teamA.score} points
+  return <Flex align="center" w={480} direction="column">
+    <Text color={theme.teamA.primary} fontSize="lg" fontWeight="Bold">
+      Team A Score: {teamA.score} pts
     </Text>
-    <Spacer/>
-    <Text fontSize="2xl">VS</Text>
-    <Spacer/>
-    <Text color={theme.teamB.primary} fontSize="xl" fontWeight="Bold">
-      Team B: {teamB.score} points
+    <Text color={theme.teamB.primary} fontSize="lg" fontWeight="Bold">
+      Team B Socre: {teamB.score} pts
     </Text>
   </Flex>
 }

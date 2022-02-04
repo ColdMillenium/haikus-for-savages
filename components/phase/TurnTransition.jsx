@@ -10,7 +10,7 @@ import Score from '../Score';
 function TurnTransition() {
   const {clientsRole, clientsTeam, readyToStart, theme} = useStore(store => store);
   const startTurn = useStore(store => () =>store.playerAction(store.ACTION.START_TURN))
-  
+  console.log(readyToStart);
 
   const getTeamColor = () => {
     if(clientsTeam == "teamA"){
@@ -38,10 +38,11 @@ function TurnTransition() {
       h='fit-content'
       backgroundColor="white"
     >
-      <Score/>
+      
       <Text fontSize="2xl" fontWeight="bold">
         Next Turn
       </Text>
+      <Score/>
       <RoleDisplay backgroundColor={getTeamColor()}/>
       <ReadyStatuses />
       <StartButton data={{readyToStart, clientsRole, startTurn}}/>
