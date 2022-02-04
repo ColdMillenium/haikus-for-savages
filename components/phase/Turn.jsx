@@ -29,14 +29,17 @@ const PointsEarnedDiv = styled.div`
   animation: 1s ${keyframes`${fadeInAndOut}`} 
 `;
 
+const TimeUpDiv = styled.div`
+  color: red;
+  animation: 1s ${keyframes`${fadeInAndOut}`} infinite
+`;
+
 
 const soundVolume = 0.05;
 
 function Turn() {
   const {
     currCard, 
-    score, 
-    timerOn, 
     playedCards, 
     timeLeft, 
     timeStart, 
@@ -46,12 +49,16 @@ function Turn() {
     lastPointsEarned
   } = useStore(store => store.room)
   const {clientId, clientsRole ,room , lastCard,} = useStore(store => store);
+  const playCardCount = useStore(store =>{
+    return room.playedCards.oops + room.playedCards.great + room.playedCards.good
+  })
   const playCard = useStore(store => (type) =>store.playerAction(store.ACTION.PLAY_CARD, type))
   const endTurn = useStore(store => () =>store.playerAction(store.ACTION.END_TURN))
   const executePunishment = useStore(store => () =>store.playerAction(store.ACTION.EXECUTE_PUNISHMENT))
   const [turnOver, setTurnOver] = useState(false);
   const [startOfCard, setStartOfCard] = useState(true);
   const [soundPlaying, setSoundPlaying] = useState(false);
+  const [playedCardCount, setPlayedCardCount] = useState(0);
   const totalPoints = playedCards.oops.length * -1 + 
                       playedCards.good.length + 
                       playedCards.great.length * 3;
@@ -62,18 +69,23 @@ function Turn() {
   const hideCard = () =>{
     return clientsRole != "Punisher" && clientsRole!="Speaker"
   }
-  
-  useEffect(()=>{
-    if(startOfCard == false){
-      setStartOfCard(true);
+  useEffect(() =>{
+    if(turnOver){
+      const sound = new Audio(SOUNDS.WWE_RING_BELL);
+      sound.volume = soundVolume
+      sound.play();
     }
-    if(soundPlaying == false && startOfCard){
+  },[turnOver])
+  useEffect(() =>{
+    const count = room.playedCards.oops + room.playedCards.great + room.playedCards.good;
+    if(count != playedCardCount){
+      setPlayedCardCount(count);
       if(lastPointsEarned == -1){
         const sound = new Audio(SOUNDS.BRUH);
         sound.volume = soundVolume
         sound.play();
       }else if (lastPointsEarned == 1){
-        const sound = new Audio(SOUNDS.WWE_RING_BELL);
+        const sound = new Audio(SOUNDS.SUCCESS_CHIME);
         sound.volume = soundVolume
         sound.play();
       }else if (lastPointsEarned == 3){
@@ -81,8 +93,15 @@ function Turn() {
         sound.volume = soundVolume
         sound.play();
       }
-      setSoundPlaying(false);
     }
+  },[room, lastPointsEarned, lastCard])
+  
+  
+  useEffect(()=>{
+    if(startOfCard == false){
+      setStartOfCard(true);
+    }
+   
     setTimeout(()=>{
       setStartOfCard(false);
     },1000)
@@ -262,10 +281,10 @@ const Timer = (props) => {
     if(time >0){
       return Math.floor(time/60) + ":" + (time%60 < 10? "0":"") + time%60;
     }else{
-      return "0:00";
+      return <TimeUpDiv>0:00</TimeUpDiv>
     }
   }
 
-  return <Text fontSize="3xl">{display()}</Text>
+  return <Text fontSize="4xl">{display()}</Text>
 }
 export default Turn;
