@@ -17,6 +17,7 @@ const ReadyStatuses = () =>{
     mode,
     teamA,
     teamB,
+    permanentPunisher,
     players: allPlayers
   } = useStore(store => store.room)
   const {currTeam, theme} = useStore(store => store);
@@ -67,12 +68,20 @@ const ReadyStatuses = () =>{
 
   return <Box h='fit-content'>
     <Show when={mode=="TEAMS"}>
-      <Flex width="250px" direction="row">
+      <Flex width="280px" direction="row">
         <Flex  direction="column">
           <Text fontSize="lg" fontWeight="bold" color={theme.teamA.primary}>Team A</Text>
           {listPlayerStatuses(teamA.players)}
         </Flex>
         <Spacer/>
+        <Show when={permanentPunisher}>
+          <Flex  align="center" justify="center" direction="column" border="2px solid" p={2} w={100}  rounded={5} backgroundColor="black">
+            <Icon h={6} w={8} color="white" as={PunisherIcon} />
+            <Text  color="white" align="center" fontSize="sm">{punisher.username}</Text>
+            <ReadyIcon ready={punisherReady} />
+          </Flex>
+          <Spacer/>
+        </Show>
         <Flex  direction="column">
           <Text fontSize="lg" fontWeight="bold" color={theme.teamB.primary}>Team B</Text>
           {listPlayerStatuses(teamB.players)}
