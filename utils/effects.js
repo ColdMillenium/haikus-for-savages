@@ -9,7 +9,8 @@ export const GIFS = {
   SPONGE_BOB_CAVEMEN:"https://c.tenor.com/3nA3bRItJkgAAAAC/spongebob-spongegar.gif",
   BART_DUMPING_CAKE: "https://c.tenor.com/eTqdoJ96YP4AAAAd/failure-fail.gif",
   SUBARU_FREAKOUT: "https://c.tenor.com/WtlvAQKd0s8AAAAC/anime-anime-cry.gif",
-  SUBARU_ZONEDOUT: "https://c.tenor.com/3Ov_pUxfvNMAAAAC/rezero-shinimodori.gif"
+  SUBARU_ZONEDOUT: "https://c.tenor.com/3Ov_pUxfvNMAAAAC/rezero-shinimodori.gif",
+  LAW_AND_ORDER: "https://i.giphy.com/media/1msK2c1s3lfyomkRmL/giphy.webp",
 
 }
 
@@ -31,7 +32,8 @@ export const SOUNDS = {
   DUMMY_YEAH: "https://www.myinstants.com/media/sounds/dummy-yah.mp3",
   ANTA_BAKA: "https://www.myinstants.com/media/sounds/anta-baka.mp3",
   WWE_RING_BELL: "https://www.myinstants.com/media/sounds/wwe-bell.mp3",
-  SUCCESS_CHIME: "https://www.myinstants.com/media/sounds/success-chime.mp3"
+  SUCCESS_CHIME: "https://www.myinstants.com/media/sounds/success-chime.mp3",
+  LAW_AND_ORDER: "https://www.myinstants.com/media/sounds/dun_dun_1.mp3",
 }
 
 export const punishments = [
@@ -78,6 +80,10 @@ export const punishments = [
   { 
     gif : GIFS.SUBARU_ZONEDOUT, 
     sound: SOUNDS.RE_ZERO_WEIRD,
+  },
+  { 
+    gif : GIFS.LAW_AND_ORDER, 
+    sound: SOUNDS.LAW_AND_ORDER,
   },
 ]
 
