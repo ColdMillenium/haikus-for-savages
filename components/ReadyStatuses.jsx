@@ -77,7 +77,7 @@ const ReadyStatuses = () =>{
         <Show when={permanentPunisher}>
           <Flex  align="center" justify="center" direction="column" border="2px solid" p={2} w={100}  rounded={5} backgroundColor="black">
             <Icon h={6} w={8} color="white" as={PunisherIcon} />
-            <Text  color="white" align="center" fontSize="sm">{punisher.username}</Text>
+            <Text  color="white" align="center" fontSize="sm">{punisher?.username}</Text>
             <ReadyIcon ready={punisherReady} />
           </Flex>
           <Spacer/>

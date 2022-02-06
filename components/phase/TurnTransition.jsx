@@ -9,16 +9,20 @@ import Score from '../Score';
 
 function TurnTransition() {
   const {clientsRole, clientsTeam, readyToStart, theme} = useStore(store => store);
+  const {permanentPunisher} = useStore(store => store.room);
   const startTurn = useStore(store => () =>store.playerAction(store.ACTION.START_TURN))
-  console.log(readyToStart);
-
   const getTeamColor = () => {
     if(clientsTeam == "teamA"){
       return theme.teamA.primary
     }else if(clientsTeam == "teamB"){
       return theme.teamB.primary
     }
-    return "black"
+    if(permanentPunisher){
+      return "black"
+    }else{
+      return "lightgrey"
+    }
+    
   }
 
   useEffect(() =>{
