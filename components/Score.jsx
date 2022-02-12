@@ -34,7 +34,7 @@ const RotateScore = ({players}) =>{
   console.log(players);
   return <>{
     players.map(p =>{
-      return <Text fontSize="2xl" key={p.id}>{p.username}: {p.score} points</Text>
+      return <Text key={p.id}>{p.username}: {p.score} points</Text>
     })
   }</>
 }
