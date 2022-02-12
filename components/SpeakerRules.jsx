@@ -11,7 +11,7 @@ function SpeakerRules() {
       <Text fontSize="2xl">{youCan}</Text>
       <Box pl={5}>
         <ul>
-          <li><Text>{youCan} only speeak using words with one syllabe.</Text></li>
+          <li><Text>{youCan} only speak using words with one syllable.</Text></li>
           <li>
             <Text>
               {youCan} say any word on your card <strong>AFTER</strong> an
