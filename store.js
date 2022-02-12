@@ -27,6 +27,7 @@ const useStore = create((set,get) => ({
   gameLogOpen: false,
   gameLog: [],
   disconnectedInGame: false,
+  timerOffset: 0,
 
   theme:{
     teamA:{
@@ -110,6 +111,9 @@ const useStore = create((set,get) => ({
     }),
 
     socket.current.on("gameStatus", room => {
+      if(get().timerOffset == 0){
+        set({timerOffset: Date.now() - room.lastGameLog.time})
+      }
       get().gameLog.push(room.lastGameLog);
       let clientsRole = get().clientsRole;
       let clientsTeam = get().clientsTeam;

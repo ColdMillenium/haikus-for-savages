@@ -46,9 +46,11 @@ function Turn() {
     roundNum, 
     turnNum,
     punishmentInProgress,
-    lastPointsEarned
+    lastPointsEarned,
   } = useStore(store => store.room)
-  const {clientId, clientsRole ,room , lastCard,} = useStore(store => store);
+
+  const {clientId, clientsRole ,room , lastCard, timerOffset} = useStore(store => store);
+  
   const playCardCount = useStore(store =>{
     return room.playedCards.oops + room.playedCards.great + room.playedCards.good
   })
@@ -113,6 +115,7 @@ function Turn() {
       <Text fontSize="4xl" fontWeight="bold">{clientsRole}</Text>
       <Hide when={punishmentInProgress}>
         <Timer 
+          timerOffset={timerOffset}
           timerOn={punishmentInProgress == false} 
           timeLeft={timeLeft} 
           timeStart={timeStart}
@@ -245,8 +248,9 @@ const PileButton = ({type, score, onClick, ...rest}) =>{
 }
 
 const Timer = (props) => {
-  const {timeLeft, timeStart, setTurnOver} = props
-  const [time, setTime] = useState(timeLeft/1000);
+  const {timeLeft, timeStart, setTurnOver, timerOffset} = props
+  console.log("timerOffset", timerOffset)
+  const [time, setTime] = useState(Math.floor((timeLeft - (Date.now() - timeStart - timerOffset))/1000));
   const [timerOn, setTimerOn] = useState(props.timerOn);
   useEffect(() => {
     // if(Date.now() - timeStart > timeLeft){
@@ -266,7 +270,7 @@ const Timer = (props) => {
           setTurnOver(true)
           setTime(0);
         }else if(timerOn){
-          setTime(Math.floor((timeLeft - (Date.now() - timeStart))/1000));
+          setTime(Math.floor((timeLeft - (Date.now() - timeStart - timerOffset))/1000));
         }
       },200)
       
