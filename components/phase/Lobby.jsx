@@ -172,7 +172,7 @@ function Lobby() {
     <HiddenButton hidden={switchTeamsHidden} onClick={switchTeams}>
       Switch Teams
     </HiddenButton>
-    <HiddenButton hidden={startHidden} onClick={startGame} colorScheme="red">
+    <HiddenButton hidden={startHidden} onClick={startGame} colorScheme="green">
       Start Game
     </HiddenButton>
     <Show when={mode == 'TEAMS'}>
