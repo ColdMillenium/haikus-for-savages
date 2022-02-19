@@ -38,7 +38,7 @@ function GameLog({containerRef}) {
             {gameLog.map((log, i) =>{
               let msg = log.msg;
               const isUsername = (word) => players.map(p=> p.username).includes(word);
-              msg = msg.split(" ").map(w => isUsername(w)?<strong key={i} style={{color:"green"}}> {w} </strong>: <p key={i}> {w} </p>)
+              msg = msg.split(" ").map(w => isUsername(w)?<strong key={i} style={{color:"green"}}> {w} </strong>: w + " ")
               const hr = new Date(log.time).getHours();
               const min = new Date(log.time).getMinutes()
               return <Box key={i}> 
