@@ -6,6 +6,7 @@ import useStore from '../../store.js'
 import { Hide, Show } from '../Conditional';
 import PlayerList from '../PlayerList';
 import {CopyIcon} from '@chakra-ui/icons';
+import {HostIcon} from '../MyIcons'
 
 function Lobby() {
   
@@ -81,6 +82,9 @@ function Lobby() {
       </Button>
     </Flex>
     <Box  p={5}>
+      <Show when={clientId!=host}>
+        <Text color="red">***Only Host can Edit Game Settings***</Text>
+      </Show>
       <Flex align="center">
         <Text fontWeight="bold" fontSize="lg">Mode: </Text>
         <Select disabled={clientId!=host} value={mode} onChange={onModeChange} maxW={200} ml={2}>

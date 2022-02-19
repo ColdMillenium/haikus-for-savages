@@ -4,15 +4,18 @@ import {Show} from './Conditional';
 import {Text ,Button, Box, Flex, Input, Select, Spacer} from '@chakra-ui/react'
 import useStore from '../store.js'
 import ReadyIcon from './ReadyIcon'
+import {HostIcon} from './MyIcons'
 
 
 const PlayerList = ({players, title, ...rest}) => {
   const {theme} = useStore(store => store)
+  const {host} = useStore(store => store.room)
   const list = [];
   players.forEach(p =>{
     list.push(<Flex key={p.id} align="center" mt={3}>
-      <Flex>
-        <Text 
+      <Flex >
+        <Flex 
+          align="center" justify="center"
           fontSize="md" 
           fontWeight="bold"
           key={p.id} 
@@ -26,8 +29,12 @@ const PlayerList = ({players, title, ...rest}) => {
           align="center"
           {...rest}
         >
-          {p.username}
-        </Text>
+          <Show when={p.id == host}>
+            <HostIcon color="yellow" />
+          </Show>
+          <Text pl={2}>{p.username}</Text>
+          
+        </Flex>
       </Flex>
       <Box position="relative" top="-7" left="-2.5">
         <ReadyIcon ready={p.ready}/>
