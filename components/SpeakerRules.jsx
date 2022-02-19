@@ -5,7 +5,7 @@ import {
 } from '@chakra-ui/react'
 function SpeakerRules() {
   const youCan = <strong>You can</strong>;
-  const youCant = <strong>You can{`'`}t</strong>;
+  const youCant = <strong>You can&#x27;t</strong>;
   return <Box backgroundColor="white">
     <Box backgroundColor="yellow.300" p={2}>
       <Text fontSize="2xl">{youCan}</Text>
@@ -29,7 +29,7 @@ function SpeakerRules() {
         <ul>
           <li><Text>{youCant} say any word, part of any word, or any form of a word that is on the card (unless someone on your team has already said it out loud).</Text></li>
           <li><Text>{youCant} use getstures/charades</Text></li>
-          <li><Text>{youCant} use {`"sounds like"`} or {`"rhymes with"`}.</Text></li>
+          <li><Text>{youCant} use &quot;sounds like&quot; or &quot;rhymes with&quot;.</Text></li>
           <li><Text>{youCant} use initials or abbreviations.</Text></li>
           <li><Text>{youCant} use initials or abbreviations.</Text></li>
         </ul>
