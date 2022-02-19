@@ -96,7 +96,7 @@ function Lobby() {
       <GameSetting 
         type="input"
         disabled={clientId!=host} 
-        field="Time Per Turn" 
+        field="Time per Turn (seconds)" 
         value={maxTime/1000} 
         w={14} 
         onBlur={(e)=>{
@@ -109,7 +109,7 @@ function Lobby() {
       <GameSetting 
         type="input"
         disabled={clientId!=host}
-        field="Rounds" 
+        field="Rounds per Game" 
         value={maxRounds} 
         min = {1}
         onBlur={(e)=>{
