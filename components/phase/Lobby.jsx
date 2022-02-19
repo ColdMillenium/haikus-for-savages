@@ -227,6 +227,9 @@ const GameSetting = (props) =>{
       setInputValue(0);
     }
   }, [setInputValue, inputValue])
+  useEffect(()=>{
+    setInputValue(value);
+  },[value, setInputValue])
   return <Flex mt={2} align="center" >
     <Show when={field}>
       <Text fontWeight="bold" fontSize="lg" mr={3}>{field}:</Text>
@@ -253,6 +256,11 @@ const GameSetting = (props) =>{
           const val = e.target.value;
           if(val >=0 && val<1000){
             setInputValue(Number(val));
+          }
+        }}
+        onKeyDown={e=> {
+          if(e.key == "Enter"){
+            e.target.blur();
           }
         }}
         {...rest}
