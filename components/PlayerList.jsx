@@ -15,7 +15,6 @@ const PlayerList = ({players, title, ...rest}) => {
     list.push(<Flex key={p.id} align="center" mt={3}>
       <Flex >
         <Flex 
-          align="center" justify="center"
           fontSize="md" 
           fontWeight="bold"
           key={p.id} 
@@ -27,6 +26,7 @@ const PlayerList = ({players, title, ...rest}) => {
           boxShadow="md"
           rounded={5}
           align="center"
+          justify="center"
           {...rest}
         >
           <Show when={p.id == host}>
